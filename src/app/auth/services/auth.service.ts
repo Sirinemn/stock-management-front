@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LoginRequest } from '../models/loginRequest';
 import { AuthResponse } from '../models/auth-response';
-import { RegisterRequest } from '../models/registerRequest';
+import { RegisterAdminRequest } from '../models/registerRequest';
+import { RegisterUserRequest } from '../models/registerUserRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +19,11 @@ export class AuthService {
     return this.httpclient.post<AuthResponse>(`${this.apiUrl}/login`, loginRequest);
   }
 
-  public registerAdmin(registerRequest: RegisterRequest) : Observable<any> {
+  public registerAdmin(registerRequest: RegisterAdminRequest) : Observable<any> {
     return this.httpclient.post(`${this.apiUrl}/register`, registerRequest);
   }
 
-  public registerUser(registerRequest: RegisterRequest) : Observable<any> {
+  public registerUser(registerRequest: RegisterUserRequest) : Observable<any> {
     return this.httpclient.post(`${this.apiUrl}/register/user`, registerRequest);
   }
   public logout() {

@@ -1,11 +1,20 @@
 import { Component } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-not-found',
-  imports: [],
+  imports: [MatIconModule, MatButtonModule],
   templateUrl: './not-found.component.html',
   styleUrl: './not-found.component.scss'
 })
 export class NotFoundComponent {
+
+  constructor(private router: Router){}
+
+  public redirectHome() {
+    this.router.navigate(['/home'])
+  }
 
 }

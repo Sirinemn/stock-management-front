@@ -11,10 +11,8 @@ import { Router } from '@angular/router';
 })
 export class NotFoundComponent {
 
-  constructor(private router: Router){}
-
-  public redirectHome() {
-    this.router.navigate(['/home'])
+  public back() {
+    window.history.back();
   }
 
 }

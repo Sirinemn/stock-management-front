@@ -32,18 +32,20 @@
         <!-- Champ Groupe -->
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Groupe</mat-label>
-          <input matInput formControlName="group" type="text" placeholder="Entrez votre groupe">
-          <mat-error *ngIf="formGroup.get('group')?.hasError('required')">Groupe requis</mat-error>
-          <mat-error *ngIf="formGroup.get('group')?.hasError('min')">Nom de groupe trop court</mat-error>
-          <mat-error *ngIf="formGroup.get('group')?.hasError('max')">Nom de groupe trop long</mat-error>
+          <input matInput formControlName="groupName" type="text" placeholder="Entrez votre groupe">
+          <mat-error *ngIf="formGroup.get('groupName')?.hasError('required')">Groupe requis</mat-error>
+          <mat-error *ngIf="formGroup.get('groupName')?.hasError('min')">Nom de groupe trop court</mat-error>
+          <mat-error *ngIf="formGroup.get('groupName')?.hasError('max')">Nom de groupe trop long</mat-error>
         </mat-form-field>
   
         <!-- Champ Date de Naissance -->
-        <mat-form-field appearance="outline" class="full-width">
+        <mat-form-field>
           <mat-label>Date de naissance</mat-label>
-          <input matInput formControlName="dateOfBirth" type="date">
-          <mat-error *ngIf="formGroup.get('dateOfBirth')?.hasError('required')">Date de naissance requise</mat-error>
-        </mat-form-field>
+          <input matInput formControlName="dateOfBirth" [matDatepicker]="picker">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
   
         <!-- Champ Mot de Passe -->
         <mat-form-field appearance="outline" class="full-width">
@@ -53,7 +55,8 @@
           <mat-error *ngIf="formGroup.get('password')?.hasError('min')">Mot de passe trop court</mat-error>
           <mat-error *ngIf="formGroup.get('password')?.hasError('max')">Mot de passe trop long</mat-error>
         </mat-form-field>
-  
+        <p *ngIf="errorMessage" class="error" color="red">
+          {{errorMessage}} </p>
         <!-- Boutons -->
         <div class="actions">
           <button mat-raised-button color="primary" type="submit" [disabled]="formGroup.invalid">S'inscrire</button>

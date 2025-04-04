@@ -6,16 +6,19 @@ import { RegisterAdminRequest } from '../../models/registerRequest';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { NgIf } from '@angular/common';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 
 @Component({
   selector: 'app-register',
-  imports: [MatCardModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
+  imports: [MatCardModule, MatDatepickerModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, NgIf],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
   public formGroup: FormGroup;
+  public errorMessage: string = '';
 
   constructor(
     private authService: AuthService,
@@ -26,9 +29,9 @@ export class RegisterComponent {
         email: ['', [Validators.required, Validators.email]],  
         lastname: [  '', [Validators.required, Validators.min(4), Validators.max(20)], ],
         firstname: [  '', [Validators.required, Validators.min(4), Validators.max(20)], ],
-        group: [  '', [Validators.required, Validators.min(4), Validators.max(20)], ],
+        groupName: [  '', [Validators.required, Validators.min(4), Validators.max(20)], ],
         dateOfBirth:  ['',[Validators.required],],
-        password: [ '', [Validators.required, Validators.min(4), Validators.max(40)],]
+        password: [ '', [Validators.required],]
       });
   }
   public Submit(): void {
@@ -36,10 +39,11 @@ export class RegisterComponent {
     this.authService.registerAdmin(registerRequest).subscribe({
       next: (response) => {
         console.log('Registration successful:', response);
-        this.router.navigate(['/login']); 
+        this.router.navigate(['auth/login']); 
       },
       error: (err) => {
         console.error('Registration failed:', err);
+        this.errorMessage = err.error.message;
       }
     });
   }

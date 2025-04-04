@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AuthService } from '../../services/auth.service';
 import { LoginRequest } from '../../models/loginRequest';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +21,7 @@ export class LoginComponent {
   public formGroup:FormGroup ;
   constructor(private formbuilder: FormBuilder,
     private authService: AuthService,
+    private router: Router
   ) {
     // Initialize the form group with controls for username and password
     this.formGroup = this.formbuilder.group({
@@ -44,7 +46,7 @@ export class LoginComponent {
     }
   }
   public goToRegister() {
-    throw new Error('Method not implemented.');
+    this.router.navigate(['auth/register']);
   }
 
 }

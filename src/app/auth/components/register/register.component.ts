@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { RegisterAdminRequest } from '../../models/registerRequest';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
 
 @Component({
   selector: 'app-register',
-  imports: [],
+  imports: [MatCardModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })

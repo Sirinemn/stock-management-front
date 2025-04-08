@@ -1,0 +1,145 @@
+mat-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  color: #ff66b3;
+  display: flex; 
+  align-items: center;
+  gap: 10px;
+}
+
+.toolbar-image {
+  width: 40px;
+  height: 40px; 
+  border-radius: 50%; 
+}
+
+.hero {
+  background-color: #e8f0fe; 
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.hero h1 {
+  margin-bottom: 10px;
+}
+
+.hero .subtitle {
+  font-size: 1.2em;
+  margin-bottom: 30px;
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.features {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.features h2 {
+  margin-bottom: 30px;
+}
+
+.feature-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  padding: 0 20px;
+}
+
+.feature-item {
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.feature-item mat-icon {
+  font-size: 48px;
+  color: #3f51b5;
+  margin-bottom: 10px;
+}
+.feature-item:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+.feature-item h3 {
+  margin-bottom: 10px;
+}
+
+.why-choose-us {
+  background-color: #e8f0fe; 
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.why-choose-us h2 {
+  margin-bottom: 20px;
+}
+
+.why-choose-us ul {
+  list-style: none;
+  padding: 0;
+  max-width: 600px;
+  margin: 20px auto;
+  text-align: left;
+}
+
+.why-choose-us li {
+  padding: 8px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.why-choose-us li:last-child {
+  border-bottom: none;
+}
+
+.cta {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.cta h2 {
+  margin-bottom: 20px;
+}
+
+/* Responsivité */
+@media (max-width: 768px) {
+  .hero {
+    padding: 40px 15px;
+  }
+
+  .hero h1 {
+    font-size: 2em;
+  }
+
+  .hero .subtitle {
+    font-size: 1em;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .features {
+    padding: 30px 15px;
+  }
+
+  .feature-list {
+    padding: 0 15px;
+  }
+
+  .why-choose-us {
+    padding: 40px 15px;
+  }
+
+  .cta {
+    padding: 40px 15px;
+  }
+}

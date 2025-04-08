@@ -1,0 +1,59 @@
+stages:
+  - install
+  - build
+  - test
+  - deploy
+
+# Variables globales
+variables:
+  DOCKER_IMAGE: "docker.io/sirinemn/stock-management-front"
+  NODE_ENV: development
+
+cache:
+  key: node
+  paths:
+    - node_modules/
+
+# 1️⃣ Étape d'Installation des Dépendances
+install:
+  stage: install
+  image: node:18 # Version Node.js adaptée à Angular
+  script:
+    - npm install
+  artifacts:
+    paths:
+      - node_modules/
+    expire_in: 1 week
+
+# 2️⃣ Étape de Build
+build:
+  stage: build
+  image: node:18
+  script:
+    - npm run build 
+  artifacts:
+    paths:
+      - dist/ # Contient le build Angular
+    expire_in: 1 week
+
+# 3️⃣ Étape de Test
+test:
+  stage: test
+  image: node:18
+  script:
+    - npm run test -- --watch=false --browsers=ChromeHeadless
+  coverage: /Statements.*?(\d+\.\d+)%/
+
+# 4️⃣ Étape de Déploiement
+deploy:
+  stage: deploy
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - echo "🚀 Construction et push de l'image Docker pour le front"
+    - docker login -u "$DOCKER_HUB_USERNAME" -p "$DOCKER_HUB_TOKEN" docker.io
+    - docker build -t $DOCKER_IMAGE .
+    - docker push $DOCKER_IMAGE
+  only:
+    - main

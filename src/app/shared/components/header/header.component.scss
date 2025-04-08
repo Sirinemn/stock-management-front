@@ -1,0 +1,38 @@
+@use '@angular/material' as mat;
+
+mat-toolbar {
+  position: sticky; 
+  top: 0;
+  z-index: 100;
+  color: #ff66b3;
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  gap: 10px;
+
+}
+.img {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  gap: 10px;
+}
+.toolbar-image {
+    width: 40px;
+    height: 40px; 
+    border-radius: 50%; 
+}
+
+.spacer {
+  flex-grow: 1; 
+}
+
+button {
+  margin-left: 10px;
+  color: #ff66b3;
+  border-radius: 5px; 
+  padding: 5px 10px; 
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: none;
+}

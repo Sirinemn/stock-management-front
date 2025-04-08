@@ -1,0 +1,55 @@
+// Palette de couleurs choisie
+$primary-color: #084B83;
+$secondary-color: #42BFDD;
+$tertiary-color: #BBE6E4;
+$background-color: #F0F6F6;
+$accent-color: #FF66B3;
+
+// Style des textes
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  color: black; 
+  background-color: $background-color; 
+}
+
+h1 , mat-card-title{
+  font-size: 2.5rem;
+  color: $primary-color;
+}
+h2 {
+  font-size: 2rem;
+  color: $primary-color;
+}
+h3 {
+  font-size: 1.75rem;
+  color: $primary-color;
+}
+
+.custom-button {
+  background-color: $secondary-color;
+  color: $background-color;
+  padding: 10px 20px;
+  border-radius: 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border: none;
+}
+mat-error {
+  color: red;
+  font-size: 0.9rem;
+}
+.custom-button:hover {
+  background-color: $accent-color;
+}
+
+a {
+  color: $primary-color;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: $accent-color; 
+}

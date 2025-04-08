@@ -41,7 +41,9 @@ test:
   stage: test
   image: node:18
   script:
-    - npm run test -- --watch=false --browsers=ChromeHeadless
+    - apt-get update && apt-get install -y chromium-browser
+    - export CHROME_BIN=/usr/bin/chromium-browser
+    - npm run test -- --watch=false --browsers=ChromeHeadless --no-sandbox
   coverage: /Statements.*?(\d+\.\d+)%/
 
 # 4️⃣ Étape de Déploiement

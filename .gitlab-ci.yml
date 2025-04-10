@@ -41,7 +41,7 @@ test:
   stage: test
   image: trion/ng-cli-karma:latest
   script:
-    - npm run test -- --watch=false --browsers=ChromeHeadless --no-sandbox
+    - npm run test -- --watch=false --browsers=ChromeHeadless
   coverage: /Statements.*?(\d+\.\d+)%/
 
 # 4️⃣ Étape de Déploiement

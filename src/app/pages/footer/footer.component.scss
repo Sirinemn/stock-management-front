@@ -39,9 +39,10 @@ mat-toolbar.mat-accent {
   }
 
   .footer-links {
+    display: flex;
     margin-top: 10px;
+    flex-direction: column;
   }
-
   .footer-links a {
     margin: 0 10px;
   }

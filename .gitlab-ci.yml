@@ -39,10 +39,8 @@ build:
 # 3️⃣ Étape de Test
 test:
   stage: test
-  image: node:18
+  image: trion/ng-cli-karma:latest
   script:
-    - apt-get update && apt-get install -y chromium-browser
-    - export CHROME_BIN=/usr/bin/chromium-browser
     - npm run test -- --watch=false --browsers=ChromeHeadless --no-sandbox
   coverage: /Statements.*?(\d+\.\d+)%/
 

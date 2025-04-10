@@ -1,27 +1,10 @@
-# Ignorer les modules Node.js
 node_modules
-
-# Ignorer les fichiers temporaires
-*.log
-*.tmp
-
-# Ignorer les fichiers de build locaux (non nécessaires à l'image Docker)
 dist
-
-# Ignorer les fichiers spécifiques à Git
 .git
 .gitignore
-
-# Ignorer les fichiers Docker temporaires
-.dockerignore
 Dockerfile
-
-# Ignorer les configurations locales
+Dockerfile.dev
+docker-compose.yml
+*.md
+*.log
 .env
-
-# Ignorer les caches npm
-.npm
-
-# Ignorer les fichiers système
-.DS_Store
-Thumbs.db

@@ -47,7 +47,7 @@ export class LoginComponent implements OnDestroy{
               localStorage.setItem('token', authResponse.token);
               this.isLoading = false;
               this.isLoading = true;
-              this.router.navigate(['dashboard']);
+              this.router.navigate(['features_routes/dashboard']);
             },
             error: (err) => {
               this.isLoading = false;

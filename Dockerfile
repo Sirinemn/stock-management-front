@@ -1,5 +1,5 @@
 # Étape 1 : Build de l'application Angular
-FROM node:18-bullseye-slim AS build
+FROM node:lts-alpine AS builder
 
 WORKDIR /app
 
@@ -10,8 +10,7 @@ COPY . .
 RUN npm run build --configuration=production
 
 # Étape 2 : Serveur Nginx pour le front
-FROM nginx:1.25.2-alpine3.18
-
+FROM nginx:lts-alpine
 # Copier les fichiers build dans le dossier nginx par défaut
 COPY --from=build /app/dist/stock-management-front /usr/share/nginx/html
 

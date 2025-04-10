@@ -6,10 +6,11 @@ import { SessionService } from './core/services/session.service';
 import { User } from './auth/models/user';
 import { HeaderComponent } from "./shared/components/header/header.component";
 import { NgIf } from '@angular/common';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, FooterComponent, HeaderComponent, NgIf],
+  imports: [RouterOutlet, FooterComponent, HeaderComponent, NgIf, MatToolbarModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { FooterComponent } from "./pages/footer/footer.component";
+import { FooterComponent } from "./shared/components/footer/footer.component";
 import { AuthService } from './auth/services/auth.service';
 import { SessionService } from './core/services/session.service';
 import { User } from './auth/models/user';

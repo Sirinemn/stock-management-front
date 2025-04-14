@@ -7,7 +7,7 @@ COPY . .
 RUN npm run build --configuration=production
 
 # Stage 2:  The final image, using Nginx to serve the built app
-FROM nginx:lts-alpine
+FROM nginx:1.24.0-slim
 # Copy the built Angular app from the 'build' stage
 COPY --from=build /app/dist/stock-management-front /usr/share/nginx/html
 

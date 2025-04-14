@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { FooterComponent } from "./shared/components/footer/footer.component";
 import { AuthService } from './auth/services/auth.service';
 import { SessionService } from './core/services/session.service';
@@ -10,7 +10,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, FooterComponent, HeaderComponent, NgIf, MatToolbarModule],
+  imports: [RouterOutlet, FooterComponent, HeaderComponent, NgIf, MatToolbarModule, RouterLink],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

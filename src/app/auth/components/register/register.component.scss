@@ -1,23 +1,18 @@
-/* Styles généraux pour la carte */
+
 mat-card {
   width: 100%;
-  max-width: 500px; /* Limite la largeur sur les grands écrans */
-  margin: 20px auto; /* Centre la carte et ajoute de la marge */
+  max-width: 500px; 
+  margin: 20px auto;
 }
 
 mat-card-title {
   text-align: center;
   margin-bottom: 20px;
 }
-
 mat-card-content {
   display: flex;
   flex-direction: column;
   gap: 16px; 
-}
-mat-error {
-  color: red;
-  font-size: 0.9rem;
 }
 .full-width {
   width: 100%;
@@ -31,7 +26,7 @@ mat-form-field {
   margin-top: 10px;
   padding: 12px;
   color: white;
-  background-color: #f44336; /* Rouge Material Design */
+  background-color: #f44336; 
   border-radius: 4px;
 }
 
@@ -40,10 +35,9 @@ mat-form-field {
   display: flex;
   gap: 10px;
   margin-top: 20px;
-  justify-content: flex-end; /* Aligne les boutons à droite */
+  justify-content: flex-end; 
 }
 
-/* Style pour l'indicateur de chargement */
 .loading-spinner {
   display: flex;
   justify-content: center;

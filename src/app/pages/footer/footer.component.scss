@@ -1,12 +1,11 @@
-@use '@angular/material' as mat;
 
-mat-toolbar.mat-accent { 
+mat-toolbar{ 
   position: relative;
   bottom: 0;
   left: 0;
   width: 100%;
   z-index: 99; 
-}
+  background-color: #e8f0fe; /* Couleur de fond du footer */}
 
 .footer-content {
   display: flex;
@@ -15,8 +14,10 @@ mat-toolbar.mat-accent {
   padding: 0 20px;
   width: 100%;
   box-sizing: border-box;
-  background-color: #e8f0fe; 
-
+  font-size: 16px;
+}
+p {
+  padding-top: 10px;
 }
 
 .footer-links a {
@@ -29,21 +30,37 @@ mat-toolbar.mat-accent {
   text-decoration: underline;
 }
 
-/* Responsivité pour le footer */
 @media (max-width: 600px) {
-  .footer-content {
+  mat-toolbar {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 10px;
-  }
+    height: 100%;
 
+  }
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-top: 10px;
+
+  p {
+    text-align: center; 
+    margin: 0; 
+    line-height: 1.5; 
+    white-space: pre-line; 
+  }
+  
   .footer-links {
     display: flex;
     margin-top: 10px;
     flex-direction: column;
   }
+
   .footer-links a {
-    margin: 0 10px;
+    margin: 0;
+    font-size: 0.9rem; 
+  }
   }
 }

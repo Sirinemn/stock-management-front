@@ -21,6 +21,12 @@ export const routes: Routes = [
       loadChildren: ()=> 
         import('../app/features/features.routes.').then((route)=> route.features_routes)
     },
+    {
+      path: 'admin',
+      canActivate: [AuthGuard],
+      loadChildren: ()=> 
+        import('../app/features/admin/admin.routes').then((route)=> route.admin)
+    },
     { 
       path: '404',
       component: NotFoundComponent 

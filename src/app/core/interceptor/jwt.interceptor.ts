@@ -6,8 +6,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
   public intercept(request: HttpRequest<any>, next: HttpHandler) {
     const token = localStorage.getItem('token');
-    const isApiUrl = request.url.startsWith('/api/');
-    if (token && isApiUrl) {
+    if (token) {
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`,

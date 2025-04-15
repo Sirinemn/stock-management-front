@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { SessionService } from '../../../../core/services/session.service';
 
 
 @Component({
@@ -19,15 +20,21 @@ export class UsersListComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['firstname', 'lastname', 'email'];
   public loading: boolean = false;
   public httpSubscription: Subscription = new Subscription();
+  private userId: number = 0;
 
-  constructor(private userService: UsersService, private router:Router) {}
+  constructor(
+    private userService: UsersService,
+    private router:Router,
+    private session:SessionService,
+  ) {}
 
   ngOnInit(): void {
+    this.userId = this.session.user?.id || 0;
     this.getUsers();
   }
   public getUsers(): void {
     this.loading = true;
-    this.userService.getUsers().subscribe({
+    this.userService.getUsers(this.userId).subscribe({
       next: (users: User[]) => {
         this.users.data = users;
         this.loading = false;

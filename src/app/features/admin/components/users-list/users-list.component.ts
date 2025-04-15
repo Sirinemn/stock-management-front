@@ -17,7 +17,7 @@ import { SessionService } from '../../../../core/services/session.service';
 export class UsersListComponent implements OnInit, OnDestroy {
 
   users = new MatTableDataSource<User>();
-  displayedColumns: string[] = ['firstname', 'lastname', 'email'];
+  displayedColumns: string[] = ['firstname', 'lastname', 'email', 'actions'];
   public loading: boolean = false;
   public httpSubscription: Subscription = new Subscription();
   private userId: number = 0;

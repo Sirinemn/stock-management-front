@@ -5,13 +5,13 @@ import { AuthService } from './auth/services/auth.service';
 import { SessionService } from './core/services/session.service';
 import { User } from './auth/models/user';
 import { HeaderComponent } from "./shared/components/header/header.component";
-import { NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, FooterComponent, HeaderComponent, NgIf, MatToolbarModule, RouterLink],
+  imports: [RouterOutlet, FooterComponent, HeaderComponent, CommonModule, MatToolbarModule, RouterLink],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -37,8 +37,8 @@ export class AppComponent implements OnInit {
     this.authService.getAuthenticatedUser().subscribe({
       next: (user: User) => {
         this.sessionService.logIn(user);
-        if (this.router.url !== '/feature/dashboard') {
-          this.router.navigate(['/feature/dashboard']);
+        if (this.router.url !== '/features/dashboard') {
+          this.router.navigate(['/features/dashboard']);
         }
       },
       error: (err) => {

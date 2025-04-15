@@ -16,7 +16,7 @@ import { RegisterUserRequest } from '../../../../auth/models/registerUserRequest
 @Component({
   selector: 'app-register-user',
   providers: [provideNativeDateAdapter()],
-  imports: [MatProgressSpinnerModule ,MatCardModule, MatDatepickerModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, NgIf, RouterLink],
+  imports: [MatProgressSpinnerModule ,MatCardModule, MatDatepickerModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, NgIf],
   templateUrl: './register-user.component.html',
   styleUrl: './register-user.component.scss'
 })

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UsersService } from '../../services/users.service';
+import { UsersService } from '../../../admin/services/users.service';
 import { User } from '../../../../auth/models/user';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';

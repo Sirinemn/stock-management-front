@@ -2,8 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UsersService } from '../../services/users.service';
 import { User } from '../../../../auth/models/user';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -14,12 +15,12 @@ import { Subscription } from 'rxjs';
 })
 export class UsersListComponent implements OnInit, OnDestroy {
 
-  public users: User[] = [];
+  users = new MatTableDataSource<User>();
   displayedColumns: string[] = ['firstname', 'lastname', 'email'];
   public loading: boolean = false;
   public httpSubscription: Subscription = new Subscription();
 
-  constructor(private userService: UsersService) {}
+  constructor(private userService: UsersService, private router:Router) {}
 
   ngOnInit(): void {
     this.getUsers();
@@ -28,7 +29,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.userService.getUsers().subscribe({
       next: (users: User[]) => {
-        this.users = users;
+        this.users.data = users;
         this.loading = false;
       },
       error: () => {
@@ -39,14 +40,21 @@ export class UsersListComponent implements OnInit, OnDestroy {
   public back() {
     window.history.back();
   }
-  deleteUser(arg0: any) {
-    throw new Error('Method not implemented.');
+  deleteUser(userId: number) {
+    this.userService.deleteUser(userId).subscribe({
+      next: () => {
+        this.getUsers();
+      },
+      error: () => {
+        this.getUsers();
+      }
+    });
   }
-  editUser(arg0: any) {
-    throw new Error('Method not implemented.');
+  editUser(userId: number) {
+    this.router.navigate(['/admin/users/edit', userId]);
   }
-  viewUser(arg0: any) {
-    throw new Error('Method not implemented.');
+  viewUser(userId: number) {
+    this.router.navigate(['/admin/users/view', userId]);
   }
   ngOnDestroy(): void {
     this.httpSubscription.unsubscribe();

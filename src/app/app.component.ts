@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { FooterComponent } from "./shared/components/footer/footer.component";
 import { AuthService } from './auth/services/auth.service';
 import { SessionService } from './core/services/session.service';
@@ -7,6 +7,7 @@ import { User } from './auth/models/user';
 import { HeaderComponent } from "./shared/components/header/header.component";
 import { NgIf } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -16,30 +17,38 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 })
 export class AppComponent implements OnInit {
   title = 'stock-management-front';
-  public isLogged: boolean = false;
+  public isLogged$: Observable<boolean> = of(false);
   public user?: User;
 
   constructor(
     private authService: AuthService,
     private sessionService: SessionService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    if (this.authService.isAuthenticated()) {
-      this.authService.getAthenticatedUser().subscribe({
-        next: (user) => {
-          this.sessionService.logIn(user);
-          this.isLogged = true;
-          this.user = user;
-        },
-        error: (err) => {
-          console.error('Erreur lors de la récupération de l\'utilisateur :', err);
+    this.autoLog();
+    this.isLogged$ = this.sessionService.isLogged$();
+  }
+  public $isLogged(): Observable<boolean> {
+    return this.sessionService.isLogged$();
+  }
+  public autoLog(): void {
+    this.authService.getAuthenticatedUser().subscribe({
+      next: (user: User) => {
+        this.sessionService.logIn(user);
+        if (this.router.url !== '/feature/dashboard') {
+          this.router.navigate(['/feature/dashboard']);
         }
-      });
-    }
-    this.sessionService.isLogged$().subscribe((logged) => {
-      this.isLogged = logged;
+      },
+      error: (err) => {
+        if (err.status === 401) {
+          console.log('Utilisateur non authentifié, déconnexion automatique.');
+          this.sessionService.logOut();
+        } else {
+          console.error('Erreur lors de la récupération des informations utilisateur :', err);
+        }
+      },
     });
-
   }
 }

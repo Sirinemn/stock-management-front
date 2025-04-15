@@ -37,7 +37,11 @@ export class AuthService {
   public isAuthenticated(): boolean {
     return !!localStorage.getItem('token');
   }
-  public getAthenticatedUser(): Observable<User> {
-    return this.httpclient.get<User>(`${this.apiUrl}/me`);
-    } 
+  public getAuthenticatedUser(): Observable<User> {
+    return this.httpclient.get<User>(`${this.apiUrl}/me`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
 }

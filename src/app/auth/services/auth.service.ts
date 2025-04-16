@@ -7,6 +7,7 @@ import { AuthResponse } from '../models/auth-response';
 import { RegisterAdminRequest } from '../models/registerRequest';
 import { RegisterUserRequest } from '../models/registerUserRequest';
 import { User } from '../models/user';
+import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -43,5 +44,8 @@ export class AuthService {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     });
+  }
+  public changePassword(changePasswordRequest: ChangePasswordRequest): Observable<any> {
+    return this.httpclient.patch(`${this.apiUrl}/users/change-password`, changePasswordRequest);
   }
 }

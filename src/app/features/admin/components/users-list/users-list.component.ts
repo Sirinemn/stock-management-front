@@ -32,6 +32,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.userId = this.session.user?.id || 0;
     this.getUsers();
+    console.log(this.users.data);
   }
   public getUsers(): void {
     this.loading = true;

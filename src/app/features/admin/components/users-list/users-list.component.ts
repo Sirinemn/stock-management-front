@@ -6,11 +6,12 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { SessionService } from '../../../../core/services/session.service';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @Component({
   selector: 'app-users-list',
-  imports: [MatIconModule, MatTableModule],
+  imports: [MatIconModule, MatTableModule, MatButtonModule],
   templateUrl: './users-list.component.html',
   styleUrl: './users-list.component.scss'
 })

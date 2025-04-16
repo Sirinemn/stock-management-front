@@ -1,19 +1,20 @@
 <div fxLayout="row" fxLayoutAlign="start center">
-    <div class="arrow_back">
-        <button mat-icon-button (click)="back()">
-        <mat-icon>arrow_back</mat-icon>
-        </button>
-    </div>
-  
-    <div class="example-button-row">
-        <button mat-raised-button routerLink="/admin/adduser" >Ajouter un utilisateur</button>
-        <button mat-raised-button disabled>Disabled</button>
-        <a mat-raised-button target="_blank">Link</a>
-    </div>
+    <section fxFlex="100" fxLayoutAlign="start center" class="user-list-header">
+        <div class="arrow_back">
+            <button mat-icon-button (click)="back()">
+            <mat-icon>arrow_back</mat-icon>
+            </button>
+        </div>
 
-    <div class="title">
-        <h1>Liste des utilisateurs</h1>
-    </div>    
+        <div class="title">
+            <h1>Liste des utilisateurs</h1>
+        </div>  
+    
+        <div class="add-user-btn">
+            <button class="custom-button" routerLink="/admin/adduser" >Ajouter un utilisateur</button>
+        </div>
+  
+    </section>
     <table mat-table [dataSource]="users" class="mat-elevation-z8" matSort matSortActive="name" matSortDirection="asc">
         <ng-container matColumnDef="firstname">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Prénom </th>

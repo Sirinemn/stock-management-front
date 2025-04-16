@@ -4,14 +4,14 @@ import { User } from '../../../../auth/models/user';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { SessionService } from '../../../../core/services/session.service';
 import { MatButtonModule } from '@angular/material/button';
 
 
 @Component({
   selector: 'app-users-list',
-  imports: [MatIconModule, MatTableModule, MatButtonModule],
+  imports: [MatIconModule, MatTableModule, MatButtonModule, RouterLink],
   templateUrl: './users-list.component.html',
   styleUrl: './users-list.component.scss'
 })

@@ -8,7 +8,7 @@
     <button mat-button routerLink="/features/transactions">Transactions</button>
     <button mat-button routerLink="/features/products">Produits</button>
     <button mat-button routerLink="/features/categories">Catégories</button>
-    <button mat-button routerLink="/admin/users">Utilisateur</button>
+    <button mat-button *ngIf="isAmin" >Utilisateur</button>
     <button mat-button (click)="logOut()">Déconnecter</button>
 
   </mat-toolbar>

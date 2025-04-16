@@ -6,6 +6,7 @@ export interface User {
     dateOfBirth: string;
     createdDate: string;
     lastModifiedDate: string;
+    firstLogin?: boolean;
     roles: string[];
     groupId: number;
     groupName: string;

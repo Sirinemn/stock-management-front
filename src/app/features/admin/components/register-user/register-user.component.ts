@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../../auth/services/auth.service';
 import { RegisterUserRequest } from '../../../../auth/models/registerUserRequest';
@@ -29,7 +29,7 @@ export class RegisterUserComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: RouterLink,
+    private router: Router,
     private snackBar: MatSnackBar,
     private authService: AuthService
   ) {

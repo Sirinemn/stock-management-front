@@ -8,6 +8,8 @@ import { HeaderComponent } from "./shared/components/header/header.component";
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Observable, of } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { PasswordChangeDialogComponent } from './mat-dialog/password-change-dialog/password-change-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -19,11 +21,13 @@ export class AppComponent implements OnInit {
   title = 'stock-management-front';
   public isLogged$: Observable<boolean> = of(false);
   public user?: User;
+  public firstLogin: boolean = false;
 
   constructor(
     private authService: AuthService,
     private sessionService: SessionService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -37,6 +41,12 @@ export class AppComponent implements OnInit {
     this.authService.getAuthenticatedUser().subscribe({
       next: (user: User) => {
         this.sessionService.logIn(user);
+        this.user = user;
+        this.firstLogin = user.firstLogin? true : false;
+        if (this.firstLogin) {
+          this.openPasswordChangeDialog();
+        }
+        
         if (this.router.url !== '/features/dashboard') {
           this.router.navigate(['/features/dashboard']);
         }
@@ -49,6 +59,18 @@ export class AppComponent implements OnInit {
           console.error('Erreur lors de la récupération des informations utilisateur :', err);
         }
       },
+    });
+  }
+  private openPasswordChangeDialog(): void {
+    const dialogRef = this.dialog.open(PasswordChangeDialogComponent, {
+      width: '400px',
+      disableClose: true, // Empêcher la fermeture sans action
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'redirect') {
+        this.router.navigate(['auth/change-password']);
+      }
     });
   }
 }

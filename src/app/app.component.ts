@@ -71,14 +71,13 @@ export class AppComponent implements OnInit {
     });
   }
   private openPasswordChangeDialog(): void {
-    console.log('Tentative d’ouverture du dialog'); // debug
     const dialogRef = this.dialog.open(PasswordChangeDialogComponent, {
       disableClose: true, 
     });
   
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'redirect') {
-        this.router.navigate(['/auth/change-password']);
+        this.router.navigate(['user/change-password']);
       }
     });
   }

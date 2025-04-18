@@ -11,6 +11,14 @@ export class SessionService {
   public user: User | undefined;
   public userRole!:string[];
   private isLoggedSubject = new BehaviorSubject<boolean>(this.isLogged);
+  private firstLoginSubject = new BehaviorSubject<boolean>(false);
+
+  public setFirstLogin(value: boolean) {
+    this.firstLoginSubject.next(value);
+  }
+  public getFirstLogin(): Observable<boolean> {
+    return this.firstLoginSubject.asObservable();
+  }
   
   public isLogged$(): Observable<boolean> {
     return this.isLoggedSubject.asObservable();

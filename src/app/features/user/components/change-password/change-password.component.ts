@@ -16,6 +16,8 @@ import { NgIf } from '@angular/common';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { Subscription } from 'rxjs';
 import { ChangePasswordRequest } from '../../../../auth/models/ChangePasswordRequest';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-change-password',
@@ -41,10 +43,11 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private sessionService: SessionService,
-    private formBuiler: FormBuilder
+    private formBuiler: FormBuilder,
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {
     this.formGroup = this.formBuiler.group({
-      email: [{value: '', disabled: true}, [Validators.required, Validators.email]],
       newPassword: ['', Validators.required],
       confirmPassword: ['', Validators.required],
     });
@@ -52,9 +55,6 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.user = this.sessionService.getUser();
-    this.formGroup.patchValue({
-      email: this.user?.email || '',
-    });
   }
   public Submit() {
     if (this.formGroup.invalid) {
@@ -62,7 +62,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
     }
     this.isLoading = true;
     this.errorMessage = '';
-    const { email, newPassword, confirmPassword } = this.formGroup.value;
+    const { newPassword, confirmPassword } = this.formGroup.value;
     if (newPassword !== confirmPassword) {
       this.errorMessage = 'Passwords do not match';
       this.isLoading = false;
@@ -77,7 +77,10 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
       .subscribe({
         next: () => {
           this.isLoading = false;
-          alert('Password changed successfully');
+          this.snackBar.open('Password changed successfully', 'Close', {
+            duration: 3000, 
+          });
+          this.router.navigate(['features/dashboard']);
         },
         error: (error) => {
           this.isLoading = false;

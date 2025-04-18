@@ -1,6 +1,6 @@
 import { NgIf } from '@angular/common';
 import { Component, OnDestroy } from '@angular/core';
-import { Form, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -47,7 +47,6 @@ export class LoginComponent implements OnDestroy{
               this.sessionService.setFirstLogin(user.firstLogin? true : false);
               localStorage.setItem('token', authResponse.token);
               this.isLoading = false;
-              this.isLoading = true;
               this.router.navigate(['features/dashboard']);
             },
             error: (err) => {

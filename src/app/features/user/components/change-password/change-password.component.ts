@@ -44,7 +44,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
     private formBuiler: FormBuilder
   ) {
     this.formGroup = this.formBuiler.group({
-      email: [this.user?.email, Validators.required],
+      email: [{value: '', disabled: true}, [Validators.required, Validators.email]],
       newPassword: ['', Validators.required],
       confirmPassword: ['', Validators.required],
     });
@@ -52,6 +52,9 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.user = this.sessionService.getUser();
+    this.formGroup.patchValue({
+      email: this.user?.email || '',
+    });
   }
   public Submit() {
     if (this.formGroup.invalid) {

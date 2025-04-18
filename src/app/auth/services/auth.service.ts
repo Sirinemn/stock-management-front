@@ -8,6 +8,7 @@ import { RegisterAdminRequest } from '../models/registerRequest';
 import { RegisterUserRequest } from '../models/registerUserRequest';
 import { User } from '../models/user';
 import { ChangePasswordRequest } from '../models/ChangePasswordRequest';
+import { MessageResponse } from '../../shared/models/messageResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -45,7 +46,7 @@ export class AuthService {
       }
     });
   }
-  public changePassword(changePasswordRequest: ChangePasswordRequest): Observable<any> {
-    return this.httpclient.patch(`${this.apiUrl}/users/change-password`, changePasswordRequest);
+  public changePassword(changePasswordRequest: ChangePasswordRequest): Observable<MessageResponse> {
+    return this.httpclient.patch<MessageResponse>(`${this.apiUrl}/users/change-password`, changePasswordRequest);
   }
 }

@@ -33,6 +33,15 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.autoLog();
     this.isLogged$ = this.sessionService.isLogged$();
+    this.sessionService.isLogged$().subscribe(isLogged => {
+      if (isLogged) {
+        this.sessionService.getFirstLogin().subscribe(firstLogin => {
+          if (firstLogin) {
+            this.openPasswordChangeDialog();
+          }
+        });
+      }
+    });
   }
   public $isLogged(): Observable<boolean> {
     return this.sessionService.isLogged$();
@@ -42,11 +51,11 @@ export class AppComponent implements OnInit {
       next: (user: User) => {
         this.sessionService.logIn(user);
         this.user = user;
-        this.firstLogin = user.firstLogin? true : false;
+        this.firstLogin = user.firstLogin ? true : false;
         if (this.firstLogin) {
           this.openPasswordChangeDialog();
         }
-        
+
         if (this.router.url !== '/features/dashboard') {
           this.router.navigate(['/features/dashboard']);
         }
@@ -62,14 +71,14 @@ export class AppComponent implements OnInit {
     });
   }
   private openPasswordChangeDialog(): void {
+    console.log('Tentative d’ouverture du dialog'); // debug
     const dialogRef = this.dialog.open(PasswordChangeDialogComponent, {
-      width: '400px',
-      disableClose: true, // Empêcher la fermeture sans action
+      disableClose: true, 
     });
   
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'redirect') {
-        this.router.navigate(['auth/change-password']);
+        this.router.navigate(['/auth/change-password']);
       }
     });
   }

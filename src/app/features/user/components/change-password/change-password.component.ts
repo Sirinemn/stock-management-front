@@ -75,9 +75,9 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
     this.httpSubscription = this.authService
       .changePassword(changePasswordRequest)
       .subscribe({
-        next: () => {
+        next: (response) => {
           this.isLoading = false;
-          this.snackBar.open('Password changed successfully', 'Close', {
+          this.snackBar.open(response.message, 'Close', {
             duration: 3000, 
           });
           this.router.navigate(['features/dashboard']);

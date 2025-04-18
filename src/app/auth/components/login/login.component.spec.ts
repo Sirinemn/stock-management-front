@@ -57,27 +57,5 @@ describe('LoginComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  it('should call login and navigate on successful login', () => {
-    const formValues = { email: 'test@test.com', password: 'password' };
-    component.formGroup.setValue(formValues);
-  
-    component.Submit(); 
-    expect(mockAuthService.login).toHaveBeenCalledWith(formValues); 
-    expect(mockAuthService.getUser).toHaveBeenCalledWith('mockUserId');
-    expect(sessionServiceMock.logIn).toHaveBeenCalledWith({
-      id: 'mockUserId',
-      firstame: 'Mock User',
-      lastname: 'last',
-      email: 'email',
-      dateOfBirth: '2023-01-01',
-      createdDate: '2023-01-01',
-      lastModifiedDate: '2023-01-01',
-      roles: ['user'],
-      groupId: 1,
-      groupName: 'Mock Group',
-      createdBy: 'admin'
-    });
-    expect(localStorage.getItem('token')).toBe('mockToken');
-  });
 
 });

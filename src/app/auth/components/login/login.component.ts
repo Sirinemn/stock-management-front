@@ -44,6 +44,7 @@ export class LoginComponent implements OnDestroy{
           this.authService.getUser(authResponse.userId).subscribe({
             next: (user) => {
               this.sessionService.logIn(user);
+              this.sessionService.setFirstLogin(user.firstLogin? true : false);
               localStorage.setItem('token', authResponse.token);
               this.isLoading = false;
               this.isLoading = true;

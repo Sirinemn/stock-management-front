@@ -45,6 +45,7 @@ export class LoginComponent implements OnDestroy{
             next: (user) => {
               this.sessionService.logIn(user);
               this.sessionService.setFirstLogin(user.firstLogin? true : false);
+              this.sessionService.setIsAdmin(user.roles.includes('ADMIN'));
               localStorage.setItem('token', authResponse.token);
               this.isLoading = false;
               this.router.navigate(['features/dashboard']);

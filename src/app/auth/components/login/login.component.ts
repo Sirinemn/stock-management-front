@@ -58,6 +58,7 @@ export class LoginComponent implements OnDestroy{
           })
         },
         error: (err) => {
+          this.isLoading = false;
           console.error('Login failed:', err);
           this.errorMessage = err.error.message;
         }

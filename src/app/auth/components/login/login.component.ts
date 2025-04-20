@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 import { SessionService } from '../../../core/services/session.service';
 import { AuthResponse } from '../../models/auth-response';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AuthStateService } from '../../../core/services/auth-state.service';
 
 @Component({
   selector: 'app-login',
@@ -27,6 +28,7 @@ export class LoginComponent implements OnDestroy{
   constructor(private formbuilder: FormBuilder,
     private authService: AuthService,
     private sessionService: SessionService,
+    private authStateService: AuthStateService,
     private router: Router
   ) {
     this.formGroup = this.formbuilder.group({
@@ -44,8 +46,8 @@ export class LoginComponent implements OnDestroy{
           this.authService.getUser(authResponse.userId).subscribe({
             next: (user) => {
               this.sessionService.logIn(user);
-              this.sessionService.setFirstLogin(user.firstLogin? true : false);
-              this.sessionService.setIsAdmin(user.roles.includes('ADMIN'));
+              this.authStateService.setFirstLogin(user.firstLogin? true : false);
+              this.authStateService.setIsAdmin(user.roles.includes('ADMIN'));
               localStorage.setItem('token', authResponse.token);
               this.isLoading = false;
               this.router.navigate(['features/dashboard']);

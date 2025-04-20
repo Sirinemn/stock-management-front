@@ -11,24 +11,7 @@ export class SessionService {
   public user: User | undefined;
   public userRole!:string[];
   private isLoggedSubject = new BehaviorSubject<boolean>(this.isLogged);
-  private firstLoginSubject = new BehaviorSubject<boolean>(false);
-  private isAdminSubject = new BehaviorSubject<boolean>(false);
-
-  public setFirstLogin(value: boolean) {
-    this.firstLoginSubject.next(value);
-  }
-  public setIsAdmin(value: boolean) {
-    this.isAdminSubject.next(value);
-  }
-  public getIsAdmin(): Observable<boolean> {
-    return this.isAdminSubject.asObservable();
-  }
-  public getFirstLogin(): Observable<boolean> {
-    return this.firstLoginSubject.asObservable();
-  }
-  public isAdmin(): boolean {
-    return this.userRole.includes('ADMIN');
-  }
+ 
   
   public isLogged$(): Observable<boolean> {
     return this.isLoggedSubject.asObservable();
@@ -44,7 +27,6 @@ export class SessionService {
   public logOut(): void {
     this.isLogged = false;
     this.user = undefined;
-    this.userRole = [];
     this.next();
   }
   public getUser(): User | undefined {

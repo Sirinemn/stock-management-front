@@ -55,16 +55,16 @@ export class UsersListComponent implements OnInit, OnDestroy {
   deleteUser(userId: number) {
     const dialogRef = this.matdialog.open(ConfirmDialogComponent);
     dialogRef.afterClosed().subscribe((result) => {
-    if (result) {
-      this.loading = true;
-      this.adminService.deleteUser(userId).pipe(takeUntil(this.destroy$)).subscribe({
-        next: () => {
-          this.getUsers();
-        },
-        error: () => {
-          this.getUsers();
-        }
-      });
+      if (result) {
+        this.loading = true;
+        this.adminService.deleteUser(userId).pipe(takeUntil(this.destroy$)).subscribe({
+          next: () => {
+            this.getUsers();
+          },
+          error: () => {
+            this.getUsers();
+          }
+        });
       }
     })
   }

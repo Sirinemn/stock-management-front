@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../../../auth/models/user';
 import { MessageResponse } from '../../../shared/models/messageResponse';
+import { Category } from '../models/category';
 
 @Injectable({
   providedIn: 'root'
@@ -24,5 +25,14 @@ export class AdminService {
   }
   public updateUser(id: number, user: User): Observable<MessageResponse> {
     return this.httpClient.put<MessageResponse>(`${this.apiUrl}/users/${id}`, user);
+  }
+  public addCategory(name:string, userId:number): Observable<MessageResponse> {
+    return this.httpClient.post<MessageResponse>(`${this.apiUrl}/category?name=${name}?userId=${userId}`, {});
+  }
+  public deleteCategory(id: number): Observable<MessageResponse> {
+    return this.httpClient.delete<MessageResponse>(`${this.apiUrl}/categories/${id}`);
+  }
+  public getCategories(): Observable<Category[]> {
+    return this.httpClient.get<Category[]>(`${this.apiUrl}/categories`);
   }
 }

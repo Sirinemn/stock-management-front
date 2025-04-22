@@ -18,6 +18,7 @@ import { Subscription } from 'rxjs';
 import { ChangePasswordRequest } from '../../../../auth/models/ChangePasswordRequest';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { AuthStateService } from '../../../../core/services/auth-state.service';
 
 @Component({
   selector: 'app-change-password',
@@ -43,6 +44,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private sessionService: SessionService,
+    private authStateService: AuthStateService,
     private formBuiler: FormBuilder,
     private snackBar: MatSnackBar,
     private router: Router
@@ -55,6 +57,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.user = this.sessionService.getUser();
+    this.authStateService.setFirstLogin(false);
   }
   public Submit() {
     if (this.formGroup.invalid) {
@@ -77,6 +80,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response) => {
           this.isLoading = false;
+          this.authStateService.setFirstLogin(false);
           this.snackBar.open(response.message, 'Close', {
             duration: 3000, 
           });

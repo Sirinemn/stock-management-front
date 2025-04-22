@@ -4,10 +4,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { User } from '../../../../auth/models/user';
 import { UsersService } from '../../services/users.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-user-detail',
-  imports: [MatIconModule, MatCardModule],
+  imports: [MatIconModule, MatCardModule, DatePipe],
   templateUrl: './user-detail.component.html',
   styleUrl: './user-detail.component.scss'
 })

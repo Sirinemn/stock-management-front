@@ -2,9 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { User } from '../../../../auth/models/user';
-import { UsersService } from '../../services/users.service';
 import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-user-detail',
@@ -18,7 +18,7 @@ export class UserDetailComponent implements OnInit , OnDestroy {
   public userId: number = 0;
 
   constructor(
-    private userService: UsersService,
+    private adminService: AdminService,
     private route: ActivatedRoute) {}
 
   ngOnInit(): void {
@@ -31,7 +31,7 @@ export class UserDetailComponent implements OnInit , OnDestroy {
   }
   public getUser(): void {
     this.loading = true;
-    this.userService.getUser(this.userId).subscribe({
+    this.adminService.getUser(this.userId).subscribe({
       next: (user: User) => {
         this.user = user;
         this.loading = false;

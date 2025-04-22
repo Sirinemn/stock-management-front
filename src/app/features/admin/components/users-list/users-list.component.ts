@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UsersService } from '../../../admin/services/users.service';
 import { User } from '../../../../auth/models/user';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -7,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { Router, RouterLink } from '@angular/router';
 import { SessionService } from '../../../../core/services/session.service';
 import { MatButtonModule } from '@angular/material/button';
+import { AdminService } from '../../services/admin.service';
 
 
 @Component({
@@ -24,7 +24,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
   private userId: number = 0;
 
   constructor(
-    private userService: UsersService,
+    private adminService: AdminService,
     private router:Router,
     private session:SessionService,
   ) {}
@@ -36,7 +36,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
   }
   public getUsers(): void {
     this.loading = true;
-    this.userService.getUsers(this.userId).subscribe({
+    this.adminService.getUsers(this.userId).subscribe({
       next: (users: User[]) => {
         this.users.data = users;
         this.loading = false;
@@ -50,7 +50,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
     window.history.back();
   }
   deleteUser(userId: number) {
-    this.userService.deleteUser(userId).subscribe({
+    this.adminService.deleteUser(userId).subscribe({
       next: () => {
         this.getUsers();
       },

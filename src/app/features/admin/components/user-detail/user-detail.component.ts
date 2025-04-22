@@ -3,7 +3,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { User } from '../../../../auth/models/user';
 import { UsersService } from '../../services/users.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -19,11 +19,11 @@ export class UserDetailComponent implements OnInit , OnDestroy {
 
   constructor(
     private userService: UsersService,
-    private router: Router,
     private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.userId = this.router.parseUrl(this.router.url).queryParams['id'] || 0;
+    this.userId = this.route.snapshot.params['id'];
+    this.getUser();
   }
 
   public back() {
@@ -42,7 +42,6 @@ export class UserDetailComponent implements OnInit , OnDestroy {
     });
   }
   ngOnDestroy(): void {
-    // Cleanup logic if needed
   }
 
 }

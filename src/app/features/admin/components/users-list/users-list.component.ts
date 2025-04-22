@@ -60,10 +60,10 @@ export class UsersListComponent implements OnInit, OnDestroy {
     });
   }
   editUser(userId: number) {
-    this.router.navigate(['/admin/users/edit', userId]);
+    this.router.navigate([`/admin/user/edit/${userId}`]);
   }
   viewUser(userId: number) {
-    this.router.navigate(['/admin/users/view', userId]);
+    this.router.navigate([`/admin/user/view/${userId}`]);
   }
   ngOnDestroy(): void {
     this.httpSubscription.unsubscribe();

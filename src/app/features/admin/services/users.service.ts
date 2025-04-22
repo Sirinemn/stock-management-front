@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../../../auth/models/user';
+import { MessageResponse } from '../../../shared/models/messageResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -19,5 +20,8 @@ export class UsersService {
   }
   public deleteUser(id: number): Observable<any> {
     return this.httpClient.delete(`${this.apiUrl}/users/${id}`);
+  }
+  public updateUser(id: number, user: User): Observable<MessageResponse> {
+    return this.httpClient.put<MessageResponse>(`${this.apiUrl}/users/${id}`, user);
   }
 }

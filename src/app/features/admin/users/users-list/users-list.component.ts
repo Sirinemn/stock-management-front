@@ -7,6 +7,8 @@ import { Router, RouterLink } from '@angular/router';
 import { SessionService } from '../../../../core/services/session.service';
 import { MatButtonModule } from '@angular/material/button';
 import { AdminService } from '../../services/admin.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../../../mat-dialog/confirm-dialog/confirm-dialog.component';
 
 
 @Component({
@@ -27,6 +29,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
     private adminService: AdminService,
     private router:Router,
     private session:SessionService,
+    private matdialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -50,14 +53,20 @@ export class UsersListComponent implements OnInit, OnDestroy {
     window.history.back();
   }
   deleteUser(userId: number) {
-    this.adminService.deleteUser(userId).pipe(takeUntil(this.destroy$)).subscribe({
-      next: () => {
-        this.getUsers();
-      },
-      error: () => {
-        this.getUsers();
+    const dialogRef = this.matdialog.open(ConfirmDialogComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+    if (result) {
+      this.loading = true;
+      this.adminService.deleteUser(userId).pipe(takeUntil(this.destroy$)).subscribe({
+        next: () => {
+          this.getUsers();
+        },
+        error: () => {
+          this.getUsers();
+        }
+      });
       }
-    });
+    })
   }
   editUser(userId: number) {
     this.router.navigate([`/admin/user/edit/${userId}`]);

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { User } from '../../../../auth/models/user';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { Router, RouterLink } from '@angular/router';
 import { SessionService } from '../../../../core/services/session.service';
 import { MatButtonModule } from '@angular/material/button';
@@ -20,7 +20,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
   users = new MatTableDataSource<User>();
   displayedColumns: string[] = ['firstname', 'lastname', 'email', 'actions'];
   public loading: boolean = false;
-  public httpSubscription: Subscription = new Subscription();
+  private destroy$ = new Subject<void>();
   private userId: number = 0;
 
   constructor(
@@ -36,7 +36,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
   }
   public getUsers(): void {
     this.loading = true;
-    this.adminService.getUsers(this.userId).subscribe({
+    this.adminService.getUsers(this.userId).pipe(takeUntil(this.destroy$)).subscribe({
       next: (users: User[]) => {
         this.users.data = users;
         this.loading = false;
@@ -50,7 +50,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
     window.history.back();
   }
   deleteUser(userId: number) {
-    this.adminService.deleteUser(userId).subscribe({
+    this.adminService.deleteUser(userId).pipe(takeUntil(this.destroy$)).subscribe({
       next: () => {
         this.getUsers();
       },
@@ -65,8 +65,9 @@ export class UsersListComponent implements OnInit, OnDestroy {
   viewUser(userId: number) {
     this.router.navigate([`/admin/user/view/${userId}`]);
   }
-  ngOnDestroy(): void {
-    this.httpSubscription.unsubscribe();
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 }

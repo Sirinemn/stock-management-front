@@ -1,7 +1,7 @@
 import { Routes } from "@angular/router";
-import { UserFormComponent } from "./components/user-form/user-form.component";
-import { UsersListComponent } from "./components/users-list/users-list.component";
-import { UserDetailComponent } from "./components/user-detail/user-detail.component";
+import { UserFormComponent } from "./users/user-form/user-form.component";
+import { UsersListComponent } from "./users/users-list/users-list.component";
+import { UserDetailComponent } from "./users/user-detail/user-detail.component";
 
 export const admin : Routes = [
     {title: 'Users', path: 'users', component: UsersListComponent},

@@ -13,7 +13,7 @@ import { AuthService } from '../../../../auth/services/auth.service';
 import { RegisterUserRequest } from '../../../../auth/models/registerUserRequest';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { User } from '../../../../auth/models/user';
-import { UsersService } from '../../services/users.service';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-user-form',
@@ -34,7 +34,7 @@ export class UserFormComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private userService: UsersService,
+    private adminService: AdminService,
     private snackBar: MatSnackBar,
     private authService: AuthService,
     private route: ActivatedRoute
@@ -109,7 +109,7 @@ export class UserFormComponent implements OnInit {
     if (this.formGroup.valid) {
       this.isLoading = true; 
       const registerUser = this.formGroup.value as User
-      this.userService.updateUser(+this.userId!, registerUser).pipe(takeUntil(this.destroy$)).subscribe({
+      this.adminService.updateUser(+this.userId!, registerUser).pipe(takeUntil(this.destroy$)).subscribe({
         next: (response) => {
           this.isLoading = false; 
           this.messageResponse = response.message;

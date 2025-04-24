@@ -3,6 +3,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { UnauthGuard } from './core/guards/unauth.guard';
 import { AuthGuard } from './core/guards/auth.guard';
+import { AdminGuard } from './core/guards/admin.guard';
 
 export const routes: Routes = [
     {
@@ -29,7 +30,7 @@ export const routes: Routes = [
     },
     {
       path: 'admin',
-      canActivate: [AuthGuard],
+      canActivate: [AdminGuard],
       loadChildren: ()=> 
         import('../app/features/admin/admin.routes').then((route)=> route.admin)
     },

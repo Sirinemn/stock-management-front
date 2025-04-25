@@ -8,10 +8,5 @@ export const admin : Routes = [
     {title: 'AddUser', path: 'adduser', component: UserFormComponent},
     {title: 'UserDetail', path: 'user/view/:id', component: UserDetailComponent},
     {title: 'EditUser', path: 'user/edit/:id', component: UserFormComponent},
-    {title: 'Categories',
-        path: 'features', 
-        loadChildren: ()=> 
-            import('../admin/categories/category.routes').then((route)=> route.categoryRoutes)
-    },
     
 ]

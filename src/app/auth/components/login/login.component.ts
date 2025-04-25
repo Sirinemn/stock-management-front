@@ -46,6 +46,7 @@ export class LoginComponent implements OnDestroy{
           this.authService.getUser(authResponse.userId).subscribe({
             next: (user) => {
               this.sessionService.logIn(user);
+              this.authStateService.userRole = user.roles;
               this.authStateService.setFirstLogin(user.firstLogin? true : false);
               this.authStateService.setIsAdmin(user.roles.includes('ADMIN'));
               localStorage.setItem('token', authResponse.token);

@@ -13,7 +13,11 @@ export class AdminGuard implements CanActivate {
     ) {}
 
   canActivate(): boolean {
-    if (this.sessionService.isLogged && this.authStateService.isAdmin()) {
+    let isAdmin = false;
+    this.authStateService.getIsAdmin().subscribe((isAdminValue) => {
+      isAdmin = isAdminValue;
+    });
+    if (this.sessionService.isLogged && isAdmin) {
       return true;
     } else {
       this.router.navigate(['404']);

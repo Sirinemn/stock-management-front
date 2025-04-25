@@ -6,40 +6,42 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { AdminGuard } from './core/guards/admin.guard';
 
 export const routes: Routes = [
-    {
-      path: '' , 
-      component: HomeComponent
-    },
-    {
-      path: 'auth', 
-      canActivate: [UnauthGuard], 
-      loadChildren: ()=> 
-        import('./auth/auth.routes').then((route)=> route.auth_routes)
-    },
-    {
-      path: 'user',
-      canActivate: [AuthGuard],
-      loadChildren: ()=> 
-        import('./features/user/user.routes').then((route)=> route.user_routes)
-    },
-    {
-      path: 'features',
-      canActivate: [AuthGuard],
-      loadChildren: ()=> 
-        import('../app/features/features.routes.').then((route)=> route.features_routes)
-    },
-    {
-      path: 'admin',
-      canActivate: [AdminGuard],
-      loadChildren: ()=> 
-        import('../app/features/admin/admin.routes').then((route)=> route.admin)
-    },
-    { 
-      path: '404',
-      component: NotFoundComponent 
-    },
-    { 
-      path: '**',
-      redirectTo: '404' 
-    },
+  {
+    path: '',
+    component: HomeComponent,
+  },
+  {
+    path: 'auth',
+    canActivate: [UnauthGuard],
+    loadChildren: () =>
+      import('./auth/auth.routes').then((route) => route.auth_routes),
+  },
+  {
+    path: 'user',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./features/user/user.routes').then((route) => route.user_routes),
+  },
+  {
+    path: 'features',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./features/inventory/features.routes.').then(
+        (route) => route.features_routes
+      ),
+  },
+  {
+    path: 'admin',
+    canActivate: [AdminGuard],
+    loadChildren: () =>
+      import('../app/features/admin/admin.routes').then((route) => route.admin),
+  },
+  {
+    path: '404',
+    component: NotFoundComponent,
+  },
+  {
+    path: '**',
+    redirectTo: '404',
+  },
 ];

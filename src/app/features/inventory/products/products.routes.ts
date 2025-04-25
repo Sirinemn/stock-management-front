@@ -3,7 +3,7 @@ import { ProductListComponent } from "./components/product-list/product-list.com
 import { ProductFormComponent } from "./components/product-form/product-form.component";
 
 export const products_routes: Routes = [
-    {title: 'Products', path: 'products-list', component: ProductListComponent },
-    {title: 'Products', path: 'products/edit', component: ProductFormComponent },
-    {title: 'Products', path: 'products/add', component: ProductFormComponent },
+    {title: 'Products', path: 'list', component: ProductListComponent },
+    {title: 'Products', path: 'edit/:id', component: ProductFormComponent },
+    {title: 'Products', path: 'add', component: ProductFormComponent },
 ]

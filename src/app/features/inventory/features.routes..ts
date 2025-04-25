@@ -3,4 +3,5 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 export const features_routes: Routes = [
   { title: 'Dashboard', path: 'dashboard', component: DashboardComponent },
+  { path: 'products', loadChildren: () => import('./products/products.routes').then((route) => route.products_routes) },
 ];

@@ -1,5 +1,3 @@
-@use '@angular/material' as mat;
-
 mat-toolbar {
   position: sticky; 
   top: 0;
@@ -35,6 +33,47 @@ button {
   border-radius: 5px; 
   padding: 5px 10px; 
   cursor: pointer;
-  transition: background-color 0.3s ease;
   border: none;
+  background-color: #f0f6f6;
+}
+.burger-menu {
+  display: none;
+}
+
+.desktop-menu {
+  display: flex;
+  gap: 10px;
+}
+
+mat-sidenav-container {
+  height: 100vh; /* Pour que le menu prenne toute la hauteur */
+}
+
+mat-sidenav {
+  background-color: white;
+  padding: 10px;
+}
+
+
+@media (max-width: 768px) {
+  .burger-menu {
+    display: inline-flex;
+  }
+
+  .desktop-menu {
+    display: none;
+  }
+
+  .sidenav-container {
+    height: 100%;
+  }
+
+  mat-sidenav {
+    width: 70%; 
+  }
+
+  mat-toolbar .toolbar-image {
+    max-width: 30px;
+    max-height: 30px;
+  }
 }

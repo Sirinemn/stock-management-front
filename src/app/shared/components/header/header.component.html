@@ -1,13 +1,35 @@
-<mat-toolbar color="primary">
-    <div class="img" >
-        <img src="/logo.png" alt="Logo" class="toolbar-image"/>
-        Stock - Zen
-    </div>
-    <span class="spacer"></span>
-    <button mat-button routerLink="/features/dashboard">Tableau de Bord</button>
-    <button mat-button routerLink="/features/transactions">Transactions</button>
-    <button mat-button routerLink="/features/products/list">Produits</button>
-    <button mat-button *ngIf="isAmin" routerLink="/admin/users" >Utilisateur</button>
-    <button mat-button (click)="logOut()">Déconnecter</button>
-
-  </mat-toolbar>
+<mat-sidenav-container class="sidenav-container">
+    <!-- Menu latéral -->
+    <mat-sidenav #sidenav mode="over" class="sidenav">
+      <button mat-icon-button (click)="sidenav.toggle()" aria-label="Close sidenav">
+        <mat-icon>close</mat-icon>
+      </button>
+      <button mat-button routerLink="/features/dashboard">Tableau de Bord</button>
+      <button mat-button routerLink="/features/transactions">Transactions</button>
+      <button mat-button routerLink="/features/products/list">Produits</button>
+      <button mat-button *ngIf="isAmin" routerLink="/admin/users">Utilisateur</button>
+      <button mat-button (click)="logOut()">Déconnecter</button>
+    </mat-sidenav>
+  
+    <!-- Contenu principal -->
+    <mat-sidenav-content>
+      <mat-toolbar color="primary">
+        <div class="img">
+          <img src="/logo.png" alt="Logo" class="toolbar-image" />
+          Stock - Zen
+        </div>
+        <span class="spacer"></span>
+        <div class="desktop-menu">
+          <button mat-button routerLink="/features/dashboard">Tableau de Bord</button>
+          <button mat-button routerLink="/features/transactions">Transactions</button>
+          <button mat-button routerLink="/features/products/list">Produits</button>
+          <button mat-button *ngIf="isAmin" routerLink="/admin/users">Utilisateur</button>
+          <button mat-button (click)="logOut()">Déconnecter</button>
+        </div>
+        <button mat-icon-button class="burger-menu" (click)="sidenav.toggle()" aria-label="Toggle sidenav">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </mat-toolbar>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  

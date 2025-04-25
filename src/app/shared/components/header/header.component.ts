@@ -4,10 +4,13 @@ import { AuthService } from '../../../auth/services/auth.service';
 import { SessionService } from '../../../core/services/session.service';
 import { RouterLink } from '@angular/router';
 import { NgIf } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+
 
 @Component({
   selector: 'app-header',
-imports: [MatToolbarModule, RouterLink, NgIf],
+imports: [MatToolbarModule, RouterLink, NgIf, MatIconModule, MatSidenavModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })

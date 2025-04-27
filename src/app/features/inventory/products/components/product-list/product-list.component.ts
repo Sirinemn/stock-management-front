@@ -5,17 +5,22 @@ import { MatTableModule } from '@angular/material/table';
 import { Router, RouterLink } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../../models/product';
+import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
-  selector: 'app-product-list',
-  imports: [MatIconModule, MatTableModule, MatButtonModule, RouterLink],
+  standalone: true,
+  imports: [MatIconModule, MatTableModule, MatButtonModule, RouterLink, MatFormFieldModule, MatOptionModule, MatSelectModule],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss'
 })
 export class ProductListComponent implements OnInit, OnDestroy {
 
   public products: Product[] = []; 
-  public displayedColumns: string[] = ['name','quantité', 'price', 'createdBy', 'actions'];
+  public displayedColumns: string[] = ['name','quantity', 'price', 'createdBy', 'actions'];
+  public isLoading = false;
+  
 
   constructor(
     private router: Router,

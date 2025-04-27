@@ -33,11 +33,20 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   ) { }
   
   ngOnInit(): void {
-    this.getCategories();
-    this.user = this.sessionService.getUser() ?? null;
-    if (this.user) {
-      this.userId = this.user.id;
-    }
+    this.sessionService.getUser$().pipe(takeUntil(this.destroy$)).subscribe({
+      next: (user) => {
+        this.user = user ?? null;
+        this.userId = this.user ? this.user.id : 0;
+        if (this.userId) {
+          this.getCategories();
+        } else {
+          this.errorMessage = "Utilisateur non authentifié.";
+        }
+      },
+      error: () => {
+        this.errorMessage = "Erreur lors de la récupération de l'utilisateur.";
+      }
+    });
   }
   public toggleAddCategory() {
     this.isAddingCategory = !this.isAddingCategory;
@@ -59,7 +68,11 @@ export class CategoryListComponent implements OnInit, OnDestroy {
       }
     });
   }  
-  private getCategories() {
+  private getCategories(): void {
+    if (!this.userId) {
+      this.errorMessage = "Aucun utilisateur connecté.";
+      return;
+    }
     this.loading = true;
     this.adminService.getCategories(this.userId).pipe(takeUntil(this.destroy$)).subscribe({
       next: (categories: Category[]) => {
@@ -68,8 +81,8 @@ export class CategoryListComponent implements OnInit, OnDestroy {
       },
       error: (err) => {
         this.loading = false;
-        this.errorMessage = err.error.message || 'An error occurred while fetching categories.';
-      }
+        this.errorMessage = err.error.message || "Erreur lors du chargement des catégories.";
+      },
     });
   }
 

@@ -27,7 +27,7 @@ export class AdminService {
     return this.httpClient.put<MessageResponse>(`${this.apiUrl}/users/${id}`, user);
   }
   public addCategory(name:string, userId:number): Observable<MessageResponse> {
-    return this.httpClient.post<MessageResponse>(`${this.apiUrl}/category?name=${name}?userId=${userId}`, {});
+    return this.httpClient.post<MessageResponse>(`${this.apiUrl}/category?name=${name}&userId=${userId}`, {});
   }
   public deleteCategory(id: number): Observable<MessageResponse> {
     return this.httpClient.delete<MessageResponse>(`${this.apiUrl}/categories/${id}`);

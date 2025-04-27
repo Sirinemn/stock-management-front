@@ -54,13 +54,13 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   public addCategory() {
     if (this.newCategoryName.trim() === '') return;
     this.loading = true;
+    console.log(this.userId);
     this.adminService.addCategory(this.newCategoryName, this.userId).pipe(takeUntil(this.destroy$)).subscribe({
       next: () => {
         this.getCategories();
         this.isAddingCategory = false;
         this.newCategoryName = '';
         this.loading = false;
-        this.getCategories()
       },
       error: (error) => {
         this.loading = false;

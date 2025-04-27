@@ -23,6 +23,7 @@
           <button mat-button routerLink="/features/dashboard">Tableau de Bord</button>
           <button mat-button routerLink="/features/transactions">Transactions</button>
           <button mat-button routerLink="/features/products/list">Produits</button>
+          <button mat-button *ngIf="isAmin" routerLink="/admin/categories/list">Catégories</button>
           <button mat-button *ngIf="isAmin" routerLink="/admin/users">Utilisateur</button>
           <button mat-button (click)="logOut()">Déconnecter</button>
         </div>

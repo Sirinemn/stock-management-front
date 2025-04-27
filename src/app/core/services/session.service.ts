@@ -10,6 +10,7 @@ export class SessionService {
   public isLogged = false;
   public user: User | undefined;
   public userRole!:string[];
+  private userSubject = new BehaviorSubject<User | null>(null);
   private isLoggedSubject = new BehaviorSubject<boolean>(this.isLogged);
  
   
@@ -21,6 +22,7 @@ export class SessionService {
     this.isLogged = true;
     this.user = user;
     this.userRole = user.roles;
+    this.userSubject.next(user);
     this.next();
   }
 
@@ -32,6 +34,10 @@ export class SessionService {
   public getUser(): User | undefined {
     return this.user;
   }
+  public getUser$(): Observable<User | null> {
+    return this.userSubject.asObservable();
+  }
+  
   public getUserRole(): string[] {
     return this.userRole;
   }

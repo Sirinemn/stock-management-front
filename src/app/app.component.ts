@@ -67,6 +67,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.sessionService.logIn(user);
     this.user = user;
     this.authStateService.setFirstLogin(user.firstLogin? true : false);
+    this.authStateService.setIsAdmin(user.roles.includes('ADMIN'))
     
     if (this.shouldOpenDialog(this.user?.firstLogin?? false)) {
       this.openPasswordChangeDialog();

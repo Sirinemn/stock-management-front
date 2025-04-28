@@ -12,6 +12,8 @@ import { CommonModule } from '@angular/common';
 import { Category } from '../../../../admin/models/category';
 import { SessionService } from '../../../../../core/services/session.service';
 import { User } from '../../../../../auth/models/user';
+import { AdminService } from '../../../../admin/services/admin.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -26,24 +28,38 @@ export class ProductListComponent implements OnInit, OnDestroy {
   public isLoading = false;
   public categories: Category[] = [];
   private groupId: number = 0;
-  private User?: User |null;
+  private user?: User |null;
+  private destroy$ = new Subject<void>();
+
   
 
   constructor(
     private router: Router,
     private productService: ProductService,
     private sessionService: SessionService,
+    private adminService: AdminService,
   ) { }
 
   ngOnInit(): void {
-    this.sessionService.getUser$().subscribe({
+    this.sessionService.getUser$().pipe(takeUntil(this.destroy$)).subscribe({
       next: (user) => {
-        this.User = user;
-        this.groupId = user?.groupId ? user.groupId : 0;
+        this.user = user;
+        this.groupId = user?.groupId || 0;
+        this.getCategories(this.groupId);
         this.getProducts(this.groupId);
-      }
-      , error: (error) => {
+      },
+      error: (error) => {
         console.error('Error fetching user', error);
+      }
+    });
+  }
+  public getCategories(groupId: number): void {
+    this.adminService.getCategories(groupId).subscribe({
+      next: (categories: Category[]) => {
+        this.categories = categories;
+      },
+      error: (error) => {
+        console.error('Error fetching categories', error);
       }
     });
   }

@@ -8,10 +8,14 @@ import { Product } from '../../../models/product';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { CommonModule } from '@angular/common';
+import { Category } from '../../../../admin/models/category';
+import { SessionService } from '../../../../../core/services/session.service';
+import { User } from '../../../../../auth/models/user';
 
 @Component({
   standalone: true,
-  imports: [MatIconModule, MatTableModule, MatButtonModule, RouterLink, MatFormFieldModule, MatOptionModule, MatSelectModule],
+  imports: [MatIconModule, MatTableModule, MatButtonModule, RouterLink, MatFormFieldModule, MatOptionModule, MatSelectModule, CommonModule],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss'
 })
@@ -20,22 +24,38 @@ export class ProductListComponent implements OnInit, OnDestroy {
   public products: Product[] = []; 
   public displayedColumns: string[] = ['name','quantity', 'price', 'createdBy', 'actions'];
   public isLoading = false;
+  public categories: Category[] = [];
+  private groupId: number = 0;
+  private User?: User |null;
   
 
   constructor(
     private router: Router,
     private productService: ProductService,
+    private sessionService: SessionService,
   ) { }
 
   ngOnInit(): void {
-    this.getProducts();
-  }
-  public getProducts() {
-    this.productService.getProducts().subscribe({
-      next: (products: Product[]) => {
-        this.products = products;
+    this.sessionService.getUser$().subscribe({
+      next: (user) => {
+        this.User = user;
+        this.groupId = user?.groupId ? user.groupId : 0;
+        this.getProducts(this.groupId);
       }
       , error: (error) => {
+        console.error('Error fetching user', error);
+      }
+    });
+  }
+  public getProducts(groupId:number) {
+    this.isLoading = true;
+    this.productService.getProducts(groupId).subscribe({
+      next: (products: Product[]) => {
+        this.products = products;
+        this.isLoading = false;
+      }
+      , error: (error) => {
+        this.isLoading = false;
         console.error('Error fetching products', error);
       }
     });
@@ -44,7 +64,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   public deleteProduct(productId: number) {
     this.productService.deleteProduct(productId).subscribe({
       next: () => {
-        this.getProducts();
+        this.getProducts(this.groupId);
       }
       , error: (error) => {
         console.error('Error deleting product', error);

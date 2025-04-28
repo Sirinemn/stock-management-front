@@ -21,6 +21,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   public newCategoryName: string = '';
   public user: User | null = null;
   private userId: number = 0;
+  private groupId: number = 0;
   public isAddingCategory: boolean = false;
   public errorMessage: string = '';
   public loading: boolean = false;
@@ -37,8 +38,9 @@ export class CategoryListComponent implements OnInit, OnDestroy {
       next: (user) => {
         this.user = user ?? null;
         this.userId = this.user ? this.user.id : 0;
-        if (this.userId) {
-          this.getCategories();
+        this.groupId = this.user?.groupId ?? 0;
+        if (this.groupId) {
+          this.getCategories(this.groupId);
         } else {
           this.errorMessage = "Utilisateur non authentifié.";
         }
@@ -54,10 +56,9 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   public addCategory() {
     if (this.newCategoryName.trim() === '') return;
     this.loading = true;
-    console.log(this.userId);
-    this.adminService.addCategory(this.newCategoryName, this.userId).pipe(takeUntil(this.destroy$)).subscribe({
+    this.adminService.addCategory(this.newCategoryName, this.groupId).pipe(takeUntil(this.destroy$)).subscribe({
       next: () => {
-        this.getCategories();
+        this.getCategories(this.groupId);
         this.isAddingCategory = false;
         this.newCategoryName = '';
         this.loading = false;
@@ -68,13 +69,13 @@ export class CategoryListComponent implements OnInit, OnDestroy {
       }
     });
   }  
-  private getCategories(): void {
-    if (!this.userId) {
-      this.errorMessage = "Aucun utilisateur connecté.";
+  private getCategories(groupId: number): void {
+    if (!this.groupId) {
+      this.errorMessage = "GroupId invalid.";
       return;
     }
     this.loading = true;
-    this.adminService.getCategories(this.userId).pipe(takeUntil(this.destroy$)).subscribe({
+    this.adminService.getCategories(this.groupId).pipe(takeUntil(this.destroy$)).subscribe({
       next: (categories: Category[]) => {
         this.categories = categories;
         this.loading = false;
@@ -90,7 +91,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.adminService.deleteCategory(categoryId).pipe(takeUntil(this.destroy$)).subscribe({
       next: () => {
-        this.getCategories();
+        this.getCategories(this.groupId);
       },
       error: () => {
         this.loading = false;

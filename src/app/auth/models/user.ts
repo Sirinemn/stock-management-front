@@ -10,5 +10,5 @@ export interface User {
     roles: string[];
     groupId: number;
     groupName: string;
-    createdBy: string;
+    createdBy: number;
 }

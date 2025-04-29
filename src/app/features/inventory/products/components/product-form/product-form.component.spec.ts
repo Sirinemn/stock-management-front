@@ -4,10 +4,15 @@ import { ProductFormComponent } from './product-form.component';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { SessionService } from '../../../../../core/services/session.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 describe('ProductFormComponent', () => {
   let component: ProductFormComponent;
   let fixture: ComponentFixture<ProductFormComponent>;
+  let mockRouter: any = { events: { subscribe: jest.fn() }, createUrlTree: jest.fn(), serializeUrl: jest.fn() };
+  const mockActivatedRoute = {
+    snapshot: { paramMap: { get: jest.fn().mockReturnValue('mockValue') } }
+  };
   let mockSessionService: Partial<SessionService>;
   let mockUser = {
     id: 1,
@@ -33,7 +38,8 @@ describe('ProductFormComponent', () => {
         provideHttpClient(),
         provideHttpClientTesting(),
         { provide: SessionService, useValue: mockSessionService },
-
+        { provide: Router, useValue: mockRouter },
+        { provide: ActivatedRoute, useValue: mockActivatedRoute },
       ]
     })
     .compileComponents();

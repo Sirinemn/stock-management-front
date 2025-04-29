@@ -78,7 +78,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   public deleteProduct(productId: number) {
-    this.productService.deleteProduct(productId).subscribe({
+    this.productService.deleteProduct(productId).pipe(takeUntil(this.destroy$)).subscribe({
       next: () => {
         this.getProducts(this.groupId);
       }
@@ -88,16 +88,18 @@ export class ProductListComponent implements OnInit, OnDestroy {
     });
   }
   public editProduct(productId: number) {
-    this.router.navigate(['/inventory/products/edit', productId]);
+    this.router.navigate([`/inventory/products/edit/${productId}`]);
   }
   public viewProduct(productId: number) {
-    this.router.navigate(['/inventory/products/view', productId]);
+    this.router.navigate([`/inventory/products/view/${productId}`]);
   }
 
   public back() {
     window.history.back();
   }
   ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 }

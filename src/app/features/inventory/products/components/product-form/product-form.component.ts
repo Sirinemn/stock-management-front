@@ -70,11 +70,14 @@ export class ProductFormComponent implements OnInit , OnDestroy {
     });
   }
   private initializeUserData(): void {
-    this.user = this.sessionService.getUser() as User;
-    this.userFullName = `${this.user.firstname} ${this.user.lastname}`;
-    this.userId = this.user.id;
-    this.groupId = this.user.groupId;
-    this.groupName = this.user.groupName;
+    const user = this.sessionService.getUser();
+    if (user) {
+      this.user = user as User;
+      this.userFullName = `${this.user.firstname} ${this.user.lastname}`;
+      this.userId = this.user.id;
+      this.groupId = this.user.groupId;
+      this.groupName = this.user.groupName;
+    }
   }
   public addProduct() {
     if (this.formGroup.valid && !this.isLoading) {

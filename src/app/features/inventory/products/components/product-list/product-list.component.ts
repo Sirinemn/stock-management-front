@@ -88,10 +88,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
     });
   }
   public editProduct(productId: number) {
-    this.router.navigate([`/inventory/products/edit/${productId}`]);
+    this.router.navigate([`/features/products/edit/${productId}`]);
   }
   public viewProduct(productId: number) {
-    this.router.navigate([`/inventory/products/view/${productId}`]);
+    this.router.navigate([`/features/products/view/${productId}`]);
   }
 
   public back() {

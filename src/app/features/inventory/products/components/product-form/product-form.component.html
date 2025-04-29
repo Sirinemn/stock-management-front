@@ -34,6 +34,14 @@
             <mat-error *ngIf="formGroup.get('quantity')?.hasError('min')">Quantité invalide</mat-error>
           </mat-form-field>
 
+          <!-- Seuil -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Seuil</mat-label>
+            <input matInput formControlName="threshold" type="number" placeholder="Entrez la seuil">
+            <mat-error *ngIf="formGroup.get('threshold')?.hasError('required')">Quantité requise</mat-error>
+            <mat-error *ngIf="formGroup.get('threshold')?.hasError('min')">Quantité invalide</mat-error>
+          </mat-form-field>
+
           <!-- Catégorie -->
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Catégorie</mat-label>

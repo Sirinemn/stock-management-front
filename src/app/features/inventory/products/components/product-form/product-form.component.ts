@@ -64,6 +64,7 @@ export class ProductFormComponent implements OnInit , OnDestroy {
     this.initializeUserData();
     this.loadCategories();
     if(this.productId) {
+      this.isEditMode = true;
       this.patchProductValue(this.productId);
     }
   }
@@ -114,7 +115,7 @@ export class ProductFormComponent implements OnInit , OnDestroy {
       next: (product) => {
         this.formGroup.patchValue({
           name: product.name,
-          describe: product.description,
+          description: product.description,
           quantity: product.quantity,
           threshold: product.threshold,
           price: product.price,

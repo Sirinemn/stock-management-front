@@ -22,6 +22,13 @@ mat-toolbar {
     height: 40px; 
     border-radius: 50%; 
 }
+.active-link {
+  font-weight: bold;
+  color: white; 
+  background-color: #42BFDD; 
+  border-radius: 5px; 
+  padding: 5px 10px;
+}
 
 .spacer {
   flex-grow: 1; 
@@ -45,12 +52,10 @@ button {
   gap: 10px;
 }
 
-
 mat-sidenav {
   background-color: white;
   padding: 10px;
 }
-
 
 @media (max-width: 768px) {
   .burger-menu {

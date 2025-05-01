@@ -7,5 +7,5 @@ export const products_routes: Routes = [
     {title: 'Products', path: 'list', component: ProductListComponent },
     {title: 'Products', path: 'edit/:id', component: ProductFormComponent },
     {title: 'Products', path: 'add', component: ProductFormComponent },
-    {title: 'Products', path: 'view', component: ProductDetailComponent}
+    {title: 'Products', path: 'view/:id', component: ProductDetailComponent}
 ]

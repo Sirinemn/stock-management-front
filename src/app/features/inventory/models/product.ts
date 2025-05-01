@@ -8,7 +8,7 @@ export interface Product {
     userId: number;
     userName: string;
     categoryId: number;
-    catgoryName: string;
+    categoryName: string;
     groupId: number;
     groupName: string;
 }

@@ -10,19 +10,19 @@
                 <mat-card-title> Détail du produit</mat-card-title>
             </mat-card-header>
             <mat-card-content>
-                <p><strong></strong></p>
-                <p><strong></strong></p>
-                <p><strong></strong></p>
-                <p><strong></strong></p>
-                <p><strong></strong></p>
-                <p><strong></strong></p>
-                <p><strong></strong></p>
+                <p><strong>Nom : </strong>{{product?.name}}</p>
+                <p><strong>Description : </strong>{{product?.description}}</p>
+                <p><strong>Quantité : </strong>{{product?.quantity}}</p>
+                <p><strong>Prix : </strong>{{product?.price}}</p>
+                <p><strong>Seuil : </strong>{{product?.threshold}}</p>
+                <p><strong>Créer par : </strong>{{product?.userName}}</p>
+                <p><strong>Catégorie : </strong>{{product?.catgoryName}}</p>
             </mat-card-content>
-        <p *ngIf="errorMessage" class="error">{{errorMessage}}</p>
+            <p *ngIf="errorMessage" class="error">{{errorMessage}}</p>
   
-        <div *ngIf="isLoading" class="loading-spinner">
-          <mat-spinner></mat-spinner>
-        </div>
+            <div *ngIf="isLoading" class="loading-spinner">
+            <mat-spinner></mat-spinner>
+            </div>
         </mat-card>
     </div>
 </div>

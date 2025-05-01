@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -18,7 +18,7 @@ import { AdminService } from '../../services/admin.service';
 @Component({
   selector: 'app-user-form',
   providers: [provideNativeDateAdapter()],
-  imports: [MatProgressSpinnerModule ,MatCardModule, MatDatepickerModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, NgIf],
+  imports: [MatProgressSpinnerModule ,MatCardModule, MatDatepickerModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, CommonModule],
   templateUrl: './user-form.component.html',
   styleUrl: './user-form.component.scss'
 })

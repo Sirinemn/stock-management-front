@@ -12,7 +12,7 @@ import { User } from '../../../../auth/models/user';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { NgIf } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { Subscription } from 'rxjs';
 import { ChangePasswordRequest } from '../../../../auth/models/ChangePasswordRequest';
@@ -30,6 +30,7 @@ import { AuthStateService } from '../../../../core/services/auth-state.service';
     MatInputModule,
     NgIf,
     MatProgressSpinner,
+    CommonModule
   ],
   templateUrl: './change-password.component.html',
   styleUrl: './change-password.component.scss',

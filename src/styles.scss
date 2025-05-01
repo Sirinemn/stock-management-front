@@ -42,6 +42,17 @@ mat-card {
   transition: background-color 0.3s;
   border: none;
 }
+.disabled-button {
+  background-color: dimgrey;
+  color: linen;
+  opacity: 1;
+}
+.disabled-button:hover {
+  background-color: grey;
+  color: white;
+  cursor: not-allowed;
+  opacity: 0.8; 
+}
 mat-error {
   color: red;
   font-size: 0.9rem;

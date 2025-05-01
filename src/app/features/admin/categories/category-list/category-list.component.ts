@@ -7,12 +7,12 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { SessionService } from '../../../../core/services/session.service';
 import { User } from '../../../../auth/models/user';
-import { NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-category-list',
-  imports: [MatIconModule, MatTableModule, MatButtonModule, NgIf, FormsModule],
+  imports: [MatIconModule, MatTableModule, MatButtonModule, CommonModule, FormsModule],
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.scss'
 })

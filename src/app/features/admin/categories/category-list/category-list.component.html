@@ -18,7 +18,7 @@
           
           <div *ngIf="isAddingCategory" fxLayout="row" fxLayoutAlign="start center">
             <input type="text" [(ngModel)]="newCategoryName" placeholder="Nom de la catégorie" class="category-input" />
-            <button class="custom-button" (click)="addCategory()" [disabled]="!newCategoryName.trim()">Ajouter</button>
+            <button class="custom-button" (click)="addCategory()" [ngClass]="{ 'disabled-button': loading }" [disabled]="!newCategoryName.trim()">Ajouter</button>
         </div>
 
     </section>

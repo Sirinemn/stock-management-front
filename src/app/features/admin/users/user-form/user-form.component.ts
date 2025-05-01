@@ -52,21 +52,24 @@ export class UserFormComponent implements OnInit {
       if (this.userId) {
         this.isEditMode = true; 
         this.updatePasswordValidators();
-        this.authService.getUser(+this.userId).pipe(takeUntil(this.destroy$)).subscribe({
-          next: (user) => {
-            this.formGroup.patchValue({
-              email: user.email,
-              lastname: user.lastname,
-              firstname: user.firstname,
-              dateOfBirth: user.dateOfBirth,
-            });
-            console.log("Valeurs après patchValue :", this.formGroup.value);
-          },
-          error: (error) => {
-            this.errorMessage = error.error.message;
-          }
-        });
+        this.getUserById(+this.userId)
       }
+  }
+  private getUserById(userId: number) {
+    this.authService.getUser(userId).pipe(takeUntil(this.destroy$)).subscribe({
+      next: (user) => {
+        this.formGroup.patchValue({
+          email: user.email,
+          lastname: user.lastname,
+          firstname: user.firstname,
+          dateOfBirth: user.dateOfBirth,
+        });
+        console.log("Valeurs après patchValue :", this.formGroup.value);
+      },
+      error: (error) => {
+        this.errorMessage = error.error.message;
+      }
+    });
   }
   private getPasswordValidators(): ValidatorFn[] {
     return this.isEditMode ? [] : [Validators.required, Validators.minLength(8)];

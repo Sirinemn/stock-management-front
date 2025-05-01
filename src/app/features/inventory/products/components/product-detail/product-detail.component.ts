@@ -5,10 +5,12 @@ import { Product } from '../../../models/product';
 import { ProductService } from '../../services/product.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-product-detail',
-  imports: [MatIconModule, MatCardModule],
+  imports: [MatIconModule, MatCardModule, CommonModule, MatProgressSpinnerModule],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss'
 })
@@ -16,6 +18,7 @@ export class ProductDetailComponent implements OnInit , OnDestroy{
   public isLoading: boolean = false;
   public product: Product | undefined;
   public productId: number = 0;
+  public errorMessage: string = '';
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -33,8 +36,9 @@ export class ProductDetailComponent implements OnInit , OnDestroy{
         this.product = product;
         this.isLoading = false;
       },
-      error: () => {
+      error: (error) => {
         this.isLoading = false
+        this.errorMessage = error.error.message || 'Erreur lors du chargement du produit.';
       }
     });
   }

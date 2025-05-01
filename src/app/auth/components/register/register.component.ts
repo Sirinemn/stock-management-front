@@ -6,7 +6,7 @@ import { RegisterAdminRequest } from '../../models/registerRequest';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
@@ -17,7 +17,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 @Component({
   selector: 'app-register',
   providers: [provideNativeDateAdapter()],
-  imports: [MatProgressSpinnerModule ,MatCardModule, MatDatepickerModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, NgIf, RouterLink],
+  imports: [MatProgressSpinnerModule ,MatCardModule, MatDatepickerModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, CommonModule, RouterLink],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

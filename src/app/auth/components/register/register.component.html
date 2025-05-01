@@ -57,7 +57,9 @@
       </div>
 
       <div class="actions">
-        <button class="custom-button" color="primary" type="submit" [disabled]="formGroup.invalid || isLoading">S'inscrire</button>
+        <button class="custom-button" color="primary" type="submit" 
+        [disabled]="formGroup.invalid || isLoading"
+        [ngClass]="{ 'disabled-button': formGroup.invalid || isLoading }">S'inscrire</button>
         <button class="custom-button" color="warn" type="button" (click)="back()">Retour</button>
       </div>
 

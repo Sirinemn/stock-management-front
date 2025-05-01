@@ -25,7 +25,9 @@
       </div>
 
       <div class="button-container">
-        <button class="custom-button" mat-raised-button color="primary" type="submit" [disabled]="formGroup.invalid || isLoading">Se connecter</button>
+        <button class="custom-button" mat-raised-button color="primary" type="submit" 
+        [disabled]="formGroup.invalid || isLoading"
+        [ngClass]="{ 'disabled-button': formGroup.invalid || isLoading }">Se connecter</button>
         <button class="custom-button" mat-raised-button color="accent" type="button" (click)="goToRegister()">S'inscrire</button>
       </div>
 

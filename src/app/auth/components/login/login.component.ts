@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -15,7 +15,7 @@ import { AuthStateService } from '../../../core/services/auth-state.service';
 
 @Component({
   selector: 'app-login',
-  imports: [MatProgressSpinnerModule , MatCardModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, NgIf, RouterLink],
+  imports: [MatProgressSpinnerModule , MatCardModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, CommonModule, RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

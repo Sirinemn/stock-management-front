@@ -14,6 +14,8 @@ import { SessionService } from '../../../../../core/services/session.service';
 import { User } from '../../../../../auth/models/user';
 import { AdminService } from '../../../../admin/services/admin.service';
 import { Subject, takeUntil } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../../../../mat-dialog/confirm-dialog/confirm-dialog.component';
 
 @Component({
   standalone: true,
@@ -30,6 +32,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   private groupId: number = 0;
   private user?: User |null;
   private destroy$ = new Subject<void>();
+  public errorMessage: string = '';
 
   
 
@@ -38,6 +41,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     private productService: ProductService,
     private sessionService: SessionService,
     private adminService: AdminService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -77,13 +81,22 @@ export class ProductListComponent implements OnInit, OnDestroy {
     });
   }
 
-  public deleteProduct(productId: number) {
-    this.productService.deleteProduct(productId).pipe(takeUntil(this.destroy$)).subscribe({
-      next: () => {
-        this.getProducts(this.groupId);
-      }
-      , error: (error) => {
-        console.error('Error deleting product', error);
+  public deleteProduct(product: Product): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, 
+      {data: { productName: product.name}}
+    );
+  
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.productService.deleteProduct(product.id).pipe(takeUntil(this.destroy$)).subscribe({
+          next: () => {
+            this.getProducts(this.groupId);
+          },
+          error: (error) => {
+            console.error('Error deleting product', error);
+            this.errorMessage = "un erreur est survenu lors de la suppression"
+          },
+        });
       }
     });
   }

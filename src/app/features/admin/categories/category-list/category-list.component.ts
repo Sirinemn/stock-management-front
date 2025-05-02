@@ -9,6 +9,8 @@ import { SessionService } from '../../../../core/services/session.service';
 import { User } from '../../../../auth/models/user';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../../../mat-dialog/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-category-list',
@@ -31,6 +33,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   constructor(
     private adminService: AdminService,
     private sessionService: SessionService,
+    private dialog: MatDialog
   ) { }
   
   ngOnInit(): void {
@@ -87,15 +90,20 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     });
   }
 
-  public deleteCategory(categoryId: number) {
+  public deleteCategory(category: Category) {
     this.loading = true;
-    this.adminService.deleteCategory(categoryId).pipe(takeUntil(this.destroy$)).subscribe({
-      next: () => {
-        this.getCategories(this.groupId);
-      },
-      error: () => {
-        this.loading = false;
-      }
+    const dialogRef = this.dialog.open(ConfirmDialogComponent,{ 
+      data: {categoryName: category.name} 
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      this.adminService.deleteCategory(category.id).pipe(takeUntil(this.destroy$)).subscribe({
+        next: () => {
+          this.getCategories(this.groupId);
+        },
+        error: () => {
+          this.loading = false;
+        }
+      });
     });
   }
   public back() {

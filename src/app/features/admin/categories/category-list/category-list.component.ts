@@ -96,14 +96,16 @@ export class CategoryListComponent implements OnInit, OnDestroy {
       data: {categoryName: category.name} 
     });
     dialogRef.afterClosed().subscribe((result) => {
-      this.adminService.deleteCategory(category.id).pipe(takeUntil(this.destroy$)).subscribe({
-        next: () => {
-          this.getCategories(this.groupId);
-        },
-        error: () => {
-          this.loading = false;
-        }
-      });
+      if(result) {
+        this.adminService.deleteCategory(category.id).pipe(takeUntil(this.destroy$)).subscribe({
+          next: () => {
+            this.getCategories(this.groupId);
+          },
+          error: () => {
+            this.loading = false;
+          }
+        });
+      }
     });
   }
   public back() {

@@ -74,6 +74,7 @@ export class ProductFormComponent implements OnInit , OnDestroy {
         this.categories = categories;
       },
       error: (error) => {
+        console.error(error);
         this.errorMessage = error.error.message || 'Erreur lors du chargement des catégories.';
       },
     });
@@ -105,7 +106,7 @@ export class ProductFormComponent implements OnInit , OnDestroy {
         },
         error: (error) => {
           this.isLoading = false;
-          this.errorMessage = error.eroor.message || 'Une erreur est survenue.';
+          this.errorMessage = error.error.message || 'Une erreur est survenue.';
         }
       });
     }

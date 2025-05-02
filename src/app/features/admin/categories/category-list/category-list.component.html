@@ -13,7 +13,8 @@
         </div>  
 
         <div class="add-category-btn">
-            <button class="custom-button" (click)="toggleAddCategory()" [disabled]="isAddingCategory">Ajouter une catégorie</button>
+            <button class="custom-button" (click)="toggleAddCategory()" [disabled]="isAddingCategory"
+            [ngClass]="{ 'disabled-button': isAddingCategory }">Ajouter une catégorie</button>
           </div>
           
           <div *ngIf="isAddingCategory" fxLayout="row" fxLayoutAlign="start center">

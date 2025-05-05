@@ -32,15 +32,13 @@
 
             <div class="actions">
                 <button mat-raised-button color="primary" class="custom-button"
-                        [disabled]="formGroup.invalid || isLoading"
-                        [ngClass]="{ 'disabled-button': formGroup.invalid || isLoading }"
-                        >
+                    [disabled]="formGroup.invalid || isLoading"
+                    [ngClass]="{ 'disabled-button': formGroup.invalid || isLoading }">
                   Ajouter
                 </button>
                 <button mat-button (click)="back()" class="custom-button">Retour</button>
-              </div>
+            </div>
             
-
         </form>
     </mat-card-content>
 </mat-card>

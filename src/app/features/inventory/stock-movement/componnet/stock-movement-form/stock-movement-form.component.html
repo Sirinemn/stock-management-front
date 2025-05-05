@@ -1,1 +1,46 @@
-<p>stock-movement-form works!</p>
+<mat-card>
+    <mat-card-title>Ajouter un Mouvement de Stock</mat-card-title>
+    <mat-card-content>
+        <form [formGroup]="formGroup" (ngSubmit)="Submit()">
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Produits</mat-label>
+                <mat-select formControlName="productId" placeholder="Sélectionnez un produit">
+                    <mat-option *ngFor="let product of products" [value]="product.id">{{product.name}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="formGroup.get('productId')?.hasError('required')">Produit requise</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>Type de Mouvement</mat-label>
+                <mat-select formControlName="type">
+                  <mat-option value="ENTREE">Entrée</mat-option>
+                  <mat-option value="SORTIE">Sortie</mat-option>
+                </mat-select>
+            </mat-form-field>
+            
+            <mat-form-field class="full-width">
+            <mat-label>Quantité</mat-label>
+            <input matInput formControlName="quantity" type="number" placeholder="Quantité">
+            </mat-form-field>
+
+            <p *ngIf="errorMessage" class="error">{{errorMessage}}</p>
+  
+            <div *ngIf="isLoading" class="loading-spinner">
+              <mat-spinner></mat-spinner>
+            </div>
+
+            <div class="actions">
+                <button mat-raised-button color="primary" class="custom-button"
+                        [disabled]="formGroup.invalid || isLoading"
+                        [ngClass]="{ 'disabled-button': formGroup.invalid || isLoading }"
+                        >
+                  Ajouter
+                </button>
+                <button mat-button (click)="back()" class="custom-button">Retour</button>
+              </div>
+            
+
+        </form>
+    </mat-card-content>
+</mat-card>

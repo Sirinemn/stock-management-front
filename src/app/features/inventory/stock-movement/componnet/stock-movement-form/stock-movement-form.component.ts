@@ -5,6 +5,7 @@ import { StockMovementService } from '../../service/stock-movement.service';
 import { ProductService } from '../../../products/services/product.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -19,7 +20,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-stock-movement-form',
-  imports: [MatCardModule, ReactiveFormsModule, MatFormFieldModule, MatProgressSpinnerModule, MatOptionModule, MatInputModule, MatSelectModule, CommonModule],
+  imports: [MatCardModule, ReactiveFormsModule, MatRadioModule,MatFormFieldModule, MatProgressSpinnerModule, MatOptionModule, MatInputModule, MatSelectModule, CommonModule],
   templateUrl: './stock-movement-form.component.html',
   styleUrl: './stock-movement-form.component.scss'
 })

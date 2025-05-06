@@ -11,13 +11,11 @@
                 <mat-error *ngIf="formGroup.get('productId')?.hasError('required')">Produit requise</mat-error>
             </mat-form-field>
 
-            <mat-form-field class="full-width">
-                <mat-label>Type de Mouvement</mat-label>
-                <mat-radio-group formControlName="type">
-                  <mat-radio-button value="ENTREE">Entrée</mat-radio-button>
-                  <mat-radio-button value="SORTIE">Sortie</mat-radio-button>
-                </mat-radio-group>
-            </mat-form-field>
+            <mat-label>Type de Mouvement</mat-label>
+            <mat-radio-group formControlName="type">
+                <mat-radio-button value="ENTREE">Entrée</mat-radio-button>
+                <mat-radio-button value="SORTIE">Sortie</mat-radio-button>
+            </mat-radio-group>
             
             <mat-form-field class="full-width">
             <mat-label>Quantité</mat-label>

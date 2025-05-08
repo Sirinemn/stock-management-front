@@ -6,6 +6,7 @@ export interface StockMovement {
     productName: string;
     type: 'ENTREE' | 'SORTIE';
     quantity: number;
-    date?: string;
+    createdDate?: string;
+    lastModifiedDate?: string;
     groupId: number;
   }

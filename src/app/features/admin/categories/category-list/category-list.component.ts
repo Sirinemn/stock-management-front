@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../../../mat-dialog/confirm-dialog/confirm-dialog.component';
+import { CategorieService } from '../../../inventory/products/services/categorie.service';
 
 @Component({
   selector: 'app-category-list',
@@ -33,7 +34,8 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   constructor(
     private adminService: AdminService,
     private sessionService: SessionService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private categoryService: CategorieService,
   ) { }
   
   ngOnInit(): void {
@@ -78,7 +80,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
       return;
     }
     this.loading = true;
-    this.adminService.getCategories(this.groupId).pipe(takeUntil(this.destroy$)).subscribe({
+    this.categoryService.getCategories(this.groupId).pipe(takeUntil(this.destroy$)).subscribe({
       next: (categories: Category[]) => {
         this.categories = categories;
         this.loading = false;

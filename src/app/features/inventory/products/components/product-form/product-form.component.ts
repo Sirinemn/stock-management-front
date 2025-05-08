@@ -16,6 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { AdminService } from '../../../../admin/services/admin.service';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CategorieService } from '../../services/categorie.service';
 
 @Component({
   selector: 'app-product-form',
@@ -47,6 +48,7 @@ export class ProductFormComponent implements OnInit , OnDestroy {
     private route: ActivatedRoute,
     private sessionService: SessionService,
     private adminService: AdminService,
+    private categoryService: CategorieService,
     private snackBar: MatSnackBar,
   ) {
     this.formGroup = this.formBuilder.group({
@@ -69,7 +71,7 @@ export class ProductFormComponent implements OnInit , OnDestroy {
     }
   }
   private loadCategories(): void {
-    this.adminService.getCategories(this.groupId).pipe(takeUntil(this.destroy$)).subscribe({
+    this.categoryService.getCategories(this.groupId).pipe(takeUntil(this.destroy$)).subscribe({
       next: (categories) => {
         this.categories = categories;
       },

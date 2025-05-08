@@ -13,10 +13,11 @@ import { SessionService } from '../../../../../core/services/session.service';
 import { StockMovementService } from '../../service/stock-movement.service';
 import { AuthStateService } from '../../../../../core/services/auth-state.service';
 import { User } from '../../../../../auth/models/user';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-stock-movement-list',
-  imports: [MatIconModule, MatTableModule, MatButtonModule, RouterLink, MatFormFieldModule, MatOptionModule, MatSelectModule, CommonModule],
+  imports: [MatIconModule, MatTableModule, MatProgressSpinnerModule, MatButtonModule, RouterLink, MatFormFieldModule, MatOptionModule, MatSelectModule, CommonModule],
   templateUrl: './stock-movement-list.component.html',
   styleUrl: './stock-movement-list.component.scss'
 })
@@ -27,7 +28,7 @@ export class StockMovementListComponent implements OnInit, OnDestroy {
   public movements: StockMovement[] = [];
   public isAdmin: boolean = false;
   private user!: User;
-  public displayedColumns: string[] = ['productName', 'quantity', 'createdBy', 'createdAt', 'actions'];
+  public displayedColumns: string[] = [];
   public isLoading = false;
   public groupId: number = 0;
   public filters = {userId: null, productId: null, groupId: null, startDate: null, endDate: null}
@@ -44,7 +45,9 @@ export class StockMovementListComponent implements OnInit, OnDestroy {
     this.loadStockMovements();
   }
 
-  public deleteProduct(_t77: any) {
+  public deleteProduct(stockId: number) {
+    this.isLoading = true;
+  
   }
   public editProduct(arg0: any) {
   }
@@ -69,7 +72,7 @@ export class StockMovementListComponent implements OnInit, OnDestroy {
   }
   public loadStockMovements() {
     this.isLoading = true;
-    this.stockMovementService.getStockMovementsByGroup(this.groupId).subscribe({
+    this.stockMovementService.getStockMovementsByGroup(this.groupId).pipe(takeUntil(this.destroy$)).subscribe({
       next: (response) => {
         this.movements = response;
         this.isLoading = false;
@@ -80,8 +83,6 @@ export class StockMovementListComponent implements OnInit, OnDestroy {
       }
     });
   }
-
-
   public back() {
     window.history.back();
   }

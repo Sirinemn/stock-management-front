@@ -70,7 +70,8 @@ export class StockMovementListComponent implements OnInit, OnDestroy {
           },
           error: (error) => {
             this.isLoading = false;
-            this.errorMessage = error.message;
+            this.errorMessage = error.message || 'Une erreur est survenue lors de la suppression du produit.';
+            this.snackBar.open(this.errorMessage, 'Close', { duration: 3000 });
           }
         });
       } else {

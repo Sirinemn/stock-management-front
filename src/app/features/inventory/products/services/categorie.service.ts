@@ -12,6 +12,6 @@ export class CategorieService {
   constructor(private httpClient: HttpClient) { }
 
   public getCategories(groupId: number): Observable<Category[]> {
-    return this.httpClient.get<Category[]>(`${this.apiUrl}/categories?groupId=${groupId}`);
+    return this.httpClient.get<Category[]>(`${this.apiUrl}?groupId=${groupId}`);
   }
 }

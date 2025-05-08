@@ -16,6 +16,7 @@ import { AdminService } from '../../../../admin/services/admin.service';
 import { Subject, takeUntil } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../../../../mat-dialog/confirm-dialog/confirm-dialog.component';
+import { CategorieService } from '../../services/categorie.service';
 
 @Component({
   standalone: true,
@@ -41,7 +42,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
     private productService: ProductService,
     private sessionService: SessionService,
     private adminService: AdminService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private categoryService: CategorieService,
   ) { }
 
   ngOnInit(): void {
@@ -58,7 +60,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     });
   }
   public getCategories(groupId: number): void {
-    this.adminService.getCategories(groupId).subscribe({
+    this.categoryService.getCategories(groupId).subscribe({
       next: (categories: Category[]) => {
         this.categories = categories;
       },

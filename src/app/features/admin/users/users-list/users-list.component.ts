@@ -53,7 +53,15 @@ export class UsersListComponent implements OnInit, OnDestroy {
     window.history.back();
   }
   deleteUser(userId: number) {
-    const dialogRef = this.matdialog.open(ConfirmDialogComponent);
+    const dialogRef = this.matdialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Suppression de l\'utilisateur',
+        message: 'Êtes-vous sûr de vouloir supprimer cet utilisateur ?',
+        confirmButtonText: 'Supprimer',
+        cancelButtonText: 'Annuler'
+      }
+  });
+    
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.loading = true;

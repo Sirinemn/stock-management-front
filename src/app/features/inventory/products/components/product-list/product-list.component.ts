@@ -84,8 +84,14 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   public deleteProduct(product: Product): void {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, 
-      {data: { productName: product.name}}
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Confirmation',
+        message: 'Êtes-vous sûr de vouloir supprimer ce produit ?',
+        confirmButtonText: 'Confirmer',
+        cancelButtonText: 'Annuler'
+      }
+    }
     );
   
     dialogRef.afterClosed().subscribe((result) => {

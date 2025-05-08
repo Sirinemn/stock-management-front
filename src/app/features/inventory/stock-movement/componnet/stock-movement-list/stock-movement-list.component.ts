@@ -14,6 +14,9 @@ import { StockMovementService } from '../../service/stock-movement.service';
 import { AuthStateService } from '../../../../../core/services/auth-state.service';
 import { User } from '../../../../../auth/models/user';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmDialogComponent } from '../../../../../mat-dialog/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-stock-movement-list',
@@ -37,6 +40,8 @@ export class StockMovementListComponent implements OnInit, OnDestroy {
     private sessionService: SessionService,
     private authStateService: AuthStateService,
     private stockMovementService: StockMovementService,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -47,6 +52,31 @@ export class StockMovementListComponent implements OnInit, OnDestroy {
 
   public deleteProduct(stockId: number) {
     this.isLoading = true;
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Confirmation',
+        message: 'Êtes-vous sûr de vouloir supprimer ?',
+        confirmButtonText: 'Confirmer',
+        cancelButtonText: 'Annuler'
+      }
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.stockMovementService.deleteStockMovement(stockId).pipe(takeUntil(this.destroy$)).subscribe({
+          next: (response) => {
+            this.isLoading = false;
+            this.snackBar.open(response.message, 'Close', { duration: 3000 });
+            this.loadStockMovements();
+          },
+          error: (error) => {
+            this.isLoading = false;
+            this.errorMessage = error.message;
+          }
+        });
+      } else {
+        this.isLoading = false;
+      }
+    });
   
   }
   public editProduct(arg0: any) {
@@ -59,7 +89,7 @@ export class StockMovementListComponent implements OnInit, OnDestroy {
       if (isAdmin) {
         this.displayedColumns = ['productName', 'quantity', 'createdBy', 'createdAt', 'actions'];
       } else {
-        this.displayedColumns = ['productName', 'quantity', 'createdAt'];
+        this.displayedColumns = ['productName', 'quantity', 'createdAt', 'createdBy'];
       }
     });
   }

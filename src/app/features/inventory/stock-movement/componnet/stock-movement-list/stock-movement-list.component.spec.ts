@@ -4,6 +4,7 @@ import { StockMovementListComponent } from './stock-movement-list.component';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmDialogComponent } from '../../../../../mat-dialog/confirm-dialog/confirm-dialog.component';
 
 describe('StockMovementListComponent', () => {
   let component: StockMovementListComponent;

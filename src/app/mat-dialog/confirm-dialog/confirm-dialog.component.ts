@@ -13,7 +13,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 export class ConfirmDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<ConfirmDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data : { categoryName?: string, productName?: string }
+    @Inject(MAT_DIALOG_DATA) public data : { title?: string, message?: string, confirmButtonText?: string, cancelButtonText?: string } = { title: '', message: '', confirmButtonText: '', cancelButtonText: '' }
   ) {}
 
   onNoClick(): void {

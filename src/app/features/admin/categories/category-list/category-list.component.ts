@@ -94,9 +94,14 @@ export class CategoryListComponent implements OnInit, OnDestroy {
 
   public deleteCategory(category: Category) {
     this.loading = true;
-    const dialogRef = this.dialog.open(ConfirmDialogComponent,{ 
-      data: {categoryName: category.name} 
-    });
+    const dialogRef = this.dialog.open(ConfirmDialogComponent,{
+      data: {
+        title: 'Suppression de la catégorie',
+        message: 'Êtes-vous sûr de vouloir supprimer cette categorie ?',
+        confirmButtonText: 'Supprimer',
+        cancelButtonText: 'Annuler'
+      }
+  });
     dialogRef.afterClosed().subscribe((result) => {
       if(result) {
         this.adminService.deleteCategory(category.id).pipe(takeUntil(this.destroy$)).subscribe({

@@ -9,11 +9,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { AdminService } from '../../services/admin.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../../../mat-dialog/confirm-dialog/confirm-dialog.component';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-users-list',
-  imports: [MatIconModule, MatTableModule, MatButtonModule, RouterLink],
+  imports: [MatIconModule, MatTableModule, MatButtonModule, RouterLink, CommonModule],
   templateUrl: './users-list.component.html',
   styleUrl: './users-list.component.scss'
 })
@@ -24,6 +25,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
   public loading: boolean = false;
   private destroy$ = new Subject<void>();
   private userId: number = 0;
+  public errorMessage: string = '';
 
   constructor(
     private adminService: AdminService,
@@ -35,7 +37,6 @@ export class UsersListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.userId = this.session.user?.id || 0;
     this.getUsers();
-    console.log(this.users.data);
   }
   public getUsers(): void {
     this.loading = true;
@@ -71,6 +72,8 @@ export class UsersListComponent implements OnInit, OnDestroy {
           },
           error: () => {
             this.getUsers();
+            this.loading = false;
+            this.errorMessage = 'Une erreur est survenue lors de la suppression de l\'utilisateur.';
           }
         });
       }

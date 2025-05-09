@@ -25,7 +25,7 @@ export class ProductService {
   public updateProduct(id: number, product: Product): Observable<MessageResponse> {
     return this.httpClient.put<MessageResponse>(`${this.apiUrl}/${id}`, product);
   }
-  public deleteProduct(id: number): Observable<any> {
-    return this.httpClient.delete<any>(`${this.apiUrl}/${id}`);
+  public deleteProduct(id: number, groupId: number): Observable<any> {
+    return this.httpClient.delete<any>(`${this.apiUrl}/${id}?groupId=${groupId}`);
   }
 }

@@ -29,7 +29,7 @@ export class AdminService {
   public addCategory(name:string, userId:number): Observable<MessageResponse> {
     return this.httpClient.post<MessageResponse>(`${this.apiUrl}/category?name=${name}&userId=${userId}`, {});
   }
-  public deleteCategory(id: number): Observable<MessageResponse> {
-    return this.httpClient.delete<MessageResponse>(`${this.apiUrl}/categories/${id}`);
+  public deleteCategory(id: number, groupId: number): Observable<MessageResponse> {
+    return this.httpClient.delete<MessageResponse>(`${this.apiUrl}/categories/${id}?groupId=${groupId}`);
   }
 }

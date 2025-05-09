@@ -4,8 +4,7 @@ import { UserDetailComponent } from './user-detail.component';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ActivatedRoute, Router } from '@angular/router';
-import { createFind } from 'rxjs/internal/operators/find';
-import { first } from 'rxjs';
+
 
 describe('UserDetailComponent', () => {
   let component: UserDetailComponent;
@@ -24,7 +23,7 @@ describe('UserDetailComponent', () => {
     firstLogin: true,
     roles: ['user'],
     groupId: 1,
-    createdBy: 'admin',
+    createdBy: 1,
     groupName: 'group1',
     lastModifiedDate: '2023-01-01',
   }
@@ -43,9 +42,8 @@ describe('UserDetailComponent', () => {
     .compileComponents();
 
     fixture = TestBed.createComponent(UserDetailComponent);
-    component = fixture.componentInstance;
-    component.user = mockUser;
-   
+    component = fixture.componentInstance;   
+    component.user = mockUser; 
     fixture.detectChanges();
   });
 

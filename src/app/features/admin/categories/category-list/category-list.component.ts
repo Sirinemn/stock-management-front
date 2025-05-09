@@ -104,12 +104,13 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   });
     dialogRef.afterClosed().subscribe((result) => {
       if(result) {
-        this.adminService.deleteCategory(category.id).pipe(takeUntil(this.destroy$)).subscribe({
+        this.adminService.deleteCategory(category.id, this.groupId).pipe(takeUntil(this.destroy$)).subscribe({
           next: () => {
             this.getCategories(this.groupId);
           },
-          error: () => {
+          error: (error) => {
             this.loading = false;
+            this.errorMessage = error.error.message || 'Erreur lors de la suppression de la catégorie.';
           }
         });
       }

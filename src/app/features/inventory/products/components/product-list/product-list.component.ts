@@ -36,7 +36,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
   public errorMessage: string = '';
 
   
-
   constructor(
     private router: Router,
     private productService: ProductService,
@@ -96,13 +95,13 @@ export class ProductListComponent implements OnInit, OnDestroy {
   
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.productService.deleteProduct(product.id).pipe(takeUntil(this.destroy$)).subscribe({
+        this.productService.deleteProduct(product.id, this.groupId).pipe(takeUntil(this.destroy$)).subscribe({
           next: () => {
             this.getProducts(this.groupId);
           },
           error: (error) => {
             console.error('Error deleting product', error);
-            this.errorMessage = "un erreur est survenu lors de la suppression"
+            this.errorMessage = error.error.message || "un erreur est survenu lors de la suppression"
           },
         });
       }

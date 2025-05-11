@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../../../mat-dialog/confirm-dialog/confirm-dialog.component';
 import { CategorieService } from '../../../inventory/products/services/categorie.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-category-list',
@@ -36,6 +37,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
     private sessionService: SessionService,
     private dialog: MatDialog,
     private categoryService: CategorieService,
+    private snackBar: MatSnackBar
   ) { }
   
   ngOnInit(): void {
@@ -111,6 +113,7 @@ export class CategoryListComponent implements OnInit, OnDestroy {
           error: (error) => {
             this.loading = false;
             this.errorMessage = error.error.message || 'Erreur lors de la suppression de la catégorie.';
+            this.snackBar.open(this.errorMessage, 'Fermer', { duration: 3000 });
           }
         });
       }

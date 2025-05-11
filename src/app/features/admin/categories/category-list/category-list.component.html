@@ -6,17 +6,13 @@
             <mat-icon>arrow_back</mat-icon>
             </button>
         </div>
-        <p *ngIf="errorMessage" class="error">{{errorMessage}}</p>
-
         <div class="title">
             <h1>Liste des catégories</h1>
         </div>  
-
         <div class="add-category-btn">
             <button class="custom-button" (click)="toggleAddCategory()" [disabled]="isAddingCategory"
             [ngClass]="{ 'disabled-button': isAddingCategory }">Ajouter une catégorie</button>
-          </div>
-          
+          </div>         
           <div *ngIf="isAddingCategory" fxLayout="row" fxLayoutAlign="start center">
             <input type="text" [(ngModel)]="newCategoryName" placeholder="Nom de la catégorie" class="category-input" />
             <button class="custom-button" (click)="addCategory()" [ngClass]="{ 'disabled-button': loading }" [disabled]="!newCategoryName.trim()">Ajouter</button>

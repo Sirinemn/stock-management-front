@@ -10,6 +10,7 @@ import { AdminService } from '../../services/admin.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../../../mat-dialog/confirm-dialog/confirm-dialog.component';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -31,7 +32,8 @@ export class UsersListComponent implements OnInit, OnDestroy {
     private adminService: AdminService,
     private router:Router,
     private session:SessionService,
-    private matdialog: MatDialog
+    private matdialog: MatDialog,
+    private snackBar: MatSnackBar,
   ) {}
 
   ngOnInit(): void {
@@ -70,10 +72,11 @@ export class UsersListComponent implements OnInit, OnDestroy {
           next: () => {
             this.getUsers();
           },
-          error: () => {
+          error: (error) => {
             this.getUsers();
             this.loading = false;
-            this.errorMessage = 'Une erreur est survenue lors de la suppression de l\'utilisateur.';
+            this.errorMessage = error.error.message || 'Une erreur est survenue lors de la suppression de l\'utilisateur.';
+            this.snackBar.open(this.errorMessage, 'Fermer', { duration: 3000 });
           }
         });
       }

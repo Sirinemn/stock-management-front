@@ -17,6 +17,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../../../../mat-dialog/confirm-dialog/confirm-dialog.component';
 import { CategorieService } from '../../services/categorie.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   standalone: true,
@@ -43,6 +44,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     private adminService: AdminService,
     private dialog: MatDialog,
     private categoryService: CategorieService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -102,6 +104,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
           error: (error) => {
             console.error('Error deleting product', error);
             this.errorMessage = error.error.message || "un erreur est survenu lors de la suppression"
+            this.snackBar.open(this.errorMessage, 'Fermer', {
+              duration: 3000,
+              panelClass: ['error-snackbar'],
+            });
           },
         });
       }

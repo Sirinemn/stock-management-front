@@ -33,6 +33,7 @@ export class StockMovementListComponent implements OnInit, OnDestroy {
   private user!: User;
   public displayedColumns: string[] = [];
   public isLoading = false;
+  public isDischarged: boolean = false;
   public groupId: number = 0;
   public filters = {userId: null, productId: null, groupId: null, startDate: null, endDate: null}
 
@@ -107,6 +108,11 @@ export class StockMovementListComponent implements OnInit, OnDestroy {
       next: (response) => {
         this.movements = response;
         this.isLoading = false;
+        response.forEach((movement) => {
+          if (movement.type === 'SORTIE') {
+            this.isDischarged = true;
+          }
+        });
       },
       error: (error) => {
         this.errorMessage = error.message;

@@ -22,9 +22,16 @@
     align-items: center;
     margin: 10px;
   }
-  .discharge {
-    background-color: #f44336;
+  .exit-row {
+    background-color: rgb(217, 157, 157) !important;
+    color: white; 
   }
+  .entry-row {
+    background-color: rgb(147, 208, 147) !important;
+    color: white;
+}
+
+
   .empty-state {
     text-align: center;
     margin-top: 50px;

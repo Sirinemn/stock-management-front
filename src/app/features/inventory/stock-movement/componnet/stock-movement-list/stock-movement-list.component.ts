@@ -108,11 +108,6 @@ export class StockMovementListComponent implements OnInit, OnDestroy {
       next: (response) => {
         this.movements = response;
         this.isLoading = false;
-        response.forEach((movement) => {
-          if (movement.type === 'SORTIE') {
-            this.isDischarged = true;
-          }
-        });
       },
       error: (error) => {
         this.errorMessage = error.message;

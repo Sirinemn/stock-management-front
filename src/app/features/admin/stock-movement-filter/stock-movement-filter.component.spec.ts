@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StockMovementFilterComponent } from './stock-movement-filter.component';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 describe('StockMovementFilterComponent', () => {
   let component: StockMovementFilterComponent;
@@ -8,7 +10,11 @@ describe('StockMovementFilterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StockMovementFilterComponent]
+      imports: [StockMovementFilterComponent],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+      ]
     })
     .compileComponents();
 

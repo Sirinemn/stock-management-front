@@ -35,7 +35,7 @@ export class StockMovementListComponent implements OnInit, OnDestroy {
   public isLoading = false;
   public isDischarged: boolean = false;
   public groupId: number = 0;
-  public filters = {userId: null, productId: null, groupId: null, startDate: null, endDate: null}
+  
 
   constructor(
     private sessionService: SessionService,

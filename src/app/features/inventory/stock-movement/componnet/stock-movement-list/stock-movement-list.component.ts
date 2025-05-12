@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { StockMovement } from '../../../models/stockmovement';
 import { SessionService } from '../../../../../core/services/session.service';
@@ -42,7 +42,8 @@ export class StockMovementListComponent implements OnInit, OnDestroy {
     private authStateService: AuthStateService,
     private stockMovementService: StockMovementService,
     private snackBar: MatSnackBar,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -81,9 +82,10 @@ export class StockMovementListComponent implements OnInit, OnDestroy {
     });
   
   }
-  public editProduct(arg0: any) {
+  public editProduct(movementId: number) {
   }
-  public viewProduct(arg0: any) {
+  public viewProduct(movementId: number) {
+    this.router.navigate([`/features/stock/view/${movementId}`]);
   }
   public loadDisplayedcolumns() {
     this.authStateService.getIsAdmin().subscribe((isAdmin) => {

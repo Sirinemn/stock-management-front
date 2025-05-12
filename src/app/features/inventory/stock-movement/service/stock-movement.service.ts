@@ -32,6 +32,9 @@ export class StockMovementService {
   public updateStockMovement(id: number, movement: StockMovement): Observable<MessageResponse> {
     return this.http.put<MessageResponse>(`${this.apiUrl}/movement/${id}`, movement);
   }
+  public getStockMovement(id: number): Observable<StockMovement> {
+    return this.http.get<StockMovement>(`${this.apiUrl}/movement/${id}`);
+  }
 }
 
 

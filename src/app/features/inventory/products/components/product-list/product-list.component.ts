@@ -60,7 +60,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     });
   }
   public getCategories(groupId: number): void {
-    this.categoryService.getCategories(groupId).subscribe({
+    this.categoryService.getCategories(groupId).pipe(takeUntil(this.destroy$)).subscribe({
       next: (categories: Category[]) => {
         this.categories = categories;
       },
@@ -71,7 +71,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
   public getProducts(groupId:number) {
     this.isLoading = true;
-    this.productService.getProducts(groupId).subscribe({
+    this.productService.getProducts(groupId).pipe(takeUntil(this.destroy$)).subscribe({
       next: (products: Product[]) => {
         this.products = products;
         this.isLoading = false;
@@ -82,15 +82,15 @@ export class ProductListComponent implements OnInit, OnDestroy {
       }
     });
   }
-public onCategoryChange(categoryId: number): void {
-  if (categoryId) {
-    this.getProductsByCategory(categoryId);
-  } else {
-    this.getProducts(this.groupId); // si aucune catégorie sélectionnée, afficher tous les produits
+  public onCategoryChange(categoryId: number): void {
+    if (categoryId) {
+      this.getProductsByCategory(categoryId);
+    } else {
+      this.getProducts(this.groupId); // si aucune catégorie sélectionnée, afficher tous les produits
+    }
   }
-}
 
-  getProductsByCategory(categoryId: number): void {
+  public getProductsByCategory(categoryId: number): void {
     this.isLoading = true;
     this.productService.getProductsByCategory(categoryId, this.groupId).pipe(takeUntil(this.destroy$)).subscribe({
       next: (products: Product[]) => {

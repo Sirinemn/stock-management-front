@@ -10,7 +10,12 @@
         </div>  
         <div class="add-product-btn">
             <button class="custom-button" routerLink="/features/stock/add" >Ajouter un mouvement</button>
-        </div>  
+        </div> 
+        <div class="filter-btn">
+            <button mat-icon-button routerLink="/admin/stockfilter" *ngIf="isAdmin">
+                <mat-icon>filter_list</mat-icon>
+            </button>
+        </div> 
     </section>
     <div *ngIf="isLoading">
         <mat-spinner></mat-spinner>

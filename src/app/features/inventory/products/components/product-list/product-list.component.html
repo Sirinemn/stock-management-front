@@ -11,9 +11,13 @@
         <div class="category">
             <mat-form-field appearance="fill" class="category-select">
                 <mat-label>Catégorie</mat-label>
-                <mat-select>
-                    <mat-option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</mat-option>
+                <mat-select [(value)]="categorySelected" (selectionChange)="onCategoryChange($event.value)">
+                    <mat-option [value]="null">Toutes les catégories</mat-option>
+                    <mat-option *ngFor="let category of categories" [value]="category.id">
+                        {{ category.name }}
+                    </mat-option>
                 </mat-select>
+
             </mat-form-field>
         </div>
     

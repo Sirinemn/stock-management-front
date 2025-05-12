@@ -28,4 +28,7 @@ export class ProductService {
   public deleteProduct(id: number, groupId: number): Observable<any> {
     return this.httpClient.delete<any>(`${this.apiUrl}/${id}?groupId=${groupId}`);
   }
+  public getProductsByCategory(categoryId: number, groupId: number): Observable<Product[]> {
+    return this.httpClient.get<Product[]>(`${this.apiUrl}/product?groupId=${groupId}&categoryId=${categoryId}`);
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
@@ -12,7 +12,6 @@ import { CommonModule } from '@angular/common';
 import { Category } from '../../../../admin/models/category';
 import { SessionService } from '../../../../../core/services/session.service';
 import { User } from '../../../../../auth/models/user';
-import { AdminService } from '../../../../admin/services/admin.service';
 import { Subject, takeUntil } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../../../../mat-dialog/confirm-dialog/confirm-dialog.component';
@@ -35,13 +34,13 @@ export class ProductListComponent implements OnInit, OnDestroy {
   private user?: User |null;
   private destroy$ = new Subject<void>();
   public errorMessage: string = '';
+  @Output() categorySelected = new EventEmitter<number>();
 
   
   constructor(
     private router: Router,
     private productService: ProductService,
     private sessionService: SessionService,
-    private adminService: AdminService,
     private dialog: MatDialog,
     private categoryService: CategorieService,
     private snackBar: MatSnackBar
@@ -83,7 +82,27 @@ export class ProductListComponent implements OnInit, OnDestroy {
       }
     });
   }
+public onCategoryChange(categoryId: number): void {
+  if (categoryId) {
+    this.getProductsByCategory(categoryId);
+  } else {
+    this.getProducts(this.groupId); // si aucune catégorie sélectionnée, afficher tous les produits
+  }
+}
 
+  getProductsByCategory(categoryId: number): void {
+    this.isLoading = true;
+    this.productService.getProductsByCategory(categoryId, this.groupId).pipe(takeUntil(this.destroy$)).subscribe({
+      next: (products: Product[]) => {
+        this.products = products;
+        this.isLoading = false;
+      },
+      error: (error) => {
+        this.isLoading = false;
+        console.error('Error fetching products by category', error);
+      }
+    });
+  }
   public deleteProduct(product: Product): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {

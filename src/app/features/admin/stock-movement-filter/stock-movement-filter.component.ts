@@ -14,10 +14,11 @@ import { MatOptionModule } from '@angular/material/core';
 import { StockMovement } from '../../inventory/models/stockmovement';
 import { StockMovementService } from '../../inventory/stock-movement/service/stock-movement.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-stock-movement-filter',
-  imports: [ReactiveFormsModule, MatProgressSpinnerModule ,MatCardModule, MatFormFieldModule, MatOptionModule, MatDatepickerModule],
+  imports: [ReactiveFormsModule, MatProgressSpinnerModule, CommonModule ,MatCardModule, MatFormFieldModule, MatOptionModule, MatDatepickerModule],
   templateUrl: './stock-movement-filter.component.html',
   styleUrl: './stock-movement-filter.component.scss'
 })
@@ -32,7 +33,7 @@ export class StockMovementFilterComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   public user: User | null = null;
   public userId: number = 0;
-  public movements: StockMovement[] = [];
+  public filteredMovements: StockMovement[] = [];
   public filters = {userId: null, productId: null, groupId: null, startDate: null, endDate: null}
 
   constructor(
@@ -111,14 +112,14 @@ export class StockMovementFilterComponent implements OnInit, OnDestroy {
      };
       this.stockMovementService.getHistory(filters).pipe(takeUntil(this.destroy$)).subscribe({
         next: (movements: StockMovement[]) => {
-          this.movements = movements;
+          this.filteredMovements = movements;
           this.loading = false;
         },
         error: (error) => {
           this.loading = false;
           this.errorMessage = error.error.message || 'Une erreur est survenue lors de la récupération des mouvements de stock.';
           this.snackBar.open(this.errorMessage, 'Fermer', { duration: 3000 });
-          this.movements = [];
+          this.filteredMovements = [];
           console.error('Error fetching stock movements', error);
         }
       });

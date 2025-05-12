@@ -8,7 +8,7 @@
         <mat-select formControlName="userId">
             <mat-option value="">Tous</mat-option>
             <mat-option *ngFor="let user of users" [value]="user.id">
-            {{ user.firstName }} {{ user.lastName }}
+            {{ user.firstname }} {{ user.lastname }}
             </mat-option>
         </mat-select>
         </mat-form-field>
@@ -45,4 +45,12 @@
         <button mat-stroked-button color="warn" type="button" (click)="onReset()">Réinitialiser</button>
     </div>
     </form>
+    <div class="filter-results">
+        <h3>Résultats du filtre</h3>
+        <p *ngIf="filteredMovements.length === 0">Aucun mouvement trouvé.</p>
+        <ul>
+            <li *ngFor="let movement of filteredMovements">
+                {{ movement.productName }} - {{ movement.userName }}  - {{ movement.createdDate | date }}
+            </li>
+        </ul>
 </div>

@@ -45,8 +45,8 @@
           <!-- Catégorie -->
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Catégorie</mat-label>
-            <mat-select formControlName="categoryId" placeholder="Sélectionnez une catégorie">
-              <mat-option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</mat-option>
+            <mat-select formControlName="categoryId" placeholder="Sélectionnez une catégorie" [disabled]="categories.length === 0">
+                <mat-option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</mat-option>
             </mat-select>
             <mat-error *ngIf="formGroup.get('categoryId')?.hasError('required')">Catégorie requise</mat-error>
           </mat-form-field>

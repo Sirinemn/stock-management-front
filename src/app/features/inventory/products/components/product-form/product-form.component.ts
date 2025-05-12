@@ -13,7 +13,6 @@ import { Category } from '../../../../admin/models/category';
 import { Product } from '../../../models/product';
 import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
-import { AdminService } from '../../../../admin/services/admin.service';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CategorieService } from '../../services/categorie.service';
@@ -47,7 +46,6 @@ export class ProductFormComponent implements OnInit , OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private sessionService: SessionService,
-    private adminService: AdminService,
     private categoryService: CategorieService,
     private snackBar: MatSnackBar,
   ) {
@@ -74,6 +72,10 @@ export class ProductFormComponent implements OnInit , OnDestroy {
     this.categoryService.getCategories(this.groupId).pipe(takeUntil(this.destroy$)).subscribe({
       next: (categories) => {
         this.categories = categories;
+        if (this.categories.length === 0) {
+          this.errorMessage = 'Aucune catégorie disponible. Veuillez en ajouter avant de créer un produit.';
+          this.snackBar.open(this.errorMessage, 'Fermer', {duration: 5000, })
+        }
       },
       error: (error) => {
         console.error(error);

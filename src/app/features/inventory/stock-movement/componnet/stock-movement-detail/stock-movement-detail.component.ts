@@ -2,16 +2,21 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { StockMovementService } from '../../service/stock-movement.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { StockMovement } from '../../../models/stockmovement';
+import { CommonModule } from '@angular/common';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-stock-movement-detail',
-  imports: [],
+  imports: [MatIconModule, MatCardModule, CommonModule, MatProgressSpinnerModule],
   templateUrl: './stock-movement-detail.component.html',
   styleUrl: './stock-movement-detail.component.scss'
 })
 export class StockMovementDetailComponent implements OnInit, OnDestroy {
   public isLoading: boolean = false;
-  public stockMovement: any | undefined;
+  public stockMovement: StockMovement | undefined;
   public stockMovementId: number = 0;
   public errorMessage: string = '';
   private destroy$ = new Subject<void>();

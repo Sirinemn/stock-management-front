@@ -1,0 +1,48 @@
+.movement-detail-container {
+    height: 100vh;
+}
+button {
+  border: none;
+  margin: 10px 20px;
+}
+.title {
+  text-align: center;
+}
+.movement-detail {
+  display: flex;
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  mat-card {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  mat-card-title {
+    font-size: 1.4em;
+    font-weight: bold;
+  }
+  
+  mat-card-content p {
+    margin: 10px 0;
+    font-size: 1em;
+    color: #333;
+  }
+  
+  @media (max-width: 600px) {
+    .movement-detail {
+      padding: 10px;
+    }
+  
+    mat-card-title {
+      font-size: 1.2em;
+    }
+  
+    mat-card-content p {
+      font-size: 0.9em;
+    }
+  }

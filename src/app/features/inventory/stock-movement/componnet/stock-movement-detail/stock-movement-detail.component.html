@@ -1,1 +1,27 @@
-<p>stock-movement-detail works!</p>
+<div fxLayout="row" fxLayoutAlign="start center" class="movement-detail-container"> 
+    <div class="movement-detail">
+        <div>
+            <button class="arrow_back" (click)="back()">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+        </div>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title> Détail du movement</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <p><strong>Produit: </strong>{{stockMovement?.productName}}</p>
+                <p><strong>Ajouter par  : </strong>{{stockMovement?.userName}}</p>
+                <p><strong>Quantité : </strong>{{stockMovement?.quantity}}</p>
+                <p><strong>Type : </strong>{{stockMovement?.type}}</p>
+                <p><strong>Ajouter le : </strong>{{stockMovement?.createdDate}}</p>
+                <p><strong>Modifier le : </strong>{{stockMovement?.lastModifiedDate}}</p>
+            </mat-card-content>
+            <p *ngIf="errorMessage" class="error">{{errorMessage}}</p>
+  
+            <div *ngIf="isLoading" class="loading-spinner">
+            <mat-spinner></mat-spinner>
+            </div>
+        </mat-card>
+    </div>
+</div>

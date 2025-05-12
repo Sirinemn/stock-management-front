@@ -20,9 +20,26 @@ export class StockMovementService {
     return this.http.get<StockMovement[]>(`${this.apiUrl}/movements/${productId}groupId?=${groupId}`);
   }
 
-  public getHistory(filters: { userId?: number; productId?: number; groupId?: number; startDate?: string; endDate?: string }): Observable<StockMovement[]> {
-    return this.http.get<StockMovement[]>(`${this.apiUrl}/history`, { params: filters });
+  public getHistory(filters: {
+    userId?: number;
+    productId?: number;
+    groupId?: number;
+    startDate?: string;
+    endDate?: string;
+  }): Observable<StockMovement[]> {
+    // Supprimer les champs undefined
+    const cleanedFilters = Object.entries(filters)
+      .filter(([_, value]) => value !== undefined && value !== null)
+      .reduce((acc, [key, value]) => {
+        acc[key] = value;
+        return acc;
+      }, {} as any);
+
+    return this.http.get<StockMovement[]>(`${this.apiUrl}/history`, {
+      params: cleanedFilters,
+    });
   }
+
   public getStockMovementsByGroup(groupId: number): Observable<StockMovement[]> {
     return this.http.get<StockMovement[]>(`${this.apiUrl}/movements?groupId=${groupId}`);
   }

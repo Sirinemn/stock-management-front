@@ -28,7 +28,12 @@ describe('LoginComponent', () => {
     }))
   };
   let sessionServiceMock = { logIn: jest.fn() };
-  let mockRouter: any = { events: { subscribe: jest.fn() }, createUrlTree: jest.fn(), serializeUrl: jest.fn() };
+  let mockRouter = {
+    navigate: jest.fn(),
+    events: { subscribe: jest.fn() },
+    createUrlTree: jest.fn(),
+    serializeUrl: jest.fn(),
+  };
 
   beforeEach(async () => {
     const mockActivatedRoute = {
@@ -56,6 +61,28 @@ describe('LoginComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+  it('should have invalid form when fields are empty', () => {
+  component.formGroup.setValue({ email: '', password: '' });
+  expect(component.formGroup.valid).toBeFalsy();
+  });
+  it('should call login and navigate on success', () => {
+  jest.spyOn(mockAuthService, 'login').mockReturnValue(of({ token: 'mockToken', userId: 'mockUserId' }));
+  jest.spyOn(mockAuthService, 'getUser').mockReturnValue(of({
+    id: 'mockUserId', firstLogin: false, roles: ['user']
+  }));
+
+  component.formGroup.setValue({ email: 'test@example.com', password: 'password' });
+  component.Submit();
+
+  expect(mockAuthService.login).toHaveBeenCalled();
+  expect(mockAuthService.getUser).toHaveBeenCalled();
+  expect(mockRouter.navigate).toHaveBeenCalledWith(['features/dashboard']);
+  });
+  it('should unsubscribe on destroy', () => {
+  const spy = jest.spyOn(component.subscribtion, 'unsubscribe');
+  component.ngOnDestroy();
+  expect(spy).toHaveBeenCalled();
   });
 
 });

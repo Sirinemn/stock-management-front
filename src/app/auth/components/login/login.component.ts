@@ -20,7 +20,7 @@ import { AuthStateService } from '../../../core/services/auth-state.service';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnDestroy{
-  private subscribtion: Subscription = new Subscription();
+  public subscribtion: Subscription = new Subscription();
   public isLoading: boolean = false;
   public errorMessage: string = '';
 

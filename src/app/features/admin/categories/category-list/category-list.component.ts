@@ -24,12 +24,12 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   public categories: Category[] = [];
   public newCategoryName: string = '';
   public user: User | null = null;
-  private userId: number = 0;
-  private groupId: number = 0;
+  public userId: number = 0;
+  public groupId: number = 0;
   public isAddingCategory: boolean = false;
   public errorMessage: string = '';
   public loading: boolean = false;
-  private destroy$ = new Subject<void>();
+  public destroy$ = new Subject<void>();
   public displayedColumns: string[] = ['index', 'name', 'actions'];
 
   constructor(

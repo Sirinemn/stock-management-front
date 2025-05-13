@@ -32,4 +32,7 @@ export class AdminService {
   public deleteCategory(id: number, groupId: number): Observable<MessageResponse> {
     return this.httpClient.delete<MessageResponse>(`${this.apiUrl}/categories/${id}?groupId=${groupId}`);
   }
+  public getUsersByGroupId(groupId: number): Observable<User[]> {
+    return this.httpClient.get<User[]>(`${this.apiUrl}/users/group/${groupId}`);
+  }
 }

@@ -64,7 +64,7 @@ export class StockMovementFilterComponent implements OnInit, OnDestroy {
         this.groupId = user?.groupId || 0;
         this.userId = user?.id || 0;
         this.getProducts(this.groupId);
-        this.getUsers();
+        this.getUsers(this.groupId);
       },
       error: (error) => {
         console.error('Error fetching user', error);
@@ -84,9 +84,9 @@ export class StockMovementFilterComponent implements OnInit, OnDestroy {
       }
     });
   }
-  public getUsers(): void {
+  public getUsers(groupId: number): void {
     this.isLoading = true;
-    this.adminService.getUsers(this.userId).pipe(takeUntil(this.destroy$)).subscribe({
+    this.adminService.getUsersByGroupId(this.groupId).pipe(takeUntil(this.destroy$)).subscribe({
       next: (users: User[]) => {
         this.users = users;
         this.isLoading = false;

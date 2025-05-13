@@ -117,6 +117,7 @@ export class StockMovementFilterComponent implements OnInit, OnDestroy {
         next: (movements: StockMovement[]) => {
           this.filteredMovements = movements;
           this.isLoading = false;
+          this.errorMessage = '';
         },
         error: (error) => {
           this.isLoading = false;
@@ -128,6 +129,7 @@ export class StockMovementFilterComponent implements OnInit, OnDestroy {
       });
     } else {
       console.error('Form is invalid');
+      this.errorMessage = 'Veuillez remplir tous les champs obligatoires.';
     }
   }
   public ngOnDestroy(): void {

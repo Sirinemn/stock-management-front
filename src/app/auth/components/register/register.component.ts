@@ -25,7 +25,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 export class RegisterComponent implements OnDestroy {
   public formGroup: FormGroup;
   public errorMessage: string = '';
-  private subscription: Subscription = new Subscription();
+  public subscription: Subscription = new Subscription();
   public messageResponse: string = '';
   isLoading: boolean = false;
 

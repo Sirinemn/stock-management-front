@@ -69,10 +69,8 @@ export class StockMovementFormComponent implements OnInit, OnDestroy {
           const snackBarRef = this.snackBar.open(this.messageResponse, 'Fermer', {
             duration: 3000,
           });
-          snackBarRef.afterDismissed().subscribe(() => {
-            this.formGroup.reset();
-            this.router.navigate(['/features/stock/list']);
-          });
+          this.formGroup.reset();
+          this.router.navigate(['/features/stock/list']);
         },
         error: (error) => {
           this.isLoading = false; 

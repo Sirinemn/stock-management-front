@@ -106,6 +106,7 @@ export class ProductFormComponent implements OnInit , OnDestroy {
       this.productService.addProduct(productData).pipe(takeUntil(this.destroy$)).subscribe({
         next: (response) => {
           this.isLoading = false;
+          this.formGroup.reset();
           this.router.navigate(['/features/products/list']);
         },
         error: (error) => {

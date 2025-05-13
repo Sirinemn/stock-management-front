@@ -35,9 +35,7 @@ export class StockMovementService {
         return acc;
       }, {} as any);
 
-    return this.http.get<StockMovement[]>(`${this.apiUrl}/history`, {
-      params: cleanedFilters,
-    });
+    return this.http.post<StockMovement[]>(`${this.apiUrl}/history`, filters);
   }
 
   public getStockMovementsByGroup(groupId: number): Observable<StockMovement[]> {

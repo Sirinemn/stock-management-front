@@ -10,15 +10,18 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatOptionModule } from '@angular/material/core';
+import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { StockMovement } from '../../inventory/models/stockmovement';
 import { StockMovementService } from '../../inventory/stock-movement/service/stock-movement.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 
 @Component({
   selector: 'app-stock-movement-filter',
-  imports: [ReactiveFormsModule, MatProgressSpinnerModule, CommonModule ,MatCardModule, MatFormFieldModule, MatOptionModule, MatDatepickerModule],
+  imports: [ReactiveFormsModule, MatProgressSpinnerModule, MatListModule, CommonModule ,MatCardModule, MatFormFieldModule, MatOptionModule, MatDatepickerModule, MatSelectModule, MatNativeDateModule, MatInputModule],
   templateUrl: './stock-movement-filter.component.html',
   styleUrl: './stock-movement-filter.component.scss'
 })
@@ -26,7 +29,7 @@ export class StockMovementFilterComponent implements OnInit, OnDestroy {
 
   public filterForm: FormGroup;
   public products: Product[] = []; 
-  public loading = false;
+  public isLoading = false;
   private groupId: number = 0;
   public errorMessage: string = '';
   public users: User[] = [];
@@ -69,27 +72,27 @@ export class StockMovementFilterComponent implements OnInit, OnDestroy {
     });
   }
   public getProducts(groupId:number) {
-    this.loading = true;
+    this.isLoading = true;
     this.productService.getProducts(groupId).pipe(takeUntil(this.destroy$)).subscribe({
       next: (products: Product[]) => {
         this.products = products;
-        this.loading = false;
+        this.isLoading = false;
       }
       , error: (error) => {
-        this.loading = false;
+        this.isLoading = false;
         console.error('Error fetching products', error);
       }
     });
   }
   public getUsers(): void {
-    this.loading = true;
+    this.isLoading = true;
     this.adminService.getUsers(this.userId).pipe(takeUntil(this.destroy$)).subscribe({
       next: (users: User[]) => {
         this.users = users;
-        this.loading = false;
+        this.isLoading = false;
       },
       error: () => {
-        this.loading = false;
+        this.isLoading = false;
       }
     });
   }
@@ -104,7 +107,7 @@ export class StockMovementFilterComponent implements OnInit, OnDestroy {
   }
   onSubmit() {
     if (this.filterForm.valid) {
-      this.loading = true;
+      this.isLoading = true;
       const filterValues = this.filterForm.value;
       const filters = {
       ...filterValues,
@@ -113,10 +116,10 @@ export class StockMovementFilterComponent implements OnInit, OnDestroy {
       this.stockMovementService.getHistory(filters).pipe(takeUntil(this.destroy$)).subscribe({
         next: (movements: StockMovement[]) => {
           this.filteredMovements = movements;
-          this.loading = false;
+          this.isLoading = false;
         },
         error: (error) => {
-          this.loading = false;
+          this.isLoading = false;
           this.errorMessage = error.error.message || 'Une erreur est survenue lors de la récupération des mouvements de stock.';
           this.snackBar.open(this.errorMessage, 'Fermer', { duration: 3000 });
           this.filteredMovements = [];

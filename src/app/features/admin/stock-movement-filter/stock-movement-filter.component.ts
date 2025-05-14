@@ -30,10 +30,10 @@ export class StockMovementFilterComponent implements OnInit, OnDestroy {
   public filterForm: FormGroup;
   public products: Product[] = []; 
   public isLoading = false;
-  private groupId: number = 0;
+  public groupId: number = 0;
   public errorMessage: string = '';
   public users: User[] = [];
-  private destroy$ = new Subject<void>();
+  public destroy$ = new Subject<void>();
   public user: User | null = null;
   public userId: number = 0;
   public filteredMovements: StockMovement[] = [];

@@ -17,7 +17,7 @@ export class UserDetailComponent implements OnInit , OnDestroy {
   public loading: boolean = false;
   public user!: User;
   public userId: number = 0;
-  private destroy$ = new Subject<void>();
+  public destroy$ = new Subject<void>();
 
   constructor(
     private adminService: AdminService,

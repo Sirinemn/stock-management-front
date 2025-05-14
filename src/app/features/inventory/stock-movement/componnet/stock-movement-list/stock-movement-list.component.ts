@@ -26,7 +26,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class StockMovementListComponent implements OnInit, OnDestroy {
 
-  private destroy$ = new Subject<void>();
+  public destroy$ = new Subject<void>();
   public errorMessage: string = '';
   public movements: StockMovement[] = [];
   public isAdmin: boolean = false;

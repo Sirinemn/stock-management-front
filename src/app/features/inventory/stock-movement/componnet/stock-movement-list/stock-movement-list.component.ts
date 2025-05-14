@@ -80,9 +80,9 @@ export class StockMovementListComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       }
     });
-  
   }
   public editProduct(movementId: number) {
+    this.router.navigate([`/features/stock/edit/${movementId}`]);
   }
   public viewProduct(movementId: number) {
     this.router.navigate([`/features/stock/view/${movementId}`]);

@@ -15,7 +15,7 @@ import { User } from '../../../../../auth/models/user';
 import { SessionService } from '../../../../../core/services/session.service';
 import { CommonModule } from '@angular/common';
 import { StockMovement } from '../../../models/stockmovement';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -34,12 +34,15 @@ export class StockMovementFormComponent implements OnInit, OnDestroy {
   private userId: number =0
   private groupId: number = 0;
   private destroy$ = new Subject<void>();
+  public isEditMode: boolean = false;
+  public stockMovementId: string | null = null;
 
   constructor(
     private formBuilder: FormBuilder,
     private productService: ProductService,
     private sessionService: SessionService,
     private router: Router,
+    private route: ActivatedRoute,
     private snackBar: MatSnackBar,
     private stockMovementService: StockMovementService) {
       this.formGroup = formBuilder.group({
@@ -50,11 +53,56 @@ export class StockMovementFormComponent implements OnInit, OnDestroy {
     }
 
   ngOnInit(): void {
+    this.stockMovementId = this.route.snapshot.paramMap.get('id') || null;
+    if (this.stockMovementId) { 
+      this.isEditMode = true;
+      this.patchProductValue(+this.stockMovementId);
+    }
     this.getUser();
     this.loadProducts();
   }
+  patchProductValue(stockMovementId: number) {
+    this.stockMovementService.getStockMovement(stockMovementId).pipe(takeUntil(this.destroy$)).subscribe({
+      next: (stockMovement) => {
+        this.formGroup.patchValue({
+          productId: stockMovement.productId,
+          quantity: stockMovement.quantity,
+          type: stockMovement.type,
+        });
+      },
+      error: (error) => {
+        console.error(error);
+        this.errorMessage = error.error.message || 'Erreur lors du chargement des produits.';
+      },
+    })
+  }
+  public updateStockMovement() {
+    if (this.formGroup.valid && !this.isLoading) {
+      this.isLoading = true;
+      const movementData = {
+        ...this.formGroup.value,
+        userId: this.userId,
+        groupId: this.groupId,
+      } as StockMovement;
+      this.stockMovementService.updateStockMovement(+this.stockMovementId!, movementData).pipe(takeUntil(this.destroy$)).subscribe({
+        next: (response) => {
+          this.isLoading = false;
+          this.messageResponse = response.message;
+          const snackBarRef = this.snackBar.open(this.messageResponse, 'Fermer', {
+            duration: 3000,
+          });
+          this.formGroup.reset();
+          this.router.navigate(['/features/stock/list']);
+        },
+        error: (error) => {
+          this.isLoading = false; 
+          this.errorMessage = error.error.message || 'Une erreur est survenue.';
+        }
+      })
+    }
 
-  public Submit() {
+  }
+  public addStockMovement() {
     if (this.formGroup.valid && !this.isLoading) {
       this.isLoading = true;
       const movementData = {

@@ -28,7 +28,7 @@ export class ProductFormComponent implements OnInit , OnDestroy {
   public isEditMode = false;
   public formGroup!: FormGroup;
   public isLoading = false;
-  private destroy$ = new Subject<void>();
+  public destroy$ = new Subject<void>();
   public errorMessage: string = '';
   public messageResponse: string = '';
   public user!: User ;
@@ -68,7 +68,7 @@ export class ProductFormComponent implements OnInit , OnDestroy {
       this.patchProductValue(this.productId);
     }
   }
-  private loadCategories(): void {
+  public loadCategories(): void {
     this.categoryService.getCategories(this.groupId).pipe(takeUntil(this.destroy$)).subscribe({
       next: (categories) => {
         this.categories = categories;
@@ -83,7 +83,7 @@ export class ProductFormComponent implements OnInit , OnDestroy {
       },
     });
   }
-  private initializeUserData(): void {
+  public initializeUserData(): void {
     const user = this.sessionService.getUser();
     if (user) {
       this.user = user as User;
@@ -116,7 +116,7 @@ export class ProductFormComponent implements OnInit , OnDestroy {
       });
     }
   }
-  private patchProductValue(productId: string){
+  public patchProductValue(productId: string){
     this.productService.getProduct(+productId).pipe(takeUntil(this.destroy$)).subscribe({
       next: (product) => {
         this.formGroup.patchValue({

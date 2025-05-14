@@ -4,7 +4,7 @@ import { ProductListComponent } from './product-list.component';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ActivatedRoute, Router } from '@angular/router';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { ProductService } from '../../services/product.service';
 import { SessionService } from '../../../../../core/services/session.service';
 import { CategorieService } from '../../services/categorie.service';
@@ -96,4 +96,12 @@ describe('ProductListComponent', () => {
 
     expect(spy).toHaveBeenCalled();
   });
+  it('should handle error when loading products', () => {
+    const errorResponse = { status: 500, message: 'Internal Server Error' };
+    jest.spyOn(mockProductService, 'getProducts').mockReturnValue(throwError(() => ({ error: { message: 'un erreur est survenu lors de la récupération des produits' } })));
+
+    component.getProducts(2);
+
+    expect(component.errorMessage).toBe("un erreur est survenu lors de la récupération des produits");
   });
+});

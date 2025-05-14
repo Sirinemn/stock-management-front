@@ -19,7 +19,7 @@ export class ProductDetailComponent implements OnInit , OnDestroy{
   public product: Product | undefined;
   public productId: number = 0;
   public errorMessage: string = '';
-  private destroy$ = new Subject<void>();
+  public destroy$ = new Subject<void>();
 
   constructor(
     private productService: ProductService,

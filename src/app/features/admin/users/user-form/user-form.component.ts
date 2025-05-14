@@ -55,7 +55,7 @@ export class UserFormComponent implements OnInit {
         this.getUserById(+this.userId)
       }
   }
-  private getUserById(userId: number) {
+  public getUserById(userId: number) {
     this.authService.getUser(userId).pipe(takeUntil(this.destroy$)).subscribe({
       next: (user) => {
         this.formGroup.patchValue({
@@ -74,7 +74,7 @@ export class UserFormComponent implements OnInit {
   private getPasswordValidators(): ValidatorFn[] {
     return this.isEditMode ? [] : [Validators.required, Validators.minLength(8)];
   }
-  private updatePasswordValidators(): void {
+  public updatePasswordValidators(): void {
     const passwordControl = this.formGroup.get('password');
     if (passwordControl) {
       passwordControl.clearValidators();

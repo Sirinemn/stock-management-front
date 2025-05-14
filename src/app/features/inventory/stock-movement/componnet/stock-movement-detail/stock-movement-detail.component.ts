@@ -19,7 +19,7 @@ export class StockMovementDetailComponent implements OnInit, OnDestroy {
   public stockMovement: StockMovement | undefined;
   public stockMovementId: number = 0;
   public errorMessage: string = '';
-  private destroy$ = new Subject<void>();
+  public destroy$ = new Subject<void>();
   
   constructor(
     private stockMovementService: StockMovementService,

@@ -79,7 +79,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
       , error: (error) => {
         this.isLoading = false;
         this.errorMessage = error.error.message || "un erreur est survenu lors de la récupération des produits"
-        console.error('Error fetching products', error);
       }
     });
   }

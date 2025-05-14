@@ -64,7 +64,6 @@ export class UserFormComponent implements OnInit {
           firstname: user.firstname,
           dateOfBirth: user.dateOfBirth,
         });
-        console.log("Valeurs après patchValue :", this.formGroup.value);
       },
       error: (error) => {
         this.errorMessage = error.error.message;

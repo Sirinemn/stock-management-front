@@ -55,7 +55,7 @@ export class ProductFormComponent implements OnInit , OnDestroy {
       quantity: ['', [Validators.required, Validators.min(0)]],
       threshold: ['', [Validators.required, Validators.min(0)]],
       price: ['', [Validators.required, Validators.min(0)]],
-      categoryId: ['', [Validators.required]],
+      categoryId: [{ value: '', disabled: this.categories.length === 0 }, [Validators.required]],
     });
   }
  

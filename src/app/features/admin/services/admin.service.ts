@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../../../auth/models/user';
 import { MessageResponse } from '../../../shared/models/messageResponse';
-import { Category } from '../models/category';
 
 @Injectable({
   providedIn: 'root'

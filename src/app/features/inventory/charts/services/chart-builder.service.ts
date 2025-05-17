@@ -21,13 +21,13 @@ export class ChartBuilderService {
     // 1. Extraire toutes les dates uniques
     const allDatesSet = new Set<string>();
     stockChartSeries.forEach(series => {
-      series.series.forEach(point => allDatesSet.add(point.name));
+      series.series.forEach(point => allDatesSet.add(point.date));
     });
     const sortedDates = Array.from(allDatesSet).sort(); // triées 
 
     // 2. Préparer les datasets
     const datasets = stockChartSeries.map(series => {
-      const dataMap = new Map(series.series.map(point => [point.name, point.value]));
+      const dataMap = new Map(series.series.map(point => [point.date, point.value]));
       return {
         label: series.name,
         data: sortedDates.map(date => dataMap.get(date) ?? 0),
@@ -94,7 +94,7 @@ export class ChartBuilderService {
     }
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-    const productNames = productQuantities.map(p => p.name);
+    const productNames = productQuantities.map(p => p.productName);
     this.pieChart = new Chart(ctx, {
       type: 'pie',
       data: {

@@ -1,4 +1,4 @@
 export interface ChartPoint {
-  name: string;
+  date: string;
   value: number;
 }

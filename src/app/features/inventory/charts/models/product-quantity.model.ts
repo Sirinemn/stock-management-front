@@ -1,4 +1,4 @@
 export interface ProductQuantity {
-  name: string;
+  productName: string;
   quantity: number;
 }

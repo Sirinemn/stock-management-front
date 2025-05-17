@@ -10,10 +10,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatError, MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { RouterLink } from '@angular/router';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-profile',
-  imports: [MatIconModule, MatCardModule, ReactiveFormsModule, MatFormField, MatLabel, RouterLink, MatDatepickerModule, MatFormFieldModule],
+  providers: [provideNativeDateAdapter()],
+  imports: [MatIconModule, MatCardModule, ReactiveFormsModule, MatFormField, MatLabel, RouterLink, MatDatepickerModule, MatFormFieldModule, MatInputModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
@@ -52,10 +55,10 @@ throw new Error('Method not implemented.');
         this.user = user;
         this.userId = user?.id || 0;
         this.profileForm.patchValue({
-          firstName: user?.firstname,
-          lastName: user?.lastname,
+          firstname: user?.firstname,
+          lastname: user?.lastname,
           email: user?.email,
-          dateOfBirth: user?.dateOfBirth,
+          dateOfBirth: user?.dateOfBirth ? new Date(user.dateOfBirth) : null,
           groupName: user?.groupName,
         });
         this.isLoading = false;
@@ -68,6 +71,5 @@ throw new Error('Method not implemented.');
   }
   public back() {
     window.history.back();
-  }
-  
+  }  
 }

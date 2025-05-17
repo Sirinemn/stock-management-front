@@ -1,5 +1,5 @@
 <div fxLayout="row" fxLayoutAlign="start center">
-    <button mat-icon-button (click)="back()">
+    <button mat-icon-button class="custom-button" (click)="back()">
         <mat-icon>arrow_back</mat-icon>
     </button>
     <div class="profile-container">
@@ -11,11 +11,11 @@
                 <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
                     <mat-form-field>
                         <mat-label>Prénom</mat-label>
-                        <input matInput formControlName="firstName" readonly>
+                        <input matInput formControlName="firstname" readonly>
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Nom</mat-label>
-                        <input matInput formControlName="lastName">
+                        <input matInput formControlName="lastname">
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Email</mat-label>
@@ -32,9 +32,10 @@
                         <mat-label>Groupe</mat-label>
                         <input matInput formControlName="groupName">
                     </mat-form-field>
-                    <button mat-raised-button color="primary" type="submit">Mettre à jour</button>
+                    <button mat-raised-button class="custom-button" type="submit">Mettre à jour</button>
                 </form>
-                <button mat-button color="accent" routerLink="user/change-password">Changer le mot de passe</button>
+                <button mat-button class="custom-button" routerLink="user/change-password">Changer le mot de passe</button>
             </mat-card-content>
         </mat-card>
+    </div>
 </div>

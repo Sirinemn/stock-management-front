@@ -1,49 +1,73 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../../auth/models/user';
 import { Subject, takeUntil } from 'rxjs';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AdminService } from '../services/admin.service';
-import { AuthService } from '../../../auth/services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SessionService } from '../../../core/services/session.service';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatError, MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { RouterLink } from '@angular/router';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-profile',
-  imports: [],
+  imports: [MatIconModule, MatCardModule, ReactiveFormsModule, MatFormField, MatLabel, RouterLink, MatDatepickerModule, MatFormFieldModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
 export class ProfileComponent implements OnInit{
+onSubmit() {
+throw new Error('Method not implemented.');
+}
   public user!: User | null ;
   public userId: number = 0;
   public errorMessage: string = '';
   private destroy$ = new Subject<void>();
   public isLoading: boolean = false;
-  public fb!: FormGroup;
+  public profileForm!: FormGroup;
 
   constructor(
     private adminService: AdminService,
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private sessionService: SessionService,
+    private snackBar: MatSnackBar,
   ) { 
-    this.fb = this.formBuilder.group({
-      firstName: [''],  
-      lastName: [''],
-      email: [''],
-      password : [''],
+    this.profileForm = this.formBuilder.group({
+      lastname: [  '', [Validators.required, Validators.min(4), Validators.max(20)], ],
+      firstname: [  '', [Validators.required, Validators.min(4), Validators.max(20)], ],
+      groupName: [  '', [Validators.required, Validators.min(4), Validators.max(20)], ],
+      email: ['', [Validators.required, Validators.email]],
+      dateOfBirth : ['', Validators.required],
     })
   }
   ngOnInit(): void {
     this.getUser();
   }
   public getUser() {
-    this.authService.getAuthenticatedUser().pipe(takeUntil(this.destroy$)).subscribe({
-      next: (response) => {
-        this.user = response;
-        this.userId = response.id;
+    this.isLoading = true;
+    this.sessionService.getUser$().subscribe({
+      next: (user) => {
+        this.user = user;
+        this.userId = user?.id || 0;
+        this.profileForm.patchValue({
+          firstName: user?.firstname,
+          lastName: user?.lastname,
+          email: user?.email,
+          dateOfBirth: user?.dateOfBirth,
+          groupName: user?.groupName,
+        });
+        this.isLoading = false;
       },
       error: (error) => {
-        this.errorMessage = error.error.message;
+        this.errorMessage = error;
+        this.isLoading = false;
       }
     });
+  }
+  public back() {
+    window.history.back();
   }
   
 }

@@ -25,6 +25,7 @@
           <button mat-button routerLink="/features/products/list" routerLinkActive="active-link">Produits</button>
           <button mat-button *ngIf="isAmin" routerLink="/admin/categories/list" routerLinkActive="active-link">Catégories</button>
           <button mat-button *ngIf="isAmin" routerLink="/admin/users" routerLinkActive="active-link">Utilisateur</button>
+          <button mat-button *ngIf="isAmin" routerLink="/admin/profile" routerLinkActive="active-link">Profil</button>
           <button mat-button (click)="logOut()">Déconnecter</button>
         </div>
         <button mat-icon-button class="burger-menu" (click)="sidenav.toggle()" aria-label="Toggle sidenav">

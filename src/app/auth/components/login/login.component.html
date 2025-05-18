@@ -18,7 +18,7 @@
         <mat-error *ngIf="formGroup.get('password')?.hasError('required')">Mot de passe requis</mat-error>
       </mat-form-field>
 
-      <p *ngIf="errorMessage" class="error">{{errorMessage}}</p>
+      <p *ngIf="errorMessage" class="error-message">{{errorMessage}}</p>
 
       <div *ngIf="isLoading" class="loading-spinner">
         <mat-spinner></mat-spinner>

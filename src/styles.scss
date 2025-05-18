@@ -53,7 +53,7 @@ mat-card {
   cursor: not-allowed;
   opacity: 0.8; 
 }
-.error {
+.error-message {
   margin-top: 10px;
   padding: 12px;
   color: white;
@@ -96,4 +96,8 @@ a {
 
 a:hover {
   color: $accent-color; 
+}
+app-footer {
+  position: relative;
+  margin-top: auto; 
 }

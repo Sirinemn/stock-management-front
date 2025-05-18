@@ -1,7 +1,7 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Router, RouterLink } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../../models/product';
@@ -17,24 +17,28 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../../../../mat-dialog/confirm-dialog/confirm-dialog.component';
 import { CategorieService } from '../../services/categorie.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSort } from '@angular/material/sort';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   standalone: true,
-  imports: [MatIconModule, MatTableModule, MatButtonModule, RouterLink, MatFormFieldModule, MatOptionModule, MatSelectModule, CommonModule],
+  imports: [MatIconModule, MatTableModule, MatButtonModule, MatProgressSpinnerModule, RouterLink, MatFormFieldModule, MatOptionModule, MatSelectModule, CommonModule],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss'
 })
 export class ProductListComponent implements OnInit, OnDestroy {
+  @ViewChild(MatSort) sort!: MatSort;
+  @Output() categorySelected = new EventEmitter<number>();
 
   public products: Product[] = []; 
-  public displayedColumns: string[] = ['name','quantity', 'price', 'createdBy', 'actions'];
+  public dataSource!: MatTableDataSource<Product>;
+  public displayedColumns: string[] = ['name', 'quantity', 'price', 'createdBy', 'actions'];
   public isLoading = false;
   public categories: Category[] = [];
   public groupId: number = 0;
-  private user?: User |null;
+  private user?: User | null;
   public destroy$ = new Subject<void>();
   public errorMessage: string = '';
-  @Output() categorySelected = new EventEmitter<number>();
 
   
   constructor(
@@ -56,6 +60,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
       },
       error: (error) => {
         console.error('Error fetching user', error);
+        this.snackBar.open('Erreur lors de la récupération des informations utilisateur', 'Fermer', {
+          duration: 3000,
+          panelClass: ['error-snackbar']
+        });
       }
     });
   }
@@ -66,22 +74,38 @@ export class ProductListComponent implements OnInit, OnDestroy {
       },
       error: (error) => {
         console.error('Error fetching categories', error);
+        this.snackBar.open('Erreur lors de la récupération des catégories', 'Fermer', {
+          duration: 3000,
+          panelClass: ['error-snackbar']
+        });
       }
     });
   }
-  public getProducts(groupId:number) {
+  public getProducts(groupId: number) {
     this.isLoading = true;
     this.productService.getProducts(groupId).pipe(takeUntil(this.destroy$)).subscribe({
       next: (products: Product[]) => {
         this.products = products;
+        this.dataSource = new MatTableDataSource(this.products);
+        
+        // Configuration du tri après avoir chargé les données
+        if (this.sort) {
+          this.dataSource.sort = this.sort;
+        }
+        
         this.isLoading = false;
-      }
-      , error: (error) => {
+      },
+      error: (error) => {
         this.isLoading = false;
-        this.errorMessage = error.error.message || "un erreur est survenu lors de la récupération des produits"
+        this.errorMessage = error.error?.message || "Une erreur est survenue lors de la récupération des produits";
+        this.snackBar.open(this.errorMessage, 'Fermer', {
+          duration: 3000,
+          panelClass: ['error-snackbar']
+        });
       }
     });
   }
+  
   public onCategoryChange(categoryId: number): void {
     if (categoryId) {
       this.getProductsByCategory(categoryId);
@@ -89,17 +113,26 @@ export class ProductListComponent implements OnInit, OnDestroy {
       this.getProducts(this.groupId); // si aucune catégorie sélectionnée, afficher tous les produits
     }
   }
-
   public getProductsByCategory(categoryId: number): void {
     this.isLoading = true;
     this.productService.getProductsByCategory(categoryId, this.groupId).pipe(takeUntil(this.destroy$)).subscribe({
       next: (products: Product[]) => {
         this.products = products;
+        this.dataSource = new MatTableDataSource(this.products);
+        
+        if (this.sort) {
+          this.dataSource.sort = this.sort;
+        }
+        
         this.isLoading = false;
       },
       error: (error) => {
         this.isLoading = false;
-        console.error('Error fetching products by category', error);
+        this.errorMessage = error.error?.message || "Une erreur est survenue lors de la récupération des produits par catégorie";
+        this.snackBar.open(this.errorMessage, 'Fermer', {
+          duration: 3000,
+          panelClass: ['error-snackbar']
+        });
       }
     });
   }
@@ -107,25 +140,30 @@ export class ProductListComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
         title: 'Confirmation',
-        message: 'Êtes-vous sûr de vouloir supprimer ce produit ?',
+        message: `Êtes-vous sûr de vouloir supprimer le produit "${product.name}" ?`,
         confirmButtonText: 'Confirmer',
         cancelButtonText: 'Annuler'
       }
-    }
-    );
+    });
   
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
+        this.isLoading = true;
         this.productService.deleteProduct(product.id, this.groupId).pipe(takeUntil(this.destroy$)).subscribe({
           next: () => {
+            this.isLoading = false;
+            this.snackBar.open(`Le produit "${product.name}" a été supprimé avec succès`, 'Fermer', {
+              duration: 3000,
+              panelClass: ['success-snackbar']
+            });
             this.getProducts(this.groupId);
           },
           error: (error) => {
-            console.error('Error deleting product', error);
-            this.errorMessage = error.error.message || "un erreur est survenu lors de la suppression"
+            this.isLoading = false;
+            this.errorMessage = error.error?.message || "Une erreur est survenue lors de la suppression";
             this.snackBar.open(this.errorMessage, 'Fermer', {
               duration: 3000,
-              panelClass: ['error-snackbar'],
+              panelClass: ['error-snackbar']
             });
           },
         });

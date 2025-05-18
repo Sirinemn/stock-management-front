@@ -13,10 +13,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../../../mat-dialog/confirm-dialog/confirm-dialog.component';
 import { CategorieService } from '../../../inventory/products/services/categorie.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-category-list',
-  imports: [MatIconModule, MatTableModule, MatButtonModule, CommonModule, FormsModule],
+  imports: [MatIconModule, MatTableModule, MatButtonModule, CommonModule, FormsModule, MatProgressSpinnerModule],
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.scss'
 })
@@ -59,6 +60,10 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   }
   public toggleAddCategory() {
     this.isAddingCategory = !this.isAddingCategory;
+  }
+  public cancelAddCategory() {
+    this.isAddingCategory = false;
+    this.newCategoryName = '';
   }
   public addCategory() {
     if (this.newCategoryName.trim() === '') return;

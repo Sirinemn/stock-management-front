@@ -68,7 +68,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
     this.errorMessage = '';
     const { newPassword, confirmPassword } = this.formGroup.value;
     if (newPassword !== confirmPassword) {
-      this.errorMessage = 'Passwords do not match';
+      this.errorMessage = 'Les mots de passe ne correspondent pas';
       this.isLoading = false;
       return;
     }
@@ -82,7 +82,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
         next: (response) => {
           this.isLoading = false;
           this.authStateService.setFirstLogin(false);
-          this.snackBar.open(response.message, 'Close', {
+          this.snackBar.open(response.message, 'Fermer', {
             duration: 3000, 
           });
           this.router.navigate(['features/dashboard']);
@@ -90,7 +90,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
         error: (error) => {
           this.isLoading = false;
           this.errorMessage =
-            error.message || 'An error occurred while changing the password';
+            error.message || 'Une erreur est survenue lors de la modification du mot de passe.';
         },
       });
   }

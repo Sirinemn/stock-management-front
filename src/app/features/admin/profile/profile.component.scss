@@ -1,12 +1,14 @@
+.profile-header {
+  display: flex;
+  margin-bottom: 20px;
+}
 mat-card {
   width: 100%;
   max-width: 500px; 
   margin: 20px auto;
 }
-
-mat-card-title {
-  text-align: center;
-  margin-bottom: 20px;
+.title {
+  margin-left: 120px;
 }
 mat-card-content {
   display: flex;

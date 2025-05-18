@@ -79,7 +79,7 @@ describe('StockMovementListComponent', () => {
     component.deleteProduct(1);
 
     expect(mockStockMovementService.deleteStockMovement).toHaveBeenCalledWith(1);
-    expect(mockSnackBar.open).toHaveBeenCalledWith('Stock movement deleted successfully', 'Close', { duration: 3000 });
+    expect(mockSnackBar.open).toHaveBeenCalledWith('Stock movement deleted successfully', 'Fermer', { duration: 3000, panelClass: ['success-snackbar'] });
   });
   it('should clean up subscriptions on destroy', () => {
     const spy = jest.spyOn(component.destroy$, 'next');

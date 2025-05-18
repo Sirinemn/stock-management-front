@@ -34,4 +34,7 @@ export class AdminService {
   public getUsersByGroupId(groupId: number): Observable<User[]> {
     return this.httpClient.get<User[]>(`${this.apiUrl}/users/group/${groupId}`);
   }
+  public updateGroupName(UserId: number, groupName: string): Observable<MessageResponse> {
+    return this.httpClient.put<MessageResponse>(`${this.apiUrl}/group/${UserId}?groupName=${groupName}`, {});
+  }
 }

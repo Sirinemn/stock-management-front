@@ -29,20 +29,11 @@ table {
   width: 100%;
 }
 
-/* En-têtes de colonne fixes pendant le défilement */
 .mat-header-row {
   min-height: 56px;
   background-color: white;
 }
 
-/* Message d'erreur */
-.error-message {
-  color: #f44336;
-  padding: 16px;
-  text-align: center;
-}
-
-/* Indicateur de chargement */
 .loading-indicator {
   display: flex;
   justify-content: center;
@@ -51,12 +42,11 @@ table {
 
 /* Cellules du tableau */
 .mat-cell, .mat-header-cell {
-  padding: 0 16px;
+  padding: 0 10px;
 }
 
 /* Colonne des actions */
 .mat-column-actions {
-  width: 160px;
   text-align: center;
 }
 

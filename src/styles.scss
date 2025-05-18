@@ -73,6 +73,7 @@ mat-error {
   transition: color 0.3s;
   background-color: $secondary-color;
   border-radius: 50%;
+  border: none;
 }
 .arrow_back:hover {
   background-color: $accent-color;

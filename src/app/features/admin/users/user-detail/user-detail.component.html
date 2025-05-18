@@ -10,13 +10,19 @@
         <mat-card-header>
           <mat-card-title>Profil Utilisateur </mat-card-title>
         </mat-card-header>
-        <mat-card-content>
+        <mat-card-content *ngIf="!errorMessage; else noUser" >
           <p><strong>Email:</strong> {{ user.email }}</p>
           <p><strong>Prénom:</strong> {{ user.firstname }}</p>
           <p><strong>Nom:</strong> {{ user.lastname }}</p>
           <p><strong>Date de naissance:</strong> {{ user.dateOfBirth  | date}}</p>
           <p><strong>Ajouter le</strong> {{user.createdDate | date }} </p>
         </mat-card-content>
+         <ng-template #noUser>
+          <div class="empty-state">
+            <mat-icon>inventory_2</mat-icon>
+            <p class="error-message">{{errorMessage}}</p>
+          </div>
+        </ng-template>
       </mat-card>
     </div>
   </div>

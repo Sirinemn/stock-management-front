@@ -12,11 +12,12 @@ import { RouterLink } from '@angular/router';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
   providers: [provideNativeDateAdapter()],
-  imports: [MatIconModule, MatCardModule, ReactiveFormsModule, MatFormField, MatLabel, RouterLink, MatDatepickerModule, MatFormFieldModule, MatInputModule],
+  imports: [MatIconModule, MatCardModule, ReactiveFormsModule, MatFormField, MatLabel, RouterLink, MatDatepickerModule, MatFormFieldModule, MatInputModule, CommonModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
@@ -64,7 +65,7 @@ throw new Error('Method not implemented.');
         this.isLoading = false;
       },
       error: (error) => {
-        this.errorMessage = error;
+        this.errorMessage = error.error.message;
         this.isLoading = false;
       }
     });

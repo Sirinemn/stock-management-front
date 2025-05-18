@@ -34,6 +34,9 @@
                     </mat-form-field>
                     <button mat-raised-button class="custom-button" type="submit">Mettre à jour</button>
                 </form>
+                <div *ngIf="errorMessage" class="error-message">
+                    {{ errorMessage }}
+                </div>
                 <button mat-button class="custom-button" routerLink="/user/change-password">Changer le mot de passe</button>
             </mat-card-content>
         </mat-card>

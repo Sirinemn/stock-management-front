@@ -3,13 +3,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { User } from '../../../../auth/models/user';
 import { ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { AdminService } from '../../services/admin.service';
 import { takeUntil, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-user-detail',
-  imports: [MatIconModule, MatCardModule, DatePipe],
+  imports: [MatIconModule, MatCardModule, DatePipe, CommonModule],
   templateUrl: './user-detail.component.html',
   styleUrl: './user-detail.component.scss'
 })
@@ -18,6 +18,7 @@ export class UserDetailComponent implements OnInit , OnDestroy {
   public user!: User;
   public userId: number = 0;
   public destroy$ = new Subject<void>();
+  public errorMessage: string = '';
 
   constructor(
     private adminService: AdminService,
@@ -40,6 +41,7 @@ export class UserDetailComponent implements OnInit , OnDestroy {
       },
       error: () => {
         this.loading = false;
+        this.errorMessage = 'Error loading user';
       }
     });
   }

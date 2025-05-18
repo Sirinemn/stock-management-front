@@ -18,7 +18,7 @@
                 <p><strong>Créer par : </strong>{{product?.userName}}</p>
                 <p><strong>Catégorie : </strong>{{product?.categoryName}}</p>
             </mat-card-content>
-            <p *ngIf="errorMessage" class="error">{{errorMessage}}</p>
+            <p *ngIf="errorMessage" class="error-message">{{errorMessage}}</p>
   
             <div *ngIf="isLoading" class="loading-spinner">
             <mat-spinner></mat-spinner>

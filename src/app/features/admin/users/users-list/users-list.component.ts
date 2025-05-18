@@ -11,11 +11,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../../../mat-dialog/confirm-dialog/confirm-dialog.component';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 @Component({
   selector: 'app-users-list',
-  imports: [MatIconModule, MatTableModule, MatButtonModule, RouterLink, CommonModule],
+  imports: [MatIconModule, MatTableModule, MatButtonModule, RouterLink, CommonModule, MatProgressSpinnerModule],
   templateUrl: './users-list.component.html',
   styleUrl: './users-list.component.scss'
 })

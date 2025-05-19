@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { User } from '../../../auth/models/user';
 import { Subject, takeUntil } from 'rxjs';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -21,11 +21,11 @@ import { CommonModule } from '@angular/common';
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
-export class ProfileComponent implements OnInit{
+export class ProfileComponent implements OnInit, OnDestroy {
   public user!: User | null ;
   public userId: number = 0;
   public errorMessage: string = '';
-  private destroy$ = new Subject<void>();
+  public destroy$ = new Subject<void>();
   public isLoading: boolean = false;
   public profileForm!: FormGroup;
 
@@ -72,54 +72,58 @@ export class ProfileComponent implements OnInit{
       });
   }
   public onSubmit() {
-  if (this.profileForm.valid && this.userId) {
-    const updatedUser = {
-      firstname: this.profileForm.value.firstname,
-      lastname: this.profileForm.value.lastname,
-      email: this.profileForm.value.email,
-      dateOfBirth: this.profileForm.value.dateOfBirth
-    } as User;
+    if (this.profileForm.valid && this.userId) {
+      const updatedUser = {
+        firstname: this.profileForm.value.firstname,
+        lastname: this.profileForm.value.lastname,
+        email: this.profileForm.value.email,
+        dateOfBirth: this.profileForm.value.dateOfBirth
+      } as User;
 
-    this.adminService.updateUser(this.userId, updatedUser).subscribe({
-      next: () => {
-        this.snackBar.open('Profil mis à jour avec succès', 'Fermer', {
-          duration: 3000,
-          panelClass: ['success-snackbar'],
-        });
+      this.adminService.updateUser(this.userId, updatedUser).subscribe({
+        next: () => {
+          this.snackBar.open('Profil mis à jour avec succès', 'Fermer', {
+            duration: 3000,
+            panelClass: ['success-snackbar'],
+          });
 
-        // Mise à jour du groupe séparément
-        if (this.user?.groupName !== this.profileForm.value.groupName) {
-          this.adminService.updateGroupName(this.userId, this.profileForm.value.groupName).subscribe({
-            next: () => {
-              this.snackBar.open('Groupe mis à jour avec succès', 'Fermer', {
-                duration: 3000,
-                panelClass: ['success-snackbar'],
-              });
-            },
-            error: () => {
-              this.snackBar.open('Erreur lors de la mise à jour du groupe', 'Fermer', {
-                duration: 3000,
-                panelClass: ['error-snackbar'],
-              });
-            }
+          // Mise à jour du groupe séparément
+          if (this.user?.groupName !== this.profileForm.value.groupName) {
+            this.adminService.updateGroupName(this.userId, this.profileForm.value.groupName).subscribe({
+              next: () => {
+                this.snackBar.open('Groupe mis à jour avec succès', 'Fermer', {
+                  duration: 3000,
+                  panelClass: ['success-snackbar'],
+                });
+              },
+              error: () => {
+                this.snackBar.open('Erreur lors de la mise à jour du groupe', 'Fermer', {
+                  duration: 3000,
+                  panelClass: ['error-snackbar'],
+                });
+              }
+            });
+          }
+        },
+        error: () => {
+          this.snackBar.open('Erreur lors de la mise à jour du profil', 'Fermer', {
+            duration: 3000,
+            panelClass: ['error-snackbar'],
           });
         }
-      },
-      error: () => {
-        this.snackBar.open('Erreur lors de la mise à jour du profil', 'Fermer', {
-          duration: 3000,
-          panelClass: ['error-snackbar'],
-        });
-      }
-    });
-  } else {
-    this.snackBar.open('Veuillez corriger les erreurs dans le formulaire', 'Fermer', {
-      duration: 3000,
-      panelClass: ['error-snackbar']
-    });
+      });
+    } else {
+      this.snackBar.open('Veuillez corriger les erreurs dans le formulaire', 'Fermer', {
+        duration: 3000,
+        panelClass: ['error-snackbar']
+      });
+    }
   }
-}
   public back() {
     window.history.back();
   }  
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }

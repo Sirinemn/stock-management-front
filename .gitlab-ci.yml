@@ -53,7 +53,7 @@ test:
 sonarqube:
   stage: sonarqube
   image: sonarsource/sonar-scanner-cli:latest
-  dependancies:
+  dependencies:
     - test
   script:
     - sonar-scanner -Dsonar.sources=src -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN

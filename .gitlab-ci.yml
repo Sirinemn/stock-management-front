@@ -40,15 +40,21 @@ build:
 # 3️⃣ Étape de Test
 test:
   stage: test
-  image: trion/ng-cli-karma:latest
+  image: node:18
   script:
-    - npm run test -- --watch=false --browsers=ChromeHeadless
-  coverage: /Statements.*?(\d+\.\d+)%/
+    - npm install
+    - npm run test -- --coverage
+  artifacts:
+    paths:
+      - coverage/
+    expire_in: 1 week
 
 # 4️⃣ Étape SonarQube
 sonarqube:
   stage: sonarqube
   image: sonarsource/sonar-scanner-cli:latest
+  dependancies:
+    - test
   script:
     - sonar-scanner -Dsonar.sources=src -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN
 

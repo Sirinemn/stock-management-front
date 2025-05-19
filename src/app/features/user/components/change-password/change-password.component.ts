@@ -40,7 +40,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
   public formGroup: FormGroup;
   public errorMessage: string = '';
   public isLoading: boolean = false;
-  private httpSubscription?: Subscription;
+  public httpSubscription?: Subscription;
 
   constructor(
     private authService: AuthService,

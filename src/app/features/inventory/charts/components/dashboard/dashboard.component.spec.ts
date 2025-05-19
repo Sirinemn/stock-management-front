@@ -3,17 +3,30 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DashboardComponent } from './dashboard.component';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { of } from 'rxjs';
+import { ChartHttpService } from '../../services/chart-http.service';
+import { SessionService } from '../../../../../core/services/session.service';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
   let fixture: ComponentFixture<DashboardComponent>;
+  const mockChartHttpService = {
+    getLineChartData: jest.fn().mockReturnValue(of([{ name: 'Stock Flow', series: [{ date: '2023-01-01', value: 100 }] }])),
+    getPieChartData: jest.fn().mockReturnValue(of([{ productName: 'Product A', quantity: 50 }]))
+  };
+
+  const mockSessionService = {
+    getUser$: jest.fn().mockReturnValue(of({ id: 1, groupId: 2 }))
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [DashboardComponent],
       providers:[
         provideHttpClient(),
-        provideHttpClientTesting() 
+        provideHttpClientTesting(),
+        { provide: ChartHttpService, useValue: mockChartHttpService },
+        { provide: SessionService, useValue: mockSessionService },
       ]
     })
     .compileComponents();
@@ -25,5 +38,30 @@ describe('DashboardComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+  it('should fetch user data and set groupId', () => {
+    component.getUser();
+
+    expect(mockSessionService.getUser$).toHaveBeenCalled();
+    expect(component.groupId).toBe(2);
+  });
+  it('should fetch line chart data successfully', () => {
+    component.getLineChartData();
+
+    expect(mockChartHttpService.getLineChartData).toHaveBeenCalledWith(2);
+    expect(component.lineChartData.length).toBe(1);
+  });
+  it('should fetch pie chart data successfully', () => {
+    component.getPieChartData();
+
+    expect(mockChartHttpService.getPieChartData).toHaveBeenCalledWith(2);
+    expect(component.pieChartData.length).toBe(1);
+  });
+  it('should clean up subscriptions on destroy', () => {
+    const spy = jest.spyOn(component.destroy$, 'next');
+
+    component.ngOnDestroy();
+
+    expect(spy).toHaveBeenCalled();
   });
 });

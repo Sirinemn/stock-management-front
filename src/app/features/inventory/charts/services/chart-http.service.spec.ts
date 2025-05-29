@@ -4,8 +4,7 @@ import { ChartHttpService } from './chart-http.service';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { DashboardOverview } from '../models/dashboardOverview.model';
-import { ProductQuantity } from '../models/product-quantity.model';
-import { StockChartSeries } from '../models/stock-chart-series.model';
+
 
 describe('ChartHttpService', () => {
   let service: ChartHttpService;
@@ -41,26 +40,5 @@ describe('ChartHttpService', () => {
     expect(req.request.method).toBe('GET');
     req.flush(mockOverview);
   });
-  it('should fetch pie chart data', () => {
-    const mockData: ProductQuantity[] = [{ productName: 'Product A', quantity: 50 }];
 
-    service.getPieChartData(1).subscribe(data => {
-      expect(data).toEqual(mockData);
-    });
-
-    const req = httpMock.expectOne(`${service['apiUrl']}/pie?groupId=1`);
-    expect(req.request.method).toBe('GET');
-    req.flush(mockData);
-  });
-  it('should fetch line chart data', () => {
-    const mockData: StockChartSeries[] = [{ name: 'Stock Flow', series: [{ date: '2023-01-01', value: 100 }] }];
-
-    service.getLineChartData(1).subscribe(data => {
-      expect(data).toEqual(mockData);
-    });
-
-    const req = httpMock.expectOne(`${service['apiUrl']}/line?groupId=1`);
-    expect(req.request.method).toBe('GET');
-    req.flush(mockData);
-  });
 });

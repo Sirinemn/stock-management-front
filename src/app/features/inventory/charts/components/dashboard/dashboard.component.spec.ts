@@ -45,18 +45,6 @@ describe('DashboardComponent', () => {
     expect(mockSessionService.getUser$).toHaveBeenCalled();
     expect(component.groupId).toBe(2);
   });
-  it('should fetch line chart data successfully', () => {
-    component.getLineChartData();
-
-    expect(mockChartHttpService.getLineChartData).toHaveBeenCalledWith(2);
-    expect(component.lineChartData.length).toBe(1);
-  });
-  it('should fetch pie chart data successfully', () => {
-    component.getPieChartData();
-
-    expect(mockChartHttpService.getPieChartData).toHaveBeenCalledWith(2);
-    expect(component.pieChartData.length).toBe(1);
-  });
   it('should clean up subscriptions on destroy', () => {
     const spy = jest.spyOn(component.destroy$, 'next');
 

@@ -1,26 +1,39 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ChartHttpService } from '../../services/chart-http.service';
-import { Subject, takeUntil } from 'rxjs';
+import { forkJoin, Subject, takeUntil } from 'rxjs';
 import { PieChartComponent } from '../pie-chart/pie-chart.component';
 import { ProductQuantity } from '../../models/product-quantity.model';
 import { SessionService } from '../../../../../core/services/session.service';
 import { User } from '../../../../../auth/models/user';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { DashboardOverview } from '../../models/dashboardOverview.model';
+import { StockStats } from '../../models/StockStats';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { StockMovement } from '../../../models/stockmovement';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [PieChartComponent, CommonModule, MatProgressSpinnerModule],
+  imports: [PieChartComponent, CommonModule, MatProgressSpinnerModule, MatDividerModule, MatListModule, MatIconModule, MatCardModule ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   public pieChartData: ProductQuantity[] = [];
+  public dashboardOverview: DashboardOverview | null = null;
+  public stockStatusData: ProductQuantity[] = [];
+  public stockStats: StockStats | null = null;
+  public recentMovements: StockMovement[] = [];
+
   public destroy$ = new Subject<void>();
   public groupId: number = 0;
   public user: User | null = null;
   public isLoading: boolean = false;
   public errorMessage: string = '';
+
 
   constructor(
     private chartHttp: ChartHttpService,
@@ -31,32 +44,49 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.getUser();
   }
   public getUser() {
+    this.errorMessage = '';
     this.sessionService.getUser$().pipe(takeUntil(this.destroy$)).subscribe({
       next: (user) => {
         this.user = user;
         this.groupId = user?.groupId || 0;
-        this.getPieChartData();
+        this.loadDashboardData();
       },
       error: (error) => {
-        this.errorMessage = error.error.message || 'Erreur lors de la récupération des données utilisateur.';
-        console.error("Erreur lors de la récupération des données utilisateur:", error);
+        this.handleError(error, 'Erreur lors de la récupération des données utilisateur.');
       }
       
     });
   }
-  public getPieChartData() {
+
+  public loadDashboardData(): void {
+    if (!this.groupId) return;
+    
     this.isLoading = true;
-    this.chartHttp.getProductQuantities(this.groupId).pipe(takeUntil(this.destroy$)).subscribe({
+    this.errorMessage = '';
+
+    // Charger toutes les données en parallèle
+    forkJoin({
+      overview: this.chartHttp.getDashboardOverview(this.groupId),
+      stockStats: this.chartHttp.getStockStats(this.groupId),
+      stockStatusChart: this.chartHttp.getProductQuantities(this.groupId)
+    }).pipe(takeUntil(this.destroy$)).subscribe({
       next: (data) => {
-        this.pieChartData = data;
+        this.dashboardOverview = data.overview;
+        this.stockStats = data.stockStats;
+        this.stockStatusData = data.stockStatusChart;
+        this.recentMovements = data.overview.recentMovements || [];
         this.isLoading = false;
       },
       error: (error) => {
         this.isLoading = false;
-        this.errorMessage = error.error.message || 'Erreur lors du chargement des données du graphique circulaire.';
-        console.error("Erreur lors de la récupération des données du graphique circulaire:", error);
+        this.handleError(error, 'Erreur lors du chargement des données du dashboard.');
       }
     });
+  }
+  
+   private handleError(error: any, defaultMessage: string): void {
+    this.errorMessage = error?.error?.message || defaultMessage;
+    console.error(defaultMessage, error);
   }
 
   ngOnDestroy(): void {

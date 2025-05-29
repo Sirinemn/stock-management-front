@@ -1,17 +1,77 @@
-<div class="dashboard">
-    <div class="header">
-        <h1>Tableau de bord</h1>
-        <p *ngIf="errorMessage" class="error">{{errorMessage}}</p>
+<div class="dashboard-container" *ngIf="!isLoading; else loading">
+  <!-- En-tête -->
+  <div class="header">
+    <h1>Tableau de bord</h1>
+    <p *ngIf="errorMessage" class="error mat-elevation-z2">{{ errorMessage }}</p>
+  </div>
+
+  <!-- Cartes des statistiques -->
+  <div class="stats-grid">
+    <mat-card class="stat-card-total-product" *ngIf="stockStats">
+      <mat-card-title>Produits totaux</mat-card-title>
+      <mat-card-content>{{ stockStats.totalProducts }}</mat-card-content>
+    </mat-card>
+    <mat-card class="stat-card-low" *ngIf="stockStats">
+      <mat-card-title>Stock faible</mat-card-title>
+      <mat-card-content>{{ stockStats.lowStockProducts }}</mat-card-content>
+    </mat-card>
+    <mat-card class="stat-card-out" *ngIf="stockStats">
+      <mat-card-title>Ruptures de stock</mat-card-title>
+      <mat-card-content>{{ stockStats.outOfStockProducts }}</mat-card-content>
+    </mat-card>
+    <mat-card class="stat-card-total" *ngIf="stockStats">
+      <mat-card-title>Quantité totale</mat-card-title>
+      <mat-card-content>{{ stockStats.totalQuantity }}</mat-card-content>
+    </mat-card>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <!-- Section camembert + mouvements récents côte à côte -->
+  <div class="chart-movements-row">
+    <!-- Camembert -->
+    <div class="pie-chart-section">
+      <h2>État du stock</h2>
+      <ng-container *ngIf="stockStatusData.length > 0; else noProduct">
+        <app-pie-chart [chartData]="stockStatusData"></app-pie-chart>
+      </ng-container>
     </div>
-    <div class="chart-container">
-        <div *ngIf="isLoading" class="loading-spinner">
-            <mat-spinner></mat-spinner>
-        </div>
-        <div class="row">
-            <div class="pie-chart">
-                <app-pie-chart *ngIf="pieChartData.length > 0" [chartData]="pieChartData"></app-pie-chart>
+
+    <!-- Mouvements récents -->
+    <div class="recent-movements-section">
+      <h2>Mouvements récents</h2>
+      <ng-container *ngIf="recentMovements.length > 0; else noMovements">
+        <div class="movement-list">
+            <div class="movement-item" *ngFor="let movement of recentMovements">
+            <span>{{ movement.productName }} </span>
+            <span>{{ movement.type }} </span>
+            <span>{{ movement.quantity }} unités </span>
+            <span>{{ movement.createdDate | date: 'short' }}</span>
             </div>
         </div>
+      </ng-container>
     </div>
+  </div>
 </div>
+
+<ng-template #noMovements>
+    <div class="no-movements">
+        <mat-icon>inbox</mat-icon>
+        <p>Aucun mouvement récent</p>
+    </div>
+</ng-template>
+<ng-template #noProduct>
+  <div class="no-product">
+    <mat-icon>inbox</mat-icon>
+    <p>Aucun produit récent</p>
+  </div>
+</ng-template>
+
+<!-- Loader -->
+<ng-template #loading>
+  <div class="loading-spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>
+
 

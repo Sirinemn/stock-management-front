@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { DashboardOverview } from '../models/dashboardOverview.model';
 import { ProductQuantity } from '../models/product-quantity.model';
 import { StockChartSeries } from '../models/stock-chart-series.model';
-import { StockStats } from '../../models/StockStats';
+import { StockStats } from '../models/StockStats';
 
 
 @Injectable({

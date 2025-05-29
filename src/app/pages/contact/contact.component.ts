@@ -6,11 +6,12 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-contact',
-  imports: [MatCardModule, ReactiveFormsModule, MatFormFieldModule, MatProgressSpinnerModule, NgClass, CommonModule, MatInputModule, MatOptionModule],
+  imports: [MatCardModule, ReactiveFormsModule, MatFormFieldModule, MatProgressSpinnerModule, NgClass, CommonModule, MatInputModule, MatOptionModule, MatSelectModule],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss'
 })

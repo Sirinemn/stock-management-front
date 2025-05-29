@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { DashboardOverview } from '../models/dashboardOverview.model';
 import { ProductQuantity } from '../models/product-quantity.model';
 import { StockChartSeries } from '../models/stock-chart-series.model';
+import { StockStats } from '../../models/StockStats';
 
 
 @Injectable({
@@ -17,10 +18,13 @@ export class ChartHttpService {
   public getDashboardOverview(groupId: number): Observable<DashboardOverview> {
     return this.httpClient.get<DashboardOverview>(`${this.apiUrl}/overview?groupId=${groupId}`);
   }
-  public getPieChartData(groupId: number): Observable<ProductQuantity[]> {
-    return this.httpClient.get<ProductQuantity[]>(`${this.apiUrl}/pie?groupId=${groupId}`);
+   public getStockCategoryChart(groupId: number): Observable<ProductQuantity[]> {
+    return this.httpClient.get<ProductQuantity[]>(`${this.apiUrl}/stock-categories?groupId=${groupId}`);
   }
-  public getLineChartData(groupId: number): Observable<StockChartSeries[]> {
-    return this.httpClient.get<StockChartSeries[]>(`${this.apiUrl}/line?groupId=${groupId}`);
+  public getProductQuantities(groupId: number): Observable<ProductQuantity[]> {
+    return this.httpClient.get<ProductQuantity[]>(`${this.apiUrl}/products?groupId=${groupId}`);
+  }
+  public getStockStats(groupId: number): Observable<StockStats> {
+    return this.httpClient.get<StockStats>(`${this.apiUrl}/stats?groupId=${groupId}`);
   }
 }

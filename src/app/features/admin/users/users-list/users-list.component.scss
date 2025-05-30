@@ -40,17 +40,14 @@ table {
   padding: 16px;
 }
 
-/* Cellules du tableau */
 .mat-cell, .mat-header-cell {
   padding: 0 10px;
 }
 
-/* Colonne des actions */
 .mat-column-actions {
   text-align: center;
 }
 
-/* Ajustement de la taille des colonnes */
 .mat-column-firstname, .mat-column-lastname {
   max-width: 150px;
 }
@@ -62,16 +59,14 @@ table {
   text-overflow: ellipsis;
 }
 
-/* Amélioration de la lisibilité des lignes */
 .mat-row:nth-child(even) {
   background-color: #f9f9f9;
 }
 
-.mat-row:hover {
-  background-color: #e8eaf6;
+tr:hover {
+  background-color: #f1f1f1;
 }
 
-/* Responsivité pour petits écrans */
 @media screen and (max-width: 768px) {
   .user-list-header {
     flex-direction: column;

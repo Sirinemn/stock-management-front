@@ -11,10 +11,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ContactService } from '../../service/contact.service';
 import { Subject, takeUntil } from 'rxjs';
 import { ContactRequest } from '../../shared/models/contactRequest';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-contact',
-  imports: [MatCardModule, ReactiveFormsModule, MatFormFieldModule, MatProgressSpinnerModule, NgClass, CommonModule, MatInputModule, MatOptionModule, MatSelectModule],
+  imports: [MatCardModule, ReactiveFormsModule, MatFormFieldModule, MatProgressSpinnerModule, NgClass, CommonModule, MatInputModule, MatOptionModule, MatSelectModule, MatIconModule],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss'
 })
@@ -54,6 +55,9 @@ export class ContactComponent implements OnDestroy{
       this.isLoading = false;
       this.errorMessage = "Veuillez remplir tous les champs correctement.";
     }
+  }
+  public back() {
+    window.history.back();
   }
   ngOnDestroy(): void {
     this.destroy$.next();

@@ -24,8 +24,8 @@ mat-toolbar {
 }
 .active-link {
   font-weight: bold;
-  color: white; 
-  background-color: #42BFDD; 
+  color: #42BFDD;
+  text-decoration: underline;
   border-radius: 5px; 
   padding: 5px 10px;
 }

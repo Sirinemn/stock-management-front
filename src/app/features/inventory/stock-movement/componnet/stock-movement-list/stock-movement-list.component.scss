@@ -1,5 +1,6 @@
 .main-container {
   padding-top: 30px;
+  min-height: calc(100vh - 64px);
 }
 .stock-list-header {
   display: flex;

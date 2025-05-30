@@ -7,19 +7,19 @@
 
   <!-- Cartes des statistiques -->
   <div class="stats-grid">
-    <mat-card class="stat-card-total-product" *ngIf="stockStats">
+    <mat-card class="stat-card" *ngIf="stockStats">
       <mat-card-title>Produits totaux</mat-card-title>
       <mat-card-content>{{ stockStats.totalProducts }}</mat-card-content>
     </mat-card>
-    <mat-card class="stat-card-low" *ngIf="stockStats">
-      <mat-card-title>Stock faible</mat-card-title>
+    <mat-card class="stat-card" *ngIf="stockStats">
+      <mat-card-title>Stock faible <mat-icon color="warn">warning</mat-icon></mat-card-title>
       <mat-card-content>{{ stockStats.lowStockProducts }}</mat-card-content>
     </mat-card>
-    <mat-card class="stat-card-out" *ngIf="stockStats">
-      <mat-card-title>Ruptures de stock</mat-card-title>
+    <mat-card class="stat-card" *ngIf="stockStats">
+      <mat-card-title> Ruptures de stock <mat-icon color="error">error</mat-icon></mat-card-title>
       <mat-card-content>{{ stockStats.outOfStockProducts }}</mat-card-content>
     </mat-card>
-    <mat-card class="stat-card-total" *ngIf="stockStats">
+    <mat-card class="stat-card" *ngIf="stockStats">
       <mat-card-title>Quantité totale</mat-card-title>
       <mat-card-content>{{ stockStats.totalQuantity }}</mat-card-content>
     </mat-card>
@@ -53,20 +53,19 @@
     </div>
   </div>
 </div>
-
 <ng-template #noMovements>
-    <div class="no-movements">
-        <mat-icon>inbox</mat-icon>
-        <p>Aucun mouvement récent</p>
-    </div>
-</ng-template>
-<ng-template #noProduct>
-  <div class="no-product">
-    <mat-icon>inbox</mat-icon>
-    <p>Aucun produit récent</p>
+  <div class="no-movements">
+    <mat-icon class="no-icon">inventory</mat-icon>
+    <p>Aucun mouvement récent</p>
   </div>
 </ng-template>
 
+<ng-template #noProduct>
+  <div class="no-product">
+    <mat-icon class="no-icon">inventory</mat-icon>
+    <p>Aucun produit récent</p>
+  </div>
+</ng-template>
 <!-- Loader -->
 <ng-template #loading>
   <div class="loading-spinner">

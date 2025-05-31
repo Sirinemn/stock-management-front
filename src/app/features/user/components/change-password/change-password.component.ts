@@ -19,6 +19,7 @@ import { ChangePasswordRequest } from '../../../../auth/models/ChangePasswordReq
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthStateService } from '../../../../core/services/auth-state.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-change-password',
@@ -30,7 +31,8 @@ import { AuthStateService } from '../../../../core/services/auth-state.service';
     MatInputModule,
     NgIf,
     MatProgressSpinner,
-    CommonModule
+    CommonModule,
+    MatIconModule
   ],
   templateUrl: './change-password.component.html',
   styleUrl: './change-password.component.scss',
@@ -93,6 +95,9 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
             error.message || 'Une erreur est survenue lors de la modification du mot de passe.';
         },
       });
+  }
+  public back() {
+    window.history.back();
   }
   ngOnDestroy(): void {
     if (this.httpSubscription) {

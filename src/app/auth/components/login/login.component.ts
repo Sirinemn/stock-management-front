@@ -12,10 +12,11 @@ import { SessionService } from '../../../core/services/session.service';
 import { AuthResponse } from '../../models/auth-response';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AuthStateService } from '../../../core/services/auth-state.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-login',
-  imports: [MatProgressSpinnerModule , MatCardModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, CommonModule, RouterLink],
+  imports: [MatProgressSpinnerModule, MatIconModule , MatCardModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, CommonModule, RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -70,6 +71,9 @@ export class LoginComponent implements OnDestroy{
   }
   public goToRegister() {
     this.router.navigate(['auth/register']);
+  }
+  public back() {
+    window.history.back();
   }
   public ngOnDestroy(): void {
     this.subscribtion.unsubscribe();

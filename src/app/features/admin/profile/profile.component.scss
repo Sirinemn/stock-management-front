@@ -6,6 +6,7 @@ mat-card {
   width: 100%;
   max-width: 500px; 
   margin: 20px auto;
+  min-height: calc(90vh - 64px);
 }
 .title {
   margin-left: 120px;
